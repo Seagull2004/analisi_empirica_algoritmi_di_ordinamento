@@ -14,8 +14,8 @@ def partition3way(A, p, q):
     if q - p <= 0:
         return
     # ora la situazione è come segue
-	#      i     k     l     j 
-	# ... |<|<|<|=|=|=|>|>|>| ...
+    #      i     k     l     j 
+    # ... |<|<|<|=|=|=|>|>|>| ...
     i = p
     k = p
     l = p
