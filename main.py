@@ -6,12 +6,14 @@ import time
 import random
 
 
+print("mini test per il mergeSort")
 A = [1,2,3,5,8,7,6,5,4,5,6,7,8,9,0,9,6,5,4,3,7,6,5,4,3,2]
 MS.mergeSort(A)
 print(A)
 print("---")
 
 
+print("mini test per il countingSort")
 A = [1,2,3,5,8,7,6,5,4,5,6,7,8,9,0,9,6,5,4,3,7,6,5,4,3,2]
 B = [0 for _ in range(len(A))]
 CS.countingSort(A, B, len(A))
@@ -19,12 +21,14 @@ print(B)
 print("---")
 
 
+print("mini test per il quicksort3Way")
 A = [1,2,3,5,8,7,6,5,4,5,6,7,8,9,0,9,6,5,4,3,7,6,5,4,3,2]
 QS3.quickSort3Way(A)
 print(A)
 print("---")
 
 
+print("mini test per il quickSort")
 A = [1,2,3,5,8,7,6,5,4,5,6,7,8,9,0,9,6,5,4,3,7,6,5,4,3,2]
 QS.quickSort(A)
 print(A)
