@@ -16,11 +16,11 @@ def mergeSortAux(A, p, q):
     Precondizione: 0 <= p <= q < len(A)
     Postcondizione: A[p...q] è ordinato in ordine non decrescente.
     """
-	if (p < q):
-		r = (p + q) // 2
-		mergeSortAux(A, p, r) 
-		mergeSortAux(A, r + 1, q) 
-		merge(A, p, r, q)
+    if (p < q):
+        r = (p + q) // 2
+        mergeSortAux(A, p, r) 
+        mergeSortAux(A, r + 1, q) 
+        merge(A, p, r, q)
 
 def merge(A, p, r, q):
     """

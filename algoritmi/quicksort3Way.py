@@ -1,9 +1,21 @@
 def quickSort3Way(vec):
+    """
+    Ordina l'array vec in ordine crescente usando il Quick Sort a 3 vie.
+    
+    Precondizione: vec è una lista.
+    Postcondizione: vec è ordinato in ordine non decrescente.
+    """
     if len(vec) <= 0:
         return
     quickSort3WayRec(vec, 0, len(vec))
 
 def quickSort3WayRec(vec, p, q): 
+    """
+    Funzione ricorsiva per il Quick Sort a 3 vie.
+    
+    Precondizione: 0 <= p <= q <= len(vec)
+    Postcondizione: vec[p...q] è ordinato in ordine non decrescente.
+    """
     if q - p <= 1:
         return
     res = partition3way(vec, p, q)
@@ -11,6 +23,12 @@ def quickSort3WayRec(vec, p, q):
     quickSort3WayRec(vec, res[1], q)
 
 def partition3way(A, p, q):
+    """
+    Partiziona l'array A[p...q] in tre parti: minori, uguali e maggiori del pivot.
+    
+    Precondizione: 0 <= p < q <= len(A)
+    Postcondizione: A[p...q] è diviso in tre sezioni ordinate correttamente.
+    """
     if q - p <= 0:
         return
     # ora la situazione è come segue
@@ -53,4 +71,3 @@ def partition3way(A, p, q):
     A[l], A[q - 1] = A[q - 1], A[l]
     l += 1
     return [k,l]
-     
