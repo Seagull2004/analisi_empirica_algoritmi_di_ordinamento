@@ -1,17 +1,9 @@
-import algoritmi.mergeSort as MS
 import algoritmi.countingSort as CS
 import algoritmi.quicksort3Way as QS3
 import algoritmi.quicksort as QS
 import algoritmi.radixSort as RS
 import time
 import random
-
-
-print("mini test per il mergeSort")
-A = [1,2,3,5,8,7,6,5,4,5,6,7,8,9,0,9,6,5,4,3,7,6,5,4,3,2]
-MS.mergeSort(A)
-print(A)
-print("---")
 
 
 print("mini test per il countingSort")
