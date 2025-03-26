@@ -1,37 +1,44 @@
-# generatore pseudo casuale di array di dimensione arbitraria n e con valori numerici presenti nel range [1...m]
-# todo
 import random
 import bisect
+from enum import Enum
 
-#input: len lunghezza array
-#       max massimo valore elementi
-#       disp: 0 per avere un array ordinato in ordine crescente
-#             1 per un array ordinato in ordine decrescente
-#             2 per un array con elementi disposti casualmente
+# Enumerazione dei tipi di array generabili
+class Disposition(Enum):
+    RANDOM = 0
+    SORTED = 1
+    SORTED_REV = 2
 
+# resituisce un array di lunghezza len e con valori compresi in [0:max]
+# l'array è ordinato in senso crescente
 def riempiOrdinato(len, max):
     elements = []
     for i in range(len):
         bisect.insort(elements, random.randint(0, max))
-
     return elements
 
+# resituisce un array di lunghezza len e con valori compresi in [0:max]
+# l'array ha gli elementi disposti in maniera casuale
 def riempiCasualmente(len, max):
     elements = [0] * len
     for i in range(len):
         elements[i] = random.randint(0, max)
-
     return elements
 
 def generaArray(len, max, disp):
+    """
+    input: len lunghezza array
+           max massimo valore elementi
+           disp: 0 per avere un array ordinato in ordine crescente
+                 1 per un array ordinato in ordine decrescente
+                 2 per un array con elementi disposti casualmente
+    """
     assert(len > 0)
-    assert(disp == 0 or disp == 1 or disp == 2) 
+    assert(isinstance(disp, Disposition))
 
-    if disp == 0:
+    if disp == Disposition.SORTED:
         return riempiOrdinato(len, max)
-    elif disp == 1:
+    if disp == Disposition.SORTED_REV:
         arr = riempiOrdinato(len, max)
         arr.reverse()
         return arr
-    else:
-        return riempiCasualmente(len, max)   
+    return riempiCasualmente(len, max)   
