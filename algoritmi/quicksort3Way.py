@@ -32,22 +32,24 @@ def quickSort3WayRec(vec: List[int], p: int, q: int) -> None:
 
 def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
     """
-    Partiziona l'array A[p...q] in tre parti: minori, uguali e maggiori del pivot.
+    Partiziona l'array A[p...q - 1] in tre parti: minori, uguali e maggiori del pivot.
+    #      p     k     l     q 
+    # ... |<|<|<|=|=|=|>|>|>| ...
     
-    Precondizione: 0 <= p < q <= len(A)
-    Postcondizione: A[p...q] è diviso in tre sezioni ordinate correttamente.
+    Args: 
+        0 <= p < q <= len(A)
+    Post: 
+        A[p...q - 1] viene diviso in tre sezioni ordinate correttamente.
     """
     if q - p < 1:
-        return (p, q)
+        return p, q
 
-    # ora la situazione è come segue
-    #      i     k     l     j 
-    # ... |<|<|<|=|=|=|>|>|>| ...
     pivot = A[q - 1]
     A[q-1], A[p] = A[p], A[q-1]
     k = p
     l = p
     for j in range(p + 1, q):
+        # TOGLIERE I COMMENTI SOLO PER FARE DEBUG
         # print(" ",end="")
         # for x in range(i):
         #     print("   ", end="")
@@ -77,4 +79,4 @@ def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
             assert(A[j] == pivot)
             A[l], A[j] = A[j], A[l]
             l += 1
-    return (k,l)
+    return k, l

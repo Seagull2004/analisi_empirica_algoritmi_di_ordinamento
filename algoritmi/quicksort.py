@@ -5,8 +5,10 @@ def quickSort(A: List[int]) -> None:
     """
     Ordina l'array A in ordine crescente usando Quick Sort.
     
-    Precondizione: A è una lista.
-    Postcondizione: A è ordinato in ordine non decrescente.
+    Args: 
+        A è una lista di interi.
+    Post: 
+        A è ordinato in ordine non decrescente.
     """
     if len(A) <= 1:
         return
@@ -16,8 +18,10 @@ def quickSortAux(A: List[int], p: int, q: int) -> None:
     """
     Funzione ausiliaria per Quick Sort.
     
-    Precondizione: 0 <= p <= q < len(A)
-    Postcondizione: A[p...q] è ordinato in ordine non decrescente.
+    Args: 
+        0 <= p <= q < len(A)
+    Post: 
+        A[p...q - 1] viene ordinato
     """
     if (p < q):
         r = partition(A, p, q)
@@ -28,8 +32,11 @@ def partition(A: List[int], p: int, q: int) -> int:
     """
     Partiziona l'array A[p...q] intorno a un pivot A[q].
     
-    Precondizione: 0 <= p <= q < len(A)
-    Postcondizione: Tutti gli elementi a sinistra del pivot sono minori o uguali a esso, mentre tutti gli elementi a destra sono maggiori.
+    Args:
+        0 <= p <= q < len(A)
+    Post: 
+        - Tutti gli elementi a sinistra del pivot sono minori o uguali a esso
+        - Tutti gli elementi a destra sono maggiori
     """
     i = p - 1
     x = A[q]

@@ -1,12 +1,22 @@
 from typing import List
 
 def radixSort(A: List[int]) -> None:
+    """
+    Args:
+        A: List[int] una lista di interi che possiede solo numeri con lo stesso numero di cifre
+    Post:
+        A viene modificato in modo da essere ordinato
+    """
+    # caso base
     if len(A) <= 1:
         return
+    # ipotesi sulle cifre che hanno gli elementi dell'array A
     cifreElementi = len(str(A[0]))
-    # frammentazione degli delle cifre in una matrice da usare nel radixSort
+    # frammentazione delle cifre in una matrice da usare nel radixSort
     matrix = [ [ int(str(A[i])[j]) for j in range(cifreElementi) ] for i in range(len(A)) ]
+    # ordinamento
     matrix = radixSortAux(matrix, cifreElementi, 10)
+    # scrittura risultato nella lista fornita in input
     for i in range(len(matrix)):
         n = ""
         for j in range(len(matrix[i])):
@@ -26,8 +36,20 @@ def radixSortAux(A: List[List[int]], digits: int, B: int) -> List[List[int]]:
         A = countingSort(A, k, d) 
     return A
 
-# cifreDaConsiderare: la cifra (unità, decine, centinaia, ...) che considereremo nell'effettuare l'ordinamento
 def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
+    """
+    Una versione del counting sort adattada per l'utilizzo del radix sort, basa l'ordinamento dei vettori della matrice su una cifra del numero (cifraDaConsiderare)
+
+    Args:
+        cifreDaConsiderare: la cifra (unità, decine, centinaia, ...) che considereremo nell'effettuare l'ordinamento
+        0 = unità
+        1 = decine
+        2 = centinaia
+        ...
+    Post:
+        - la matrice fornita in input non viene modificata
+        - viene restituita una matrice risultato
+    """
     # inizializzo array contatore
     C = [0] * (k + 1)
     # inizializzo array risultato
