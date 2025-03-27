@@ -10,15 +10,15 @@ class Disposition(Enum):
 
 # resituisce un array di lunghezza len e con valori compresi in [0:max]
 # l'array è ordinato in senso crescente
-def riempiOrdinato(len, max):
+def riempiOrdinato(len: int, max: int):
     elements = []
-    for i in range(len):
+    for _ in range(len):
         bisect.insort(elements, random.randint(0, max))
     return elements
 
 # resituisce un array di lunghezza len e con valori compresi in [0:max]
 # l'array ha gli elementi disposti in maniera casuale
-def riempiCasualmente(len, max):
+def riempiCasualmente(len: int, max: int):
     elements = [0] * len
     for i in range(len):
         elements[i] = random.randint(0, max)

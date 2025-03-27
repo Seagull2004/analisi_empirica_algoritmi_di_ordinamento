@@ -1,6 +1,6 @@
-import math
+from typing import List
 
-def radixSort(A):
+def radixSort(A: List[int]) -> None:
     if len(A) <= 1:
         return
     cifreElementi = len(str(A[0]))
@@ -14,17 +14,20 @@ def radixSort(A):
         A[i] = int(n)
     
 
-# A : matrice da ordinare (ogni riga è un numero di digits cifre)
-# digits : il numero di cifre che ha ogni numero (i.e. larghezza matrice)
-# B : base numerica
-def radixSortAux(A, digits, B):
+def radixSortAux(A: List[List[int]], digits: int, B: int) -> List[List[int]]:
+    """
+    Args:
+        A : matrice da ordinare (ogni riga è un numero di digits cifre)
+        digits : il numero di cifre che ha ogni numero (i.e. larghezza matrice)
+        B : base numerica
+    """
     k = B - 1
     for d in range(digits - 1, -1, -1):
         A = countingSort(A, k, d) 
     return A
 
 # cifreDaConsiderare: la cifra (unità, decine, centinaia, ...) che considereremo nell'effettuare l'ordinamento
-def countingSort(A, k, cifraDaConsiderare):
+def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
     # inizializzo array contatore
     C = [0] * (k + 1)
     # inizializzo array risultato
@@ -40,3 +43,4 @@ def countingSort(A, k, cifraDaConsiderare):
         B[C[A[i][cifraDaConsiderare]] - 1] = A[i] # è necessario il -1 per trovare il corrento indirizzo in B, siccome gli indici partono da 0 e in B ci sono esattamente len(A) elementi, se in B ci fossero stato len(A) + 1 elementi il -1 sarebbe potuto essere tolto
         C[A[i][cifraDaConsiderare]] -= 1
     return B
+

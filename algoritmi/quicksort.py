@@ -1,4 +1,7 @@
-def quickSort(A):
+from typing import List
+
+
+def quickSort(A: List[int]) -> None:
     """
     Ordina l'array A in ordine crescente usando Quick Sort.
     
@@ -9,7 +12,7 @@ def quickSort(A):
         return
     quickSortAux(A, 0, len(A) - 1)
 
-def quickSortAux(A, p, q):
+def quickSortAux(A: List[int], p: int, q: int) -> None:
     """
     Funzione ausiliaria per Quick Sort.
     
@@ -21,7 +24,7 @@ def quickSortAux(A, p, q):
         quickSortAux(A, p, r - 1)
         quickSortAux(A, r + 1, q)
 
-def partition(A, p, q):
+def partition(A: List[int], p: int, q: int) -> int:
     """
     Partiziona l'array A[p...q] intorno a un pivot A[q].
     

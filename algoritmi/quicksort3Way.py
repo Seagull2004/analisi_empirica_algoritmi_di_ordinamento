@@ -1,22 +1,28 @@
-from typing import List
+from typing import List, Tuple
 
-def quickSort3Way(vec: List):
+
+# ciao mondo
+def quickSort3Way(vec: List[int]) -> None:
     """
     Ordina l'array vec in ordine crescente usando il Quick Sort a 3 vie.
     
-    Precondizione: vec è una lista.
-    Postcondizione: vec è ordinato in ordine non decrescente.
+    Args:
+        vec: List[int] è una lista.
+    Post: 
+        vec viene ordinato in ordine non decrescente.
     """
     if len(vec) < 2:
         return
     quickSort3WayRec(vec, 0, len(vec))
 
-def quickSort3WayRec(vec: List, p: int, q: int): 
+def quickSort3WayRec(vec: List[int], p: int, q: int) -> None: 
     """
     Funzione ricorsiva per il Quick Sort a 3 vie.
     
-    Precondizione: 0 <= p <= q <= len(vec)
-    Postcondizione: vec[p...q-1] è ordinato in ordine non decrescente.
+    Args: 
+        0 <= p <= q <= len(vec)
+    Post: 
+        vec[p...q - 1] viene ordinato in ordine non decrescente.
     """
     if q - p < 2:
         return
@@ -24,7 +30,7 @@ def quickSort3WayRec(vec: List, p: int, q: int):
     quickSort3WayRec(vec, p, k)
     quickSort3WayRec(vec, l, q)
 
-def partition3way(A: List, p: int, q: int):
+def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
     """
     Partiziona l'array A[p...q] in tre parti: minori, uguali e maggiori del pivot.
     
@@ -33,6 +39,7 @@ def partition3way(A: List, p: int, q: int):
     """
     if q - p < 1:
         return (p, q)
+
     # ora la situazione è come segue
     #      i     k     l     j 
     # ... |<|<|<|=|=|=|>|>|>| ...
