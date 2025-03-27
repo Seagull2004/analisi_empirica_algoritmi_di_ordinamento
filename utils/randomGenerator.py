@@ -24,7 +24,7 @@ def riempiCasualmente(len, max):
         elements[i] = random.randint(0, max)
     return elements
 
-def generaArray(len, max, disp):
+def generaArray(len: int, max: int, disp: Disposition):
     """
     input: len lunghezza array
            max massimo valore elementi
