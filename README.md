@@ -30,12 +30,10 @@ I valori dell'ascissa devono seguire una serie geometrica[^1], nell'intervallo d
 
 #### Come trovare le costanti
 
+##### se $m$ è fisso e $n$ varia
+
 ```
 n0   : 100
-n1   : 1000
-n2   : 10000
-n3   : 100000
-n4   : 1000000
 ...
 n99  : 100000
 ```
@@ -64,13 +62,49 @@ import math
 A = 100
 B = 1000 ** (1 / 99)
 for i in range(100):
-    print(math.floor(A * B ** i))
+    m = 10000
+    n = math.floor(A * B ** i)
+    print(n)
+
 ```
 
 
+##### se $m$ varia e $n$ è fisso
 
+```
+m0   : 10
+...
+m99  : 1000000
+```
 
+troviamo $B$
 
+$$
+\begin{cases}
+1'000'000=A\cdot B^{99} \\
+10 = A\cdot B^{0}
+\end{cases}
+$$
+troviamo $A=10$
+$$
+1'000'000=10\cdot B^{99}
+$$
+$$
+B^{99}=100'000
+$$
+$$
+B=\sqrt[99]{  100'000}
+$$
+
+```python
+import math
+A = 10
+B = 100000 ** (1 / 99)
+for i in range(100):
+    n = 10000
+    m = math.floor(A * B ** i)
+    print(m)
+```
 
 ### Cosa cronometrare?
 
