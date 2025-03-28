@@ -62,7 +62,7 @@ import math
 A = 100
 B = 1000 ** (1 / 99)
 for i in range(100):
-    m = 10000
+    m = 100000
     n = math.floor(A * B ** i)
     print(n)
 
