@@ -1,7 +1,5 @@
 from typing import List, Tuple
 
-
-# ciao mondo
 def quickSort3Way(vec: List[int]) -> None:
     """
     Ordina l'array vec in ordine crescente usando il Quick Sort a 3 vie.

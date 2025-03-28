@@ -1,6 +1,14 @@
 from typing import List
 
-def countingSort(A: List, B: List, k: int):
+def countingSort(A: List[int], B: List[int], k: int):
+    """
+    Args:
+        A è la lista da ordinare
+        B è il vettore che dovrà contenere il risultato
+        k è il valore massimo che posso trovare nella lista A
+    Post:
+        B viene modificato in modo che sia ordinato in senso crescente
+    """
     C = [0 for _ in range(k + 1)] # avrà lunghezza k+1 C[0..k]
     # fase di conto occorrenze
     for i in range(0, len(A)):
