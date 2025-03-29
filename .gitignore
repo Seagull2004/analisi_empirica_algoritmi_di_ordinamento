@@ -3,8 +3,8 @@ __pycache__
 **/__pycache__
 
 # escludiamo i file di compilazione di latex 
-docs/*.aux
-docs/*.fdb_latexmk
-docs/*.fls
-docs/*.log
-docs/*.toc
+**/*.aux
+**/*.fdb_latexmk
+**/*.fls
+**/*.log
+**/*.toc
