@@ -1,3 +1,10 @@
 # escludiamo il caricamento della cartella pycache sulla repository
 __pycache__
 **/__pycache__
+
+# escludiamo i file di compilazione di latex 
+docs/*.aux
+docs/*.fdb_latexmk
+docs/*.fls
+docs/*.log
+docs/*.toc
