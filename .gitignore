@@ -8,3 +8,6 @@ __pycache__
 **/*.fls
 **/*.log
 **/*.toc
+
+# escludiamo i file che genera macos
+**/.DS_Store
