@@ -25,7 +25,7 @@ I valori dell'ascissa devono seguire una serie geometrica[^1], nell'intervallo d
 > Si può fare ausilio di un `{python}for i in range(0,100)` e definire, la lunghezza $n$ dell'array come funzione esponenziale di $i$.
 
 > [!note] 
-> $$ n_{i} = \lfloor A\cdot B^{i} \rfloor $$
+> $n_{i} = \lfloor A\cdot B^{i} \rfloor$
 > dove $A,B$ sono costanti in virgola mobile calcolate opportunamente in modo da ottenere $n_{1}=100$, $n_{99}=100k$
 
 #### Come trovare le costanti
