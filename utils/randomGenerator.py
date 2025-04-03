@@ -26,10 +26,11 @@ def riempiCasualmente(len: int, min: int, max: int):
 
 def generaArray(len: int, max: int, min: int=0, disp: Disposition=Disposition.RANDOM):
     """
-    input: len lunghezza array
-           max massimo valore elementi
-           min minimo valore elementi (opzionle, di default a 0)
-           disp: (opzionale, di default a RANDOM)
+    Args: 
+        len: lunghezza array
+        max: massimo valore elementi
+        min: minimo valore elementi
+        disp: scegli come disporre gli elementi dell'array
             - Disposition.SORTED per avere un array ordinato in ordine crescente
             - Disposition.SORTED_REV per un array ordinato in ordine decrescente
             - Disposition.RANDOM per un array con elementi disposti casualmente
