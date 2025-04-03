@@ -21,10 +21,10 @@ Ogni grafico deve essere composto da almeno 100 campioni, dove ogni campione rap
 
 I valori dell'ascissa devono seguire una serie geometrica[^1], nell'intervallo dei valori indicati prima.
 
-> [!idea] 
+> [!tip] 
 > Si può fare ausilio di un `{python}for i in range(0,100)` e definire, la lunghezza $n$ dell'array come funzione esponenziale di $i$.
 
-> [!example] 
+> [!note] 
 > $$ n_{i} = \lfloor A\cdot B^{i} \rfloor $$
 > dove $A,B$ sono costanti in virgola mobile calcolate opportunamente in modo da ottenere $n_{1}=100$, $n_{99}=100k$
 
