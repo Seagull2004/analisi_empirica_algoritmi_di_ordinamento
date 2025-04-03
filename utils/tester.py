@@ -19,7 +19,7 @@ def test_quickSort():
     for _ in range(100):
         n = 10000
         m = 10000
-        vec = generator.generaArray(n, 0, m, generator.Disposition.RANDOM)
+        vec = generator.generaArray(n, max=m)
         qs.quickSort(vec)
         if not isSorted(vec):
             print("Test su quick sort fallito dovrebbe essere ordinato")
@@ -31,7 +31,7 @@ def test_quickSort3Way():
     for _ in range(100):
         n = 10000
         m = 10000
-        vec = generator.generaArray(n, 0, m, generator.Disposition.RANDOM)
+        vec = generator.generaArray(n, m)
         qs3.quickSort3Way(vec)
         if not isSorted(vec):
             print(vec)
@@ -43,7 +43,7 @@ def test_countingSort():
     for _ in range(100):
         n = 10000
         m = 10000
-        vec = generator.generaArray(n, 0, m, generator.Disposition.RANDOM)
+        vec = generator.generaArray(n, max=m)
         B = [0 for _ in range(len(vec))]
         cs.countingSort(vec, B, m)
         if not isSorted(B):
@@ -57,7 +57,7 @@ def test_radixSort():
         n = 10000
         min = 100
         m = 999
-        vec = generator.generaArray(n, min, m, generator.Disposition.RANDOM)
+        vec = generator.generaArray(n, min=min, max=m)
         rs.radixSort(vec)
         if not isSorted(vec):
             print(vec)

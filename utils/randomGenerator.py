@@ -24,14 +24,15 @@ def riempiCasualmente(len: int, min: int, max: int):
         elements[i] = random.randint(min, max)
     return elements
 
-def generaArray(len: int, min: int, max: int, disp: Disposition):
+def generaArray(len: int, max: int, min: int=0, disp: Disposition=Disposition.RANDOM):
     """
     input: len lunghezza array
-           min minimo valore elementi
            max massimo valore elementi
-           disp: 0 per avere un array ordinato in ordine crescente
-                 1 per un array ordinato in ordine decrescente
-                 2 per un array con elementi disposti casualmente
+           min minimo valore elementi (opzionle, di default a 0)
+           disp: (opzionale, di default a RANDOM)
+            - Disposition.SORTED per avere un array ordinato in ordine crescente
+            - Disposition.SORTED_REV per un array ordinato in ordine decrescente
+            - Disposition.RANDOM per un array con elementi disposti casualmente
     """
     assert(len > 0)
     assert(isinstance(disp, Disposition))
