@@ -5,8 +5,8 @@ from enum import Enum
 # Enumerazione dei tipi di array generabili
 class Disposition(Enum):
     RANDOM = 0
-    SORTED = 1
-    SORTED_REV = 2
+    ASCENDANT = 1
+    DESCENDANT = 2
 
 # resituisce un array di lunghezza len e con valori compresi in [0:max]
 # l'array è ordinato in senso crescente
@@ -38,9 +38,9 @@ def generaArray(len: int, max: int, min: int=0, disp: Disposition=Disposition.RA
     assert(len > 0)
     assert(isinstance(disp, Disposition))
 
-    if disp == Disposition.SORTED:
+    if disp == Disposition.ASCENDANT:
         return riempiOrdinato(len, min, max)
-    if disp == Disposition.SORTED_REV:
+    if disp == Disposition.DESCENDANT:
         arr = riempiOrdinato(len, min, max)
         arr.reverse()
         return arr
