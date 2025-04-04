@@ -31,8 +31,8 @@ def generaArray(len: int, max: int, min: int=0, disp: Disposition=Disposition.RA
         max: massimo valore elementi
         min: minimo valore elementi
         disp: scegli come disporre gli elementi dell'array
-            - Disposition.SORTED per avere un array ordinato in ordine crescente
-            - Disposition.SORTED_REV per un array ordinato in ordine decrescente
+            - Disposition.ASCENDANT per avere un array ordinato in ordine crescente
+            - Disposition.DESCENDANT per un array ordinato in ordine decrescente
             - Disposition.RANDOM per un array con elementi disposti casualmente
     """
     assert(len > 0)
