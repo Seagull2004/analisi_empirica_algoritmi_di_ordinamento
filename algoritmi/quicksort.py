@@ -45,3 +45,10 @@ def partition(A: List[int], p: int, q: int) -> int:
             i += 1
             A[i], A[j] = A[j], A[i]
     return i
+
+def auxQuickSort(A, k):
+    """
+        versione ausiliaria di quickSort per avere solo input l'array da ordinare e il max
+    """
+    quickSort(A)
+

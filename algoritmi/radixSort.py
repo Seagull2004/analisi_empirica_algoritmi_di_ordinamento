@@ -66,3 +66,10 @@ def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
         C[A[i][cifraDaConsiderare]] -= 1
     return B
 
+
+def auxRadixSort(A, k):
+    """
+        versione ausiliaria di radixSort per avere solo input l'array da ordinare e il max
+    """
+    radixSort(A)
+
