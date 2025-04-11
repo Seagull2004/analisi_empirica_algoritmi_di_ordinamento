@@ -15,6 +15,7 @@ algorithms = [
     {"name": "Counting Sort", "algo": CS.uniformedCountingSort, "color": "black"},
     {"name": "Quick Sort", "algo": QS.uniformedQuickSort, "color": "black"},
     {"name": "Quick Sort 3-Way", "algo": QS3.uniformedQuickSort3Way, "color": "black"},
+    # {"name": "Radix Sort", "algo": RS.uniformedRadixSort, "color": "black"}, # da errore siccome il radix ha bisogno di elementi con lo stesso numero di cifre
 ]
 
 # Creazione di sottotrame
@@ -25,9 +26,9 @@ for idx, algo_config in enumerate(algorithms, start=1):
     ordinate = [ 0.0 ] * range
     count = 0
 
-    for i in generatorRange.generateGeometricRange(100, 100000, range):
-        ascisse[count] = i
-        ordinate[count] = measurement.measureMeanTimeAlgo(algo_config["algo"], i, i)
+    for n in generatorRange.generateGeometricRange(100, 100000, range):
+        ascisse[count] = n
+        ordinate[count] = measurement.measureMeanTimeAlgo(algo_config["algo"], n, m=100000) # se n varia il range m è lockato a 100k
         count += 1
 
     # Creazione della sottotrama con una griglia 2x2
