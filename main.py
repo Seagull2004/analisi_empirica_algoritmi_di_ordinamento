@@ -22,7 +22,7 @@ plt.figure(figsize=(12, 10))  # Aumenta la dimensione della figura per adattarsi
 
 for idx, algo_config in enumerate(algorithms, start=1):
     ascisse = [0] * range
-    ordinate = [0] * range
+    ordinate = [ 0.0 ] * range
     count = 0
 
     for i in generatorRange.generateGeometricRange(100, 100000, range):
