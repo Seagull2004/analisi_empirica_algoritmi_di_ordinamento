@@ -1,21 +1,44 @@
 from typing import List
 
-def radixSort(A: List[int]) -> None:
+def estraiCifra(cifraDaEstrarre: int, n: int) -> int: 
+    """
+        estrae una certa cifra da un numero n
+        Args:
+            cifraDaEstrarre: 0 unità, 1 decide, 2 centinaia ecc
+        Post: 
+            - restituisce la cifra richiesta del numero
+            - restituisce 0 se la cifra non è esplictamente presente nel numero
+
+        e.g.
+            - estraiCifra(2, 1234) -> 2
+            - estraiCifra(0, 1234) -> 4
+            - estraiCifra(9, 1234) -> 0
+            - estraiCifra(4, 1234) -> 0
+    """
+    cifreNumero = len(str(n))
+    if cifreNumero < cifraDaEstrarre + 1:
+        return 0
+    return int(str(n)[cifreNumero - 1 - cifraDaEstrarre])
+
+def radixSort(A: List[int], digits: int = -1) -> None:
     """
     Args:
         A: List[int] una lista di interi che possiede solo numeri con lo stesso numero di cifre
+        digits: il numero di cifre che hanno gli elementi (in particolare il valore massimo) se non viene passato come parametro o viene posto a -1 l'algoritmo troverà il massimo per poi stabilire il numero di digits da usare nell'algoritmo
     Post:
         A viene modificato in modo da essere ordinato
     """
     # caso base
     if len(A) <= 1:
         return
-    # ipotesi sulle cifre che hanno gli elementi dell'array A
-    cifreElementi = len(str(A[0]))
+    # se non sappiamo il numero di cifre che ha il numero massimo lo calcoliamo Θ(n)!!
+    if digits == -1:
+        digits = len(str(max(A)))
+
     # frammentazione delle cifre in una matrice da usare nel radixSort
-    matrix = [ [ int(str(A[i])[j]) for j in range(cifreElementi) ] for i in range(len(A)) ]
+    matrix = [ [ estraiCifra(j, A[i]) for j in range(digits - 1, -1, -1) ] for i in range(len(A)) ]
     # ordinamento
-    matrix = radixSortAux(matrix, cifreElementi, 10)
+    matrix = radixSortAux(matrix, digits, 10)
     # scrittura risultato nella lista fornita in input
     for i in range(len(matrix)):
         n = ""

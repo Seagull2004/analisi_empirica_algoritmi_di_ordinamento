@@ -20,7 +20,7 @@ def test_quickSort():
         n = 10000
         m = 10000
         vec = generator.generaArray(n, max=m)
-        qs.quickSort(vec)
+        qs.quicksort(vec, 0, len(vec) - 1)
         if not isSorted(vec):
             print("Test su quick sort fallito dovrebbe essere ordinato")
             return

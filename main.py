@@ -15,7 +15,7 @@ algorithms = [
     {"name": "Counting Sort", "algo": CS.uniformedCountingSort, "color": "black"},
     {"name": "Quick Sort", "algo": QS.uniformedQuickSort, "color": "black"},
     {"name": "Quick Sort 3-Way", "algo": QS3.uniformedQuickSort3Way, "color": "black"},
-    # {"name": "Radix Sort", "algo": RS.uniformedRadixSort, "color": "black"}, # da errore siccome il radix ha bisogno di elementi con lo stesso numero di cifre
+    {"name": "Radix Sort", "algo": RS.uniformedRadixSort, "color": "black"}, # da errore siccome il radix ha bisogno di elementi con lo stesso numero di cifre
 ]
 
 # Creazione di sottotrame
