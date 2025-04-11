@@ -12,3 +12,4 @@ __pycache__
 
 # escludiamo i file che genera macos
 **/.DS_Store
+
