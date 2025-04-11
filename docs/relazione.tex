@@ -1,8 +1,20 @@
 \documentclass[a4paper, 12pt, oneside]{book}
+\usepackage[italian]{babel} % Lingua italiana
+\usepackage{authblk} % Per gli autori
+
+\renewcommand\Authands{ e }
+
 \title{Analisi empirica degli algoritmi di ordinamento}
 
-\author{Graziano Francesco, Ongaro Michele, Petri Riccardo, Ungaro Marco}
+\author[ ]{Graziano Francesco \thanks{Email: graziano.francesco@spes.uniud.it, Matricola: 166680}}
+\author[ ]{Ongaro Michele \thanks{Email: ongaro.michele@spes.uniud.it, Matricola: 168049}}
+\author[ ]{Petri Riccardo \thanks{Email: petri.riccardo@spes.uniud.it, Matricola: 167623}}
+\author[ ]{Ungaro Marco \thanks{Email: ungaro.marco@spes.uniud.it, Matricola: 168934}}
+
+\affil[ ]{Università degli Studi di Udine, Dipartimento di Matematica e Informatica}
+
 \date{A.A. 2024-2025}
+%\date{}
 
 \usepackage{amsmath} % Per equazioni avanzate
 \usepackage{amssymb} % Simboli matematici
@@ -16,15 +28,36 @@
 
 \begin{document}
 
+\renewcommand{\contentsname}{Contenuti}
+\renewcommand{\chaptername}{Capitolo}
+
 \maketitle % copertina del documento
 \tableofcontents % sommario di tutti i titoli
 
-
 \chapter{Introduzione}\label{chap:Introduzione} % (fold)
+
+Il progetto richiede l'implementazione di quattro algoritmi di ordinamento per array interi di dimensioni variabili.
+Gli algoritmi che andremo ad analizzare sono il Counting Sort, il Quick Sort, il Quick Sort 3 way e il Radix Sort (algoritmo a scelta).
+Oltre alla corretta implementazione viene richiesto di effettuare un analisi empirica dei tempi medi di esecuzione degli algorimti al variare della dimensione dell'array e del range dei valori interi.
+Per stimare i tempi di esecuzione di questi algoritmi garanantendo un errore relativo massimo pari a 0.001 adotteremo le seguenti metodologie:
+\begin{itemize}
+    \item Utilizzeremo un clock di sistema monotono per garantire precisione nelle misurazioni (ad esempio, \texttt{perf\_counter()} del modulo \(time\) in Python);
+    \item Andremo a generare almeno 100 campioni per ciascun grafico, con i valori dei parametri (dimensione dell’array \(n\) e intervallo dei valori \(m\)) distribuiti secondo una progressione geometrica;
+    \item Effettueremo più esecuzioni per ogni campione, per stimare in modo affidabile il tempo medio di esecuzione e, eventualmente, il relativo errore.
+\end{itemize}
+Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà interessante confrontare i grafici ottenuti per analizzare il comportamento degli algoritmi in diverse situazioni, come il caso peggiore, quello migliore o in quello medio.
+
+Da tutto questo potremmo ottenere una verifica empirica dell'andamento asintotico dei tempi di esecuzione di ogni algoritmo.
 
 % chapter Introduzione (end)
 
 \chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
+
+Spiegazione dell'algoritmo di ordinamento
+
+Analisi della complessità
+
+Grafico dei tempi di esecuzione
 
 % chapter Counting Sort (end)
 
