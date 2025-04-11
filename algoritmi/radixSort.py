@@ -67,7 +67,7 @@ def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
     return B
 
 
-def auxRadixSort(A, k):
+def uniformedRadixSort(A, k):
     """
         versione ausiliaria di radixSort per avere solo input l'array da ordinare e il max
     """

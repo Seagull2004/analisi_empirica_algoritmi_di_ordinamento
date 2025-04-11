@@ -79,7 +79,7 @@ def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
             l += 1
     return k, l
 
-def auxQuickSort3Way(A, k):
+def uniformedQuickSort3Way(A, k):
     """
         versione ausiliaria di quickSort3Way per avere solo input l'array da ordinare e il max
     """

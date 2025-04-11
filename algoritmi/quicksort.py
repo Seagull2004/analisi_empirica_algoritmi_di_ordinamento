@@ -1,20 +1,9 @@
 from typing import List
 
-
-def quickSort(A: List[int]) -> None:
-    """
-    Ordina l'array A in ordine crescente usando Quick Sort.
     
-    Args: 
-        A è una lista di interi.
-    Post: 
-        A è ordinato in ordine non decrescente.
-    """
-    if len(A) <= 1:
-        return
-    quickSortAux(A, 0, len(A) - 1)
+    
 
-def quickSortAux(A: List[int], p: int, q: int) -> None:
+def quicksort(A: List[int], p: int, q: int) -> None:
     """
     Funzione ausiliaria per Quick Sort.
     
@@ -25,8 +14,8 @@ def quickSortAux(A: List[int], p: int, q: int) -> None:
     """
     if (p < q):
         r = partition(A, p, q)
-        quickSortAux(A, p, r - 1)
-        quickSortAux(A, r + 1, q)
+        quicksort(A, p, r - 1)
+        quicksort(A, r + 1, q)
 
 def partition(A: List[int], p: int, q: int) -> int:
     """
@@ -46,9 +35,18 @@ def partition(A: List[int], p: int, q: int) -> int:
             A[i], A[j] = A[j], A[i]
     return i
 
-def auxQuickSort(A, k):
+def uniformedQuickSort(A, k):
     """
         versione ausiliaria di quickSort per avere solo input l'array da ordinare e il max
+        Ordina l'array A in ordine crescente usando Quick Sort.
+    
+        Args: 
+            A è una lista di interi.
+        Post: 
+            A è ordinato in ordine non decrescente.
     """
-    quickSort(A)
+
+    if len(A) <= 1:
+        return
+    quicksort(A, 0, len(A) - 1)
 

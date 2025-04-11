@@ -6,8 +6,13 @@ import utils.randomGenerator as generator
 from utils.randomGenerator import Disposition
 import time
 import random
+import math
 
-print("work in progress...")
+
+
+
+
+
 
 #for lunghezza in range(1000, 10000000, 10000):
 #    A = [random.randrange(6) for _ in range(lunghezza)]
