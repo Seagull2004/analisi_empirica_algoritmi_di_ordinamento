@@ -23,7 +23,7 @@ def countingSort(A: List[int], B: List[int], k: int):
         C[A[i]] -= 1
 
 
-def auxCountingSort(A: List[int], k: int):
+def uniformedCountingSort(A: List[int], k: int):
     """
         versione ausiliaria di countingSort per avere solo input l'array da ordinare e il max
     """
