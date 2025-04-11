@@ -1,6 +1,5 @@
 import time
-from randomGenerator import Disposition
-import randomGenerator as generator
+from utils import randomGenerator as generator
 
 #Questa funzione fornisce la risoluzione del clock di sistema
 #importante per trovare il tempo minimo misurabile
@@ -20,7 +19,7 @@ tmin = getResolution() * 1001
 #Questa funzione ha il compito di misurare il tempo medio ,su un certo numero di esecuzioni, di un dato algoritmo
 #su un array di lunghezza n e con massimo valore m. Va posta nel ciclo che che scandisce il range di input desiderato
 #Per il momento direi che possiamo lasciare dentro il tempo di generazione dell'array.
-def measureMeanTimeAlgo(algo, n, m, k = 5, disposition = Disposition.RANDOM):
+def measureMeanTimeAlgo(algo, n, m, k = 5, disposition = generator.Disposition.RANDOM):
     """
         Misura il tempo medio di esecuzione dell'algoritmo alg su un array lungo n
         con massimo valore m
