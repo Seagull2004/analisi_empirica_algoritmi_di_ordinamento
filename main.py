@@ -38,17 +38,17 @@ for idx, algo_config in enumerate(algorithms, start=1):
     plt.xlabel('Numero di elementi')
     plt.ylabel('Tempo di esecuzione (s)')
 
-    # Calcolo della retta di regressione in scala logaritmica
+    # Calcolo della curva di adattamento in scala logaritmica
     log_x = np.log10(ascisse)
     log_y = np.log10(ordinate)
-    coeff = np.polyfit(log_x, log_y, 1)  # Regressione lineare
-    regression_line = np.poly1d(coeff)
+    coeff = np.polyfit(log_x, log_y, 3)  # Fitting polinomiale di grado 3
+    fitted_curve = np.poly1d(coeff)
 
-    # Generazione dei valori della retta di regressione
-    regression_y = 10**regression_line(log_x)
+    # Generazione dei valori della curva di adattamento
+    fitted_y = 10**fitted_curve(log_x)
 
-    # Aggiunta della retta di regressione al grafico
-    plt.loglog(ascisse, regression_y, linestyle='-', color='red', label='Retta di regressione')
+    # Aggiunta della curva di adattamento al grafico
+    plt.loglog(ascisse, fitted_y, linestyle='-', color='red', label='Curva di adattamento')
     plt.legend()
 
 plt.tight_layout()
