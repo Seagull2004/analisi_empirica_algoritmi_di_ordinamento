@@ -8,13 +8,13 @@ import matplotlib.pyplot as plt
 import numpy as np
 
 # Alcuni parametri di configurazione
-NUM_CAMPIONI = 10
+NUM_CAMPIONI = 100
 N_MIN        = 100
 N_MAX        = 100000
+N_LOCK       = 10000
+M_MIN        = 10
+M_MAX        = 1000000
 M_LOCK       = 100000
-M_MIN        = 100
-M_MAX        = 100000
-N_LOCK       = 100000
 
 # Algoritmi e relative configurazioni
 algorithms = [
