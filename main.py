@@ -7,8 +7,14 @@ import utils.geometricRangeGenerator as generatorRange
 import matplotlib.pyplot as plt
 import numpy as np
 
-# Numero di misurazioni
-range = 100
+# Alcuni parametri di configurazione
+NUM_CAMPIONI = 10
+N_MIN        = 100
+N_MAX        = 100000
+M_LOCK       = 100000
+M_MIN        = 100
+M_MAX        = 100000
+N_LOCK       = 100000
 
 # Algoritmi e relative configurazioni
 algorithms = [
@@ -21,14 +27,16 @@ algorithms = [
 # Creazione di sottotrame
 plt.figure(figsize=(12, 10))  # Aumenta la dimensione della figura per adattarsi a più sottotrame
 
+# ciclo sugli algoritmi che voglio cronometrare (countingSort, quicksort, ...)
 for idx, algo_config in enumerate(algorithms, start=1):
-    ascisse = [0] * range
-    ordinate = [ 0.0 ] * range
-    count = 0
+    print("Inizio a misurare",algo_config["name"])
 
-    for n in generatorRange.generateGeometricRange(100, 100000, range):
+    ascisse = [ 0 ] * NUM_CAMPIONI
+    ordinate = [ 0.0 ] * NUM_CAMPIONI
+    count = 0
+    for n in generatorRange.generateGeometricRange(N_MIN, N_MAX, NUM_CAMPIONI):
         ascisse[count] = n
-        ordinate[count] = measurement.measureMeanTimeAlgo(algo_config["algo"], n, m=100000) # se n varia il range m è lockato a 100k
+        ordinate[count] = measurement.measureMeanTimeAlgo(algo_config["algo"], n, m = M_LOCK) 
         count += 1
 
     # Creazione della sottotrama con una griglia 2x2
@@ -48,7 +56,7 @@ for idx, algo_config in enumerate(algorithms, start=1):
     fitted_y = 10**fitted_curve(log_x)
 
     # Aggiunta della curva di adattamento al grafico
-    plt.loglog(ascisse, fitted_y, linestyle='-', color='red', label='Curva di adattamento')
+    plt.loglog(ascisse, fitted_y, linestyle='-', color='#ff000020', label='Curva di adattamento')
     plt.legend()
 
 plt.tight_layout()
