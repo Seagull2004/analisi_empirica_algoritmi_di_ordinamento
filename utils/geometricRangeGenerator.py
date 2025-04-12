@@ -1,23 +1,21 @@
 import math
 
-def generateGeometricRange(start, end, length) -> list:
+def generateGeometricRange(start: int, end: int, length: int = 100) -> list[int]:
     """
-    Genera un intervallo geometrico di numeri da start a end con una lunghezza specificata.
-    L'intervallo viene generato utilizzando una progressione geometrica.
-    Argomenti:
-        start (int): Il numero iniziale dell'intervallo.
-        end (int): Il numero finale dell'intervallo.
-        length (int): La lunghezza dell'intervallo.
-    Restituisce:
-        list: Una lista contenente l'intervallo geometrico di numeri.
-    """
+    Genera una successione geometrica contenente un numero di elementi pari a length
+    La successione viene generato utilizzando una progressione geometrica.
 
+    Args:
+        start: Il numero iniziale dell'intervallo.
+        end: Il numero finale dell'intervallo.
+        length: La lunghezza dell'intervallo.
+
+    Post:
+        - restituisce una lista contenente i valori della successione geometrica che parte sta "start" e finisce con "end"
+    """
     A = start
     B = (end / start) ** (1 / (length-1))
     progression = [0] * length
-
     for i in range(length):
         progression[i] = math.floor(A * B ** i)
-
     return progression
-
