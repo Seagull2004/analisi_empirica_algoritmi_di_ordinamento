@@ -1,0 +1,9 @@
+{
+    "NUM_CAMPIONI": 10 ,    /* Quanti campioni vengono misurati per singolo algoritmo di ordinamento */
+    "N_MIN":        100,    /* Se facciamo variare il numero di elementi (n) questo è il valore di partenza */
+    "N_MAX":        100000, /* Se facciamo variare il numero di elementi (n) questo è il valore di arrivo */
+    "M_LOCK":       100000, /* Se facciamo variare il numero di elementi (n) questo è il valore numerico massimo che gli elementi possono assumere */
+    "M_MIN":        10,     /* Se facciamo variare i valori numerici degli elementi (m) questo è il valore di partenza */
+    "M_MAX":        1000000,/* Se facciamo variare i valori numerici degli elementi (m) questo è il valore di arrivo */
+    "N_LOCK":       10000,  /* Se facciamo variare i valori numerici degli elementi (m) questo è il numero di elementi fisso che avranno i vari vettori */
+}

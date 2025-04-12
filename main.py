@@ -6,16 +6,18 @@ import utils.measurement as measurement
 import utils.geometricRangeGenerator as generatorRange
 import matplotlib.pyplot as plt
 import numpy as np
+import json5
 
 
 # Alcuni parametri di configurazione
-NUM_CAMPIONI = 100      # Quanti campioni vengono misurati per singolo algoritmo di ordinamento
-N_MIN        = 100      # Se facciamo variare il numero di elementi (n) questo è il valore di partenza
-N_MAX        = 100000   # Se facciamo variare il numero di elementi (n) questo è il valore di arrivo
-M_LOCK       = 100000   # Se facciamo variare il numero di elementi (n) questo è il valore numerico massimo che gli elementi possono assumere
-M_MIN        = 10       # Se facciamo variare i valori numerici degli elementi (m) questo è il valore di partenza
-M_MAX        = 1000000  # Se facciamo variare i valori numerici degli elementi (m) questo è il valore di arrivo
-N_LOCK       = 10000    # Se facciamo variare i valori numerici degli elementi (m) questo è il numero di elementi fisso che avranno i vari vettori
+configuration = json5.load(open("./config.json"))
+NUM_CAMPIONI = configuration["NUM_CAMPIONI"]
+N_MIN        = configuration["N_MIN"]
+N_MAX        = configuration["N_MAX"]
+M_LOCK       = configuration["M_LOCK"]
+M_MIN        = configuration["M_MIN"]
+M_MAX        = configuration["M_MAX"]
+N_LOCK       = configuration["N_LOCK"]
 
 
 # Algoritmi e relative configurazioni
