@@ -1,19 +1,18 @@
-from typing import List, Tuple
-
-def quickSort3Way(vec: List[int]) -> None:
+def quickSort3Way(vec: list[int]) -> None:
     """
     Ordina l'array vec in ordine crescente usando il Quick Sort a 3 vie.
     
     Args:
-        vec: List[int] è una lista.
+        vec: è la lista di interi che si vuole ordinare
     Post: 
-        vec viene ordinato in ordine non decrescente.
+        vec viene ordinato in ordine in ordine crescente
     """
     if len(vec) < 2:
         return
     quickSort3WayRec(vec, 0, len(vec))
 
-def quickSort3WayRec(vec: List[int], p: int, q: int) -> None: 
+
+def quickSort3WayRec(vec: list[int], p: int, q: int) -> None: 
     """
     Funzione ricorsiva per il Quick Sort a 3 vie.
     
@@ -28,7 +27,8 @@ def quickSort3WayRec(vec: List[int], p: int, q: int) -> None:
     quickSort3WayRec(vec, p, k)
     quickSort3WayRec(vec, l, q)
 
-def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
+
+def partition3way(A: list[int], p: int, q: int) -> tuple[int, int]:
     """
     Partiziona l'array A[p...q - 1] in tre parti: minori, uguali e maggiori del pivot.
     #      p     k     l     q 
@@ -37,11 +37,13 @@ def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
     Args: 
         0 <= p < q <= len(A)
     Post: 
-        A[p...q - 1] viene diviso in tre sezioni ordinate correttamente.
+        - A[p...q - 1] viene diviso in tre sezioni ordinate correttamente.
+        - vengono restituiti:
+          - indice di inizio partizione con elementi che hanno valore pari al pivot
+          - indice di inizio partizione con elementi che hanno valore maggiore al pivot
     """
     if q - p < 1:
         return p, q
-
     pivot = A[q - 1]
     A[q-1], A[p] = A[p], A[q-1]
     k = p
@@ -65,7 +67,6 @@ def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
         #     print("   ", end="")
         # print("l")
         # print(A)
-
         if A[j] < pivot:
             A[k], A[l] = A[l], A[k]
             A[j], A[k] = A[k], A[j]
@@ -79,9 +80,13 @@ def partition3way(A: List[int], p: int, q: int) -> Tuple[int, int]:
             l += 1
     return k, l
 
-def uniformedQuickSort3Way(A, k):
+
+def uniformedQuickSort3Way(A: list[int], k: int) -> None:
     """
-        versione ausiliaria di quickSort3Way per avere solo input l'array da ordinare e il max
+    Versione ausiliaria di quickSort3Way per avere solo input l'array da ordinare e il max
+
+    Post:
+        A viene ordinato in ordine crescente
     """
     quickSort3Way(A)
 

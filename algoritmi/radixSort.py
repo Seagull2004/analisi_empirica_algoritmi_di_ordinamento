@@ -1,30 +1,33 @@
-from typing import List
-
 def estraiCifra(cifraDaEstrarre: int, n: int) -> int: 
     """
-        estrae una certa cifra da un numero n
-        Args:
-            cifraDaEstrarre: 0 unità, 1 decide, 2 centinaia ecc
-        Post: 
-            - restituisce la cifra richiesta del numero
-            - restituisce 0 se la cifra non è esplictamente presente nel numero
+    Estrae una certa cifra (u, d, h, m ecc) da un numero n
 
-        e.g.
-            - estraiCifra(2, 1234) -> 2
-            - estraiCifra(0, 1234) -> 4
-            - estraiCifra(9, 1234) -> 0
-            - estraiCifra(4, 1234) -> 0
+    Args:
+        cifraDaEstrarre: 0 unità, 1 decide, 2 centinaia, ...
+    Post: 
+        - restituisce la cifra richiesta del numero
+        - restituisce 0 se la cifra non è esplictamente presente nel numero
+
+    e.g.
+        - estraiCifra(2, 1234) -> 2
+        - estraiCifra(0, 1234) -> 4
+        - estraiCifra(9, 1234) -> 0
+        - estraiCifra(4, 1234) -> 0
     """
     cifreNumero = len(str(n))
     if cifreNumero < cifraDaEstrarre + 1:
         return 0
     return int(str(n)[cifreNumero - 1 - cifraDaEstrarre])
 
-def radixSort(A: List[int], digits: int = -1) -> None:
+
+def radixSort(A: list[int], digits: int = -1) -> None:
     """
+    Ordinamento radix sort del vettore A
+
     Args:
-        A: List[int] una lista di interi che possiede solo numeri con lo stesso numero di cifre
+        A: una lista di interi che possiede solo numeri con lo stesso numero di cifre
         digits: il numero di cifre che hanno gli elementi (in particolare il valore massimo) se non viene passato come parametro o viene posto a -1 l'algoritmo troverà il massimo per poi stabilire il numero di digits da usare nell'algoritmo
+
     Post:
         A viene modificato in modo da essere ordinato
     """
@@ -34,7 +37,6 @@ def radixSort(A: List[int], digits: int = -1) -> None:
     # se non sappiamo il numero di cifre che ha il numero massimo lo calcoliamo Θ(n)!!
     if digits == -1:
         digits = len(str(max(A)))
-
     # frammentazione delle cifre in una matrice da usare nel radixSort
     matrix = [ [ estraiCifra(j, A[i]) for j in range(digits - 1, -1, -1) ] for i in range(len(A)) ]
     # ordinamento
@@ -47,7 +49,7 @@ def radixSort(A: List[int], digits: int = -1) -> None:
         A[i] = int(n)
     
 
-def radixSortAux(A: List[List[int]], digits: int, B: int) -> List[List[int]]:
+def radixSortAux(A: list[list[int]], digits: int, B: int) -> list[list[int]]:
     """
     Args:
         A : matrice da ordinare (ogni riga è un numero di digits cifre)
@@ -59,7 +61,8 @@ def radixSortAux(A: List[List[int]], digits: int, B: int) -> List[List[int]]:
         A = countingSort(A, k, d) 
     return A
 
-def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
+
+def countingSort(A: list, k: int, cifraDaConsiderare: int) -> list[list[int]]:
     """
     Una versione del counting sort adattada per l'utilizzo del radix sort, basa l'ordinamento dei vettori della matrice su una cifra del numero (cifraDaConsiderare)
 
@@ -90,9 +93,16 @@ def countingSort(A: List, k: int, cifraDaConsiderare: int) -> List[List[int]]:
     return B
 
 
-def uniformedRadixSort(A, k):
+def uniformedRadixSort(A: list[int], k: int) -> None:
     """
-        versione ausiliaria di radixSort per avere solo input l'array da ordinare e il max
+    Versione ausiliaria di radixSort per avere solo input l'array da ordinare e il max
+
+    Args:
+        A: vettore di interi da ordinare
+        k: valore massimo che posso trovare all'interno di A (non viene usato dal radix sort)
+
+    Post:
+        A viene ordianato in senso crescente
     """
     radixSort(A)
 
