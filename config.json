@@ -1,5 +1,5 @@
 {
-    "NUM_CAMPIONI": 10 ,    /* Quanti campioni vengono misurati per singolo algoritmo di ordinamento */
+    "NUM_CAMPIONI": 10,    /* Quanti campioni vengono misurati per singolo algoritmo di ordinamento */
     "N_MIN":        100,    /* Se facciamo variare il numero di elementi (n) questo è il valore di partenza */
     "N_MAX":        100000, /* Se facciamo variare il numero di elementi (n) questo è il valore di arrivo */
     "M_LOCK":       100000, /* Se facciamo variare il numero di elementi (n) questo è il valore numerico massimo che gli elementi possono assumere */
