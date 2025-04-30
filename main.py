@@ -65,7 +65,17 @@ def misuraTempiSullaBaseDi(variabile: str, var_end: int, lock: int, var_start: i
         algo_config["ascisse"] = ascisse
 
 
-def stampaGraficoDeiValoriMisurati(x_label: str, log_scale: bool = False) -> None:
+def stampaGraficiSeparatiDeiValoriMisurati(x_label: str, log_scale: bool = False, y_label: str = "") -> None:
+    #todo
+    ...
+    if y_label == "":
+        plt.ylabel(t(n)) 
+    else:
+        plt.ylabel(y_label) 
+    ...
+    pass
+
+def stampaGraficoUnicoDeiValoriMisurati(x_label: str, log_scale: bool = False) -> None:
     """
     stampa il grafico dei valori che si trovano nella struttura dati globale algorithms
 
@@ -76,7 +86,6 @@ def stampaGraficoDeiValoriMisurati(x_label: str, log_scale: bool = False) -> Non
     for idx, algo_config in enumerate(algorithms, start=1):
         # plot del grafico misurato
         plt.plot(algo_config["ascisse"], algo_config["ordinate"], marker='o', linestyle='', color=algo_config["color"], label=algo_config["name"])
-
         # plot del grafico teorico
         log_x = np.log10(algo_config["ascisse"])
         log_y = np.log10(algo_config["ordinate"])
@@ -95,12 +104,11 @@ def stampaGraficoDeiValoriMisurati(x_label: str, log_scale: bool = False) -> Non
 
 def main():
     misuraTempiSullaBaseDi('n', var_start=N_MIN, var_end=N_MAX, lock=M_LOCK)
-    stampaGraficoDeiValoriMisurati('n')
+    stampaGraficoUnicoDeiValoriMisurati('n')
+    stampaGraficiSeparatiDeiValoriMisurati('numero elementi')
 
     misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
-    stampaGraficoDeiValoriMisurati('m')
-
-
-
+    stampaGraficoUnicoDeiValoriMisurati('m')
+    stampaGraficiSeparatiDeiValoriMisurati('range valori')
 
 main()
