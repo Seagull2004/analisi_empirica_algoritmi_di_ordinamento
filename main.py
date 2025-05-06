@@ -152,12 +152,12 @@ def stampaGraficoUnicoDeiValoriMisurati(x_label: str, log_scale: bool = False) -
 
 def main():
     misuraTempiSullaBaseDi('n', var_start=N_MIN, var_end=N_MAX, lock=M_LOCK)
-    # stampaGraficoUnicoDeiValoriMisurati('n', log_scale=True)
-    # stampaGraficiVersus('n', log_scale=True)
+    stampaGraficoUnicoDeiValoriMisurati('n', log_scale=True)
+    stampaGraficiVersus('n', log_scale=True)
     stampaGraficiSeparatiDeiValoriMisurati('numero elementi')
 
-    # misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
-    # stampaGraficoUnicoDeiValoriMisurati('m')
-    # stampaGraficiSeparatiDeiValoriMisurati('range valori')
+    misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
+    stampaGraficoUnicoDeiValoriMisurati('m', log_scale=True)
+    stampaGraficiSeparatiDeiValoriMisurati('range valori', log_scale=True)
 
 main()
