@@ -1,13 +1,12 @@
-import enum
-import algoritmi.countingSort as CS
-import algoritmi.quicksort as QS
-import algoritmi.quicksort3Way as QS3
-import algoritmi.radixSort as RS
-import utils.measurement as measurement
-import utils.geometricRangeGenerator as generatorRange
 import matplotlib.pyplot as plt
 import numpy as np
 import json5
+from algoritmi.countingSort import uniformedCountingSort as countingSort
+from algoritmi.quicksort import uniformedQuickSort as quickSort
+from algoritmi.quicksort3Way import uniformedQuickSort3Way as quickSort3Way
+from algoritmi.radixSort import uniformedRadixSort as radixSort
+import utils.measurement as measurement
+import utils.geometricRangeGenerator as generatorRange
 
 
 # Alcuni parametri di configurazione
@@ -23,10 +22,10 @@ N_LOCK       = configuration["N_LOCK"]
 
 # Algoritmi e relative configurazioni
 algorithms = [
-    {"name": "Counting Sort", "algo": CS.uniformedCountingSort, "color": "#26547c", "ordinate": [], "ascisse": []},
-    {"name": "Quick Sort", "algo": QS.uniformedQuickSort, "color": "#ef476f", "ordinate": [], "ascisse": []},
-    {"name": "Quick Sort 3-Way", "algo": QS3.uniformedQuickSort3Way, "color": "#ffd166", "ordinate": [], "ascisse": []},
-    {"name": "Radix Sort", "algo": RS.uniformedRadixSort, "color": "#06d6a0", "ordinate": [], "ascisse": []},
+    {"name": "Counting Sort", "algo": countingSort, "color": "#26547c", "ordinate": [], "ascisse": []},
+    {"name": "Quick Sort", "algo": quickSort, "color": "#ef476f", "ordinate": [], "ascisse": []},
+    {"name": "Quick Sort 3-Way", "algo": quickSort3Way, "color": "#ffd166", "ordinate": [], "ascisse": []},
+    {"name": "Radix Sort", "algo": radixSort, "color": "#06d6a0", "ordinate": [], "ascisse": []},
 ]
 
 
@@ -66,7 +65,7 @@ def misuraTempiSullaBaseDi(variabile: str, var_end: int, lock: int, var_start: i
         algo_config["ascisse"] = ascisse
 
 
-def stampaGraficiSeparatiDeiValoriMisurati(x_label: str, log_scale: bool = False, y_label: str = "") -> None:
+def stampaGraficiSeparatiDeiValoriMisurati(x_label: str, log_scale: bool=False, y_label: str="") -> None:
     """
     stampa il grafico dei valori che si trovano nella struttura dati globale algorithms
 
@@ -81,16 +80,16 @@ def stampaGraficiSeparatiDeiValoriMisurati(x_label: str, log_scale: bool = False
         # plot del grafico teorico
         fitted_y = ottieniLineaTeorica(algo_config["ascisse"], algo_config["ordinate"])
         plt.plot(algo_config["ascisse"], fitted_y, linestyle='-', color=(algo_config["color"] + "20"))
-    plt.xlabel(x_label)
-    if y_label == "":
-        plt.ylabel("t(" + x_label + ")") 
-    else:
-        plt.ylabel(y_label) 
-    plt.legend()
-    plt.tight_layout()
-    if log_scale:
-        plt.xscale("log")
-        plt.yscale("log")
+        plt.xlabel(x_label)
+        if y_label == "":
+            plt.ylabel("t(" + x_label + ")") 
+        else:
+            plt.ylabel(y_label) 
+        plt.legend()
+        plt.tight_layout()
+        if log_scale:
+            plt.xscale("log")
+            plt.yscale("log")
     plt.show()
 
 
@@ -98,8 +97,9 @@ def stampaGraficiVersus(x_label: str, log_scale: bool = False) -> None:
     """
     stampa una serie di grafici che permettdono di confrontare a due a due gli algoritmi
     """
-    for algo_1 in algorithms:
-        for algo_2 in algorithms:
+    for i_1, algo_1 in enumerate(algorithms):
+        for i_2 in range(i_1, len(algorithms)):
+            algo_2 = algorithms[i_2]
             if algo_1["name"] == algo_2["name"]:
                 continue
             # grafico primo algoritmo
@@ -144,7 +144,6 @@ def stampaGraficoUnicoDeiValoriMisurati(x_label: str, log_scale: bool = False) -
     plt.xlabel(x_label)
     plt.ylabel('t(' + x_label + ')')
     plt.legend()
-    plt.tight_layout()
     if log_scale:
         plt.xscale("log")
         plt.yscale("log")
@@ -152,12 +151,13 @@ def stampaGraficoUnicoDeiValoriMisurati(x_label: str, log_scale: bool = False) -
 
 def main():
     misuraTempiSullaBaseDi('n', var_start=N_MIN, var_end=N_MAX, lock=M_LOCK)
-    stampaGraficoUnicoDeiValoriMisurati('n', log_scale=True)
-    stampaGraficiVersus('n', log_scale=True)
-    stampaGraficiSeparatiDeiValoriMisurati('numero elementi')
+    stampaGraficoUnicoDeiValoriMisurati('n')
+    stampaGraficiVersus('n')
+    stampaGraficiSeparatiDeiValoriMisurati('n')
 
     misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
-    stampaGraficoUnicoDeiValoriMisurati('m', log_scale=True)
-    stampaGraficiSeparatiDeiValoriMisurati('range valori', log_scale=True)
+    stampaGraficoUnicoDeiValoriMisurati('m')
+    stampaGraficiVersus('m')
+    stampaGraficiSeparatiDeiValoriMisurati('m')
 
 main()
