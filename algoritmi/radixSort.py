@@ -1,97 +1,53 @@
-def estraiCifra(cifraDaEstrarre: int, n: int) -> int: 
+
+def radixSort(arr: list[int]) -> None:
     """
-    Estrae una certa cifra (u, d, h, m ecc) da un numero n
-
-    Args:
-        cifraDaEstrarre: 0 unità, 1 decide, 2 centinaia, ...
-    Post: 
-        - restituisce la cifra richiesta del numero
-        - restituisce 0 se la cifra non è esplictamente presente nel numero
-
-    e.g.
-        - estraiCifra(2, 1234) -> 2
-        - estraiCifra(0, 1234) -> 4
-        - estraiCifra(9, 1234) -> 0
-        - estraiCifra(4, 1234) -> 0
-    """
-    cifreNumero = len(str(n))
-    if cifreNumero < cifraDaEstrarre + 1:
-        return 0
-    return int(str(n)[cifreNumero - 1 - cifraDaEstrarre])
-
-
-def radixSort(A: list[int], digits: int = -1) -> None:
-    """
-    Ordinamento radix sort del vettore A
-
-    Args:
-        A: una lista di interi che possiede solo numeri con lo stesso numero di cifre
-        digits: il numero di cifre che hanno gli elementi (in particolare il valore massimo) se non viene passato come parametro o viene posto a -1 l'algoritmo troverà il massimo per poi stabilire il numero di digits da usare nell'algoritmo
-
-    Post:
-        A viene modificato in modo da essere ordinato
-    """
-    # caso base
-    if len(A) <= 1:
-        return
-    # se non sappiamo il numero di cifre che ha il numero massimo lo calcoliamo Θ(n)!!
-    if digits == -1:
-        digits = len(str(max(A)))
-    # frammentazione delle cifre in una matrice da usare nel radixSort
-    matrix = [ [ estraiCifra(j, A[i]) for j in range(digits - 1, -1, -1) ] for i in range(len(A)) ]
-    # ordinamento
-    matrix = radixSortAux(matrix, digits, 10)
-    # scrittura risultato nella lista fornita in input
-    for i in range(len(matrix)):
-        n = ""
-        for j in range(len(matrix[i])):
-            n += str(matrix[i][j])
-        A[i] = int(n)
+    Ordina in-place una lista di numeri interi non negativi usando il Radix Sort in base 10.
     
-
-def radixSortAux(A: list[list[int]], digits: int, B: int) -> list[list[int]]:
-    """
     Args:
-        A : matrice da ordinare (ogni riga è un numero di digits cifre)
-        digits : il numero di cifre che ha ogni numero (i.e. larghezza matrice)
-        B : base numerica
+        arr: Lista di interi da ordinare (non negativi).
     """
-    k = B - 1
-    for d in range(digits - 1, -1, -1):
-        A = countingSort(A, k, d) 
-    return A
+    if not arr:
+        return
+
+    # Trova il numero massimo per sapere il numero di cifre
+    max_num = max(arr)
+    exp = 1  # 10^0
+
+    while max_num // exp > 0:
+        couringSortByDigit(arr, exp)
+        exp *= 10
 
 
-def countingSort(A: list, k: int, cifraDaConsiderare: int) -> list[list[int]]:
+def couringSortByDigit(arr: list[int], exp: int) -> None:
     """
-    Una versione del counting sort adattada per l'utilizzo del radix sort, basa l'ordinamento dei vettori della matrice su una cifra del numero (cifraDaConsiderare)
-
+    Counting sort basato sulla cifra a una certa posizione (exp).
+    
     Args:
-        cifreDaConsiderare: la cifra (unità, decine, centinaia, ...) che considereremo nell'effettuare l'ordinamento
-        0 = unità
-        1 = decine
-        2 = centinaia
-        ...
-    Post:
-        - la matrice fornita in input non viene modificata
-        - viene restituita una matrice risultato
+        arr: Lista da ordinare.
+        exp: Esponente (1=unità, 10=decine, 100=centinaia,...)
     """
-    # inizializzo array contatore
-    C = [0] * (k + 1)
-    # inizializzo array risultato
-    B = [ [0] * len(A[0]) ] * len(A)
-    # conto le occorrenze
-    for i in range(0, len(A)):
-        C[A[i][cifraDaConsiderare]] += 1
-    # somme parziali
-    for i in range(1, len(C)):
+    n = len(arr)
+    output = [0] * n
+    C = [0] * 10  # 10 cifre decimali (0-9)
+
+    # Conta le occorrenze delle cifre nella posizione corrente
+    for num in arr:
+        index = (num // exp) % 10
+        C[index] += 1
+
+    # Calcola le posizioni finali cumulative
+    for i in range(1, 10):
         C[i] += C[i - 1]
-    # costruzione nuovo array a ritroso per garantire stabilità
-    for i in range(len(A) - 1, -1, -1):
-        B[C[A[i][cifraDaConsiderare]] - 1] = A[i] # è necessario il -1 per trovare il corrento indirizzo in B, siccome gli indici partono da 0 e in B ci sono esattamente len(A) elementi, se in B ci fossero stato len(A) + 1 elementi il -1 sarebbe potuto essere tolto
-        C[A[i][cifraDaConsiderare]] -= 1
-    return B
 
+    # Costruisci l'output ordinato (partendo dalla fine per stabilità)
+    for i in range(n - 1, -1, -1):
+        index = (arr[i] // exp) % 10
+        output[C[index] - 1] = arr[i]
+        C[index] -= 1
+
+    # Copia l'output nella lista originale
+    for i in range(n):
+        arr[i] = output[i]
 
 def uniformedRadixSort(A: list[int], k: int) -> None:
     """
@@ -105,4 +61,3 @@ def uniformedRadixSort(A: list[int], k: int) -> None:
         A viene ordianato in senso crescente
     """
     radixSort(A)
-

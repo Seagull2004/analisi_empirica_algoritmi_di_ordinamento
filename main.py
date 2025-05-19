@@ -1,6 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 import json5
+from time import sleep
 from algoritmi.countingSort import uniformedCountingSort as countingSort
 from algoritmi.quicksort import uniformedQuickSort as quickSort
 from algoritmi.quicksort3Way import uniformedQuickSort3Way as quickSort3Way
