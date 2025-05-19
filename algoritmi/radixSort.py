@@ -5,55 +5,49 @@
 # |_|  \__,_|\__,_|_/_/\_\ |___/\___/|_|   \__|
 #
 
-def radixSort(arr: list[int]) -> None:
+def radixSort(A: list[int]) -> None:
     """
     Ordina in-place una lista di numeri interi non negativi usando il Radix Sort in base 10.
     
     Args:
-        arr: Lista di interi da ordinare (non negativi).
+        A: Lista di interi da ordinare (non negativi).
     """
-    if not arr:
+    if not A:
         return
-
     # Trova il numero massimo per sapere il numero di cifre
-    max_num = max(arr)
+    max_num = max(A)
     exp = 1  # 10^0
-
     while max_num // exp > 0:
-        couringSortByDigit(arr, exp)
+        couringSortByDigit(A, exp)
         exp *= 10
 
 
-def couringSortByDigit(arr: list[int], exp: int) -> None:
+def couringSortByDigit(A: list[int], exp: int) -> None:
     """
     Counting sort basato sulla cifra a una certa posizione (exp).
     
     Args:
-        arr: Lista da ordinare.
+        A: Lista da ordinare.
         exp: Esponente (1=unità, 10=decine, 100=centinaia,...)
     """
-    n = len(arr)
-    output = [0] * n
+    n = len(A)
+    B = [0] * n
     C = [0] * 10  # 10 cifre decimali (0-9)
-
     # Conta le occorrenze delle cifre nella posizione corrente
-    for num in arr:
-        index = (num // exp) % 10
+    for i in A:
+        index = (i // exp) % 10
         C[index] += 1
-
     # Calcola le posizioni finali cumulative
     for i in range(1, 10):
         C[i] += C[i - 1]
-
-    # Costruisci l'output ordinato (partendo dalla fine per stabilità)
+    # Costruisci B ordinato (partendo dalla fine per stabilità)
     for i in range(n - 1, -1, -1):
-        index = (arr[i] // exp) % 10
-        output[C[index] - 1] = arr[i]
+        index = (A[i] // exp) % 10
+        B[C[index] - 1] = A[i]
         C[index] -= 1
-
-    # Copia l'output nella lista originale
+    # Copia B nella lista originale
     for i in range(n):
-        arr[i] = output[i]
+        A[i] = B[i]
 
 def uniformedRadixSort(A: list[int], k: int) -> None:
     """
