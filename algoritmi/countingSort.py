@@ -1,13 +1,20 @@
-from typing import List
+#                        _   _                              _
+#   ___ ___  _   _ _ __ | |_(_)_ __   __ _   ___  ___  _ __| |_ 
+#  / __/ _ \| | | | '_ \| __| | '_ \ / _` | / __|/ _ \| '__| __|
+# | (_| (_) | |_| | | | | |_| | | | | (_| | \__ \ (_) | |  | |_ 
+#  \___\___/ \__,_|_| |_|\__|_|_| |_|\__, | |___/\___/|_|   \__|
+#                                    |___/
 
-def countingSort(A: List[int], B: List[int], k: int):
+def countingSort(A: list[int], B: list[int], k: int) -> None:
     """
+    Ordinamento countingSort classico
+
     Args:
-        A è la lista da ordinare
-        B è il vettore che dovrà contenere il risultato
-        k è il valore massimo che posso trovare nella lista A
+        A: la lista da ordinare
+        B: il vettore che dovrà contenere il risultato
+        k: il valore massimo che posso trovare nella lista A
     Post:
-        B viene modificato in modo che sia ordinato in senso crescente
+        - B viene modificato in modo che sia ordinato in senso crescente
     """
     C = [0 for _ in range(k + 1)] # avrà lunghezza k+1 C[0..k]
     # fase di conto occorrenze
@@ -23,10 +30,17 @@ def countingSort(A: List[int], B: List[int], k: int):
         C[A[i]] -= 1
 
 
-def uniformedCountingSort(A: List[int], k: int):
+def uniformedCountingSort(A: list[int], k: int) -> list[int]:
     """
-        versione ausiliaria di countingSort per avere solo input l'array da ordinare e il max
+    versione ausiliaria di countingSort per avere solo input l'array da ordinare e il max
+
+    Args:
+        A: vettore da ordinare
+        k: valore massimo che posso trovare all'interno di A
+
+    Post:
+        - Viene restituito un nuovo vettore che rappresenta la versione ordinata di A
     """
-    B = [0] * len(A)
+    B = [ 0 ] * len(A)
     countingSort(A, B, k)
     return B
