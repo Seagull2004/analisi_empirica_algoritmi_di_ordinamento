@@ -53,15 +53,40 @@ Da tutto questo potremmo ottenere una verifica empirica dell'andamento asintotic
 
 \chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
 
+Counting Sort è un algoritmo di ordinamento non comparativo, cioè che non ordina gli elementi confrontandoli tra loro come fanno invece altri algoritmi classici come QuickSort, Merge Sort o Bubble Sort.
+Invece, conta quante occorrenze di ciascun valore sono presenti nell'array da ordinare e utilizza queste informazioni per posizionare gli elementi nell'array ordinato. Passaggi principali che effettua l'algoritmo:
+
+\begin{enumerate}
+    \item Determinazione del range: Identifica il valore massimo nell'array in input per determinare la dimensione necessaria dell'array di conteggio.
+    \item Conteggio delle occorrenze: Crea un array ausiliario (\texttt{count}) in cui ciascun indice rappresenta un valore possibile dell'array originale, e si conta quante volte ciascun valore appare.
+    \item Costruzione dell'array cumulativo: Trasforma l'array di conteggio in un array cumulativo, dove ogni elemento indica la posizione finale di un dato valore nell'array ordinato.
+    \item Costruzione dell'array ordinato: Itera sull'array originale (in genere in ordine inverso per mantenere la stabilità), e si posiziona ogni elemento nella posizione corretta dell'array di output, decrementando il valore corrispondente nell'array di conteggio.
+\end{enumerate}
+
+\noindent L'algoritmo Counting Sort è particolarmente efficiente quando il range dei valori da ordinare è limitato rispetto alla dimensione dell'array.
+
+\subsection*{Analisi della complessità}
+
+La complessità temporale di Counting Sort è \(O(n + k)\), dove:
+
+\begin{itemize}
+    \item \(n\) è il numero di elementi nell'array da ordinare;
+    \item \(k\) è il valore massimo presente nell'array.
+\end{itemize}
+
+\noindent Nel caso in cui si ha \(k=O(n)\) allora la complessità diventa \(O(n)\)
+
+Grafico dei tempi di esecuzione: TODO.
+
+% chapter Counting Sort (end)
+
+\chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
+
 Spiegazione dell'algoritmo di ordinamento
 
 Analisi della complessità
 
 Grafico dei tempi di esecuzione
-
-% chapter Counting Sort (end)
-
-\chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
 % chapter Quick Sort (end)
 
@@ -76,7 +101,6 @@ Grafico dei tempi di esecuzione
 \chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
 % chapter Conclusioni (end)
-
 
 \end{document}
 
