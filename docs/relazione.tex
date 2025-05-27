@@ -78,12 +78,18 @@ La complessità temporale di Counting Sort è \(O(n + k)\), dove:
 
 \subsection*{Grafico dei tempi di esecuzione}
 
-\begin{figure}[h]
-    \centering
-    \includegraphics[width=0.8\textwidth]{grafico_counting_sort.png}
-    \caption{Tempo di esecuzione di Counting Sort in funzione della dimensione dell’input}
-    \label{fig:counting-sort}
-\end{figure}    
+Come prima cosa abbiamo generato il grafico in cui varia la lunghezza dell'array \textbf{n} mentre il range di valori che possono esserci nell'array rimane bloccato a 100000 (\(m=100000\)). Nel grafico qui sotto abbiamo come ascissa la variazione di \textbf{n} da 100 a 1000000 in scala scentifica dove ogni valore va moltiplicato per \(10^6\), come ordinata abbiamo il tempo in secondi di riordinamento dell'array.
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{images/grafico_counting_sort_n.png}
+\end{center}    
+
+\noindent Poi abbiamo generato il grafico in cui varia il range di valori che possono esserci nell'array \textbf{m} mentre la lunghezza dell'array rimane bloccata a 10000 (\(n=10000\)). Nel grafico qui sotto abbiamo come ascissa la variazione di \textbf{m} da 10 a 1000000 in scala scientifica, dove ogni valore va moltiplicato per \(10^6\), e come ordinata abbiamo il tempo in secondi di riordinamento dell'array.
+
+\begin{center}
+    \includegraphics[width=0.9\textwidth]{images/grafico_counting_sort_m.png}
+\end{center}
+
 
 % chapter Counting Sort (end)
 
@@ -110,4 +116,3 @@ Grafico dei tempi di esecuzione
 % chapter Conclusioni (end)
 
 \end{document}
-
