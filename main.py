@@ -8,7 +8,8 @@ from algoritmi.quicksort3Way import uniformedQuickSort3Way as quickSort3Way
 from algoritmi.radixSort import uniformedRadixSort as radixSort
 import utils.measurement as measurement
 import utils.geometricRangeGenerator as generatorRange
-
+import os
+import csv
 
 # Alcuni parametri di configurazione
 configuration = json5.load(open("./config.json"))
@@ -64,6 +65,31 @@ def misuraTempiSullaBaseDi(variabile: str, var_end: int, lock: int, var_start: i
         # salvataggio risultati nella struttura dati
         algo_config["ordinate"] = ordinate
         algo_config["ascisse"] = ascisse
+
+        # scrittura su file CSV
+        salvaRisultatiCSV(ascisse, ordinate, variabile, lock, algo_config["name"])
+
+
+def salvaRisultatiCSV(ascisse, ordinate, variabile, lock, algo_name):
+    """
+    Salva i risultati delle misurazioni su file CSV.
+
+    Args:
+        ascisse: lista dei valori sull'asse x
+        ordinate: lista dei valori sull'asse y (tempi)
+        variabile: 'n' o 'm', la variabile che varia
+        lock: valore della variabile bloccata
+        algo_name: nome dell'algoritmo
+    """
+    altro = 'm' if variabile == 'n' else 'n'
+    filename = f"{algo_name}_{variabile}_{altro}{lock}.csv"
+    filepath = os.path.join("csv", filename)
+    os.makedirs("csv", exist_ok=True)
+    with open(filepath, mode='w', newline='') as csvfile:
+        writer = csv.writer(csvfile)
+        writer.writerow([variabile, "tempo_medio"])
+        for x, y in zip(ascisse, ordinate):
+            writer.writerow([x, y])
 
 
 def stampaGraficiSeparatiDeiValoriMisurati(x_label: str, log_scale: bool=False, y_label: str="") -> None:
