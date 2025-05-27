@@ -25,16 +25,16 @@
 
 \geometry{a4paper, margin=2.5cm}
 \cleardoublepage
+\pagestyle{plain}
 
 \begin{document}
-
-\renewcommand{\contentsname}{Contenuti}
-\renewcommand{\chaptername}{Capitolo}
 
 \maketitle % copertina del documento
 \tableofcontents % sommario di tutti i titoli
 
-\chapter{Introduzione}\label{chap:Introduzione} % (fold)
+\chapter*{Introduzione}
+\addcontentsline{toc}{chapter}{Introduzione}
+
 
 Il progetto richiede l'implementazione di quattro algoritmi di ordinamento per array interi di dimensioni variabili.
 Gli algoritmi che andremo ad analizzare sono il Counting Sort, il Quick Sort, il Quick Sort 3 way e il Radix Sort (algoritmo a scelta).
@@ -49,9 +49,9 @@ Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà intere
 
 Da tutto questo potremmo ottenere una verifica empirica dell'andamento asintotico dei tempi di esecuzione di ogni algoritmo.
 
-% chapter Introduzione (end)
 
-\chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
+\chapter*{Counting Sort}
+\addcontentsline{toc}{chapter}{Counting Sort}
 
 Counting Sort è un algoritmo di ordinamento non comparativo, cioè che non ordina gli elementi confrontandoli tra loro come fanno invece altri algoritmi classici come QuickSort, Merge Sort o Bubble Sort.
 Invece, conta quante occorrenze di ciascun valore sono presenti nell'array da ordinare e utilizza queste informazioni per posizionare gli elementi nell'array ordinato. Passaggi principali che effettua l'algoritmo:
@@ -91,28 +91,57 @@ Come prima cosa abbiamo generato il grafico in cui varia la lunghezza dell'array
 \end{center}
 
 
-% chapter Counting Sort (end)
 
-\chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
+\chapter*{Quick Sort}
+\addcontentsline{toc}{chapter}{Quick Sort}
 
-Spiegazione dell'algoritmo di ordinamento
+Quick Sort è un algoritmo di ordinamento basato sulla tecnica del "divide et impera". L'idea principale è quella di selezionare un elemento pivot e partizionare l'array in due sottosequenze: gli elementi minori del pivot e quelli maggiori. Passaggi principali che effettua l'algoritmo:
 
-Analisi della complessità
+\begin{enumerate}
+	\item Si sceglie un elemento \textbf{pivot} dall'array.
+	\item Si riordinano gli elementi in modo tale che tutti quelli minori del \textbf{pivot} lo precedano e quelli maggiori lo seguano.
+	\item Si applica \textbf{ricorsivamente} Quick Sort alle due sottosequenze.
+\end{enumerate}
 
-Grafico dei tempi di esecuzione
+\noindent Quick Sort è molto efficiente nella pratica, anche se nel caso peggiore ha una complessità quadratica.
 
-% chapter Quick Sort (end)
+\subsection*{Analisi della complessità}
 
-\chapter{Quick Sort 3 way}\label{chap:Quick Sort 3 way} % (fold)
+La complessità temporale di Quick Sort è:
+\begin{itemize}
+	\item Caso medio: \(O(n \log n)\) 
+	\item Caso peggiore: \(O(n^2)\)
+	\item Caso migliore: \(O(n \log n)\)
+\end{itemize}
 
-% chapter Quick Sort 3 way (end)
+\noindent Nella pratica, il caso peggiore si verifica raramente se si utilizza un buon criterio di scelta del pivot (es. pivot casuale o mediana di tre).
 
-\chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
+\subsection*{Grafico dei tempi di esecuzione}
 
-% chapter Radix Sort (end)
+Abbiamo generato un grafico in cui varia la lunghezza dell'array \textbf{n} da ordinare, mentre il paramentro \textbf{m} resta fisso. L'ordinamento viene eseguito con Quick Sort su array contenenti numeri casuali. Come ascissa abbiamo \textbf{n} da 100 a 1000000, e come ordinata il tempo di esecuzione in secondi.
 
-\chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_n.png}
+\end{center}
 
-% chapter Conclusioni (end)
+\noindent Successivamente, abbiamo realizzato un grafico in cui varia l'intervallo dei valori possibili presenti nell'array, (\textbf{m}), mantenendo costante la sua lunghezza a 10000 (\(n=10000\)). Nel grafico riportato qui sotto, sull'asse delle ascisse è rappresentata la variazione di \textbf{m} da 10 a 1000000 in scala scientifica (ogni valore va moltiplicato per \(10^6\)), mentre sull'asse delle ordinate è riportato il tempo di ordinamento dell'array in secondi.
+ 
+\begin{center}
+	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_m.png}
+\end{center}
+
+\noindent Qui si riscontra una problema nel grafico quando il numero di elementi possibile dell'array è molto basso, bisognerà indagare il motivo.
+
+\chapter*{Quick Sort 3 Way}
+\addcontentsline{toc}{chapter}{Quick Sort 3 Way}
+
+
+
+\chapter*{Radix Sort}
+\addcontentsline{toc}{chapter}{Radix Sort}
+
+\chapter*{Conclusioni}
+\addcontentsline{toc}{chapter}{Colusioni}
+
 
 \end{document}
