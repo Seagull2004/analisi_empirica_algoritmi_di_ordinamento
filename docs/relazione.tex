@@ -22,19 +22,20 @@
 \usepackage{lmodern} % Font simile a Computer Modern
 \usepackage{geometry} % Per margini personalizzati
 \usepackage{listings} % scrivere codice
+\usepackage{float} % Per il posizionamento delle immagini
 
 \geometry{a4paper, margin=2.5cm}
 \cleardoublepage
-\pagestyle{plain}
 
 \begin{document}
+
+\renewcommand{\contentsname}{Contenuti}
+\renewcommand{\chaptername}{Capitolo}
 
 \maketitle % copertina del documento
 \tableofcontents % sommario di tutti i titoli
 
-\chapter*{Introduzione}
-\addcontentsline{toc}{chapter}{Introduzione}
-
+\chapter{Introduzione}\label{chap:Introduzione} % (fold)
 
 Il progetto richiede l'implementazione di quattro algoritmi di ordinamento per array interi di dimensioni variabili.
 Gli algoritmi che andremo ad analizzare sono il Counting Sort, il Quick Sort, il Quick Sort 3 way e il Radix Sort (algoritmo a scelta).
@@ -49,51 +50,102 @@ Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà intere
 
 Da tutto questo potremmo ottenere una verifica empirica dell'andamento asintotico dei tempi di esecuzione di ogni algoritmo.
 
+% chapter Introduzione (end)
 
-\chapter*{Counting Sort}
-\addcontentsline{toc}{chapter}{Counting Sort}
+\chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
 
-Counting Sort è un algoritmo di ordinamento non comparativo, cioè che non ordina gli elementi confrontandoli tra loro come fanno invece altri algoritmi classici come QuickSort, Merge Sort o Bubble Sort.
-Invece, conta quante occorrenze di ciascun valore sono presenti nell'array da ordinare e utilizza queste informazioni per posizionare gli elementi nell'array ordinato. Passaggi principali che effettua l'algoritmo:
-
-\begin{enumerate}
-    \item Determinazione del range: Identifica il valore massimo nell'array in input per determinare la dimensione necessaria dell'array di conteggio.
-    \item Conteggio delle occorrenze: Crea un array ausiliario (\texttt{count}) in cui ciascun indice rappresenta un valore possibile dell'array originale, e si conta quante volte ciascun valore appare.
-    \item Costruzione dell'array cumulativo: Trasforma l'array di conteggio in un array cumulativo, dove ogni elemento indica la posizione finale di un dato valore nell'array ordinato.
-    \item Costruzione dell'array ordinato: Itera sull'array originale (in genere in ordine inverso per mantenere la stabilità), e si posiziona ogni elemento nella posizione corretta dell'array di output, decrementando il valore corrispondente nell'array di conteggio.
-\end{enumerate}
-
-\noindent L'algoritmo Counting Sort è particolarmente efficiente quando il range dei valori da ordinare è limitato rispetto alla dimensione dell'array.
-
-\subsection*{Analisi della complessità}
-
-La complessità temporale di Counting Sort è \(O(n + k)\), dove:
+Il Counting Sort è un algoritmo di ordinamento non comparativo: anziché effettuare confronti tra gli elementi, si basa sul conteggio delle occorrenze di ciascun elemento presente nell'array da ordinare.
+È particolarmente efficiente quando gli elementi da ordinare sono numeri interi compresi in un intervallo limitato (intervallo \([0, k]\)).
+L'implementazione adottata si articola in tre fasi principali:
 
 \begin{itemize}
-    \item \(n\) è il numero di elementi nell'array da ordinare;
-    \item \(k\) è il valore massimo presente nell'array.
+    \item Conteggio delle occorrenze di ciascun elemento; si costruisce un array ausiliario \(C\) di lunghezza \(k+1\), inizializzato a zero, in cui per ogni elemento \(x\) in \(A\), si incrementa \(C[x]\) di 1.
+    \item Calcolo delle posizioni cumulative; per ottenere la posizione finale di ciascun elemento nell'array ordinato, si trasforma \(C\) in un array cumulativo. In questa versione, \(C[0]\) viene inizialmente decrementando di uno, così che \(c[i]\) rapprsenti l'indice massimo in cui si può inserire l'elemento \(i\) nell'array ordinato.
+    \item Costruzione dell'array ordinato; si scorre l'array originale da destra a sinistra, e si inserisce ciascun elemento \(x\) nella posizione \(C[x]\) dell'array ordinato, decrementando \(C[x]\) di 1 dopo ogni inserimento. Questo garantisce la stabilità dell'ordinamento, poiché gli elementi con lo stesso valore vengono inseriti nell'ordine in cui appaiono nell'array originale.
 \end{itemize}
 
-\noindent Nel caso in cui si ha \(k=O(n)\) allora la complessità diventa \(O(n)\)
+\noindent Le due funzioni fornite nel codice sono:
 
-\subsection*{Grafico dei tempi di esecuzione}
+\begin{itemize}
+    \item \texttt{countingSort(A, B, k)}: scrive l'output ordinato in B;
+    \item \texttt{uniformedCountingSort(A, k)}: funzione wrapper che restituisce direttamente una copia ordinata di A.
+\end{itemize}
 
-Come prima cosa abbiamo generato il grafico in cui varia la lunghezza dell'array \textbf{n} mentre il range di valori che possono esserci nell'array rimane bloccato a 100000 (\(m=100000\)). Nel grafico qui sotto abbiamo come ascissa la variazione di \textbf{n} da 100 a 1000000 in scala scentifica dove ogni valore va moltiplicato per \(10^6\), come ordinata abbiamo il tempo in secondi di riordinamento dell'array.
+\section{Analisi della complessità}
 
-\begin{center}
-    \includegraphics[width=0.9\textwidth]{images/grafico_counting_sort_n.png}
-\end{center}    
+Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto in \(A\). \\
 
-\noindent Poi abbiamo generato il grafico in cui varia il range di valori che possono esserci nell'array \textbf{m} mentre la lunghezza dell'array rimane bloccata a 10000 (\(n=10000\)). Nel grafico qui sotto abbiamo come ascissa la variazione di \textbf{m} da 10 a 1000000 in scala scientifica, dove ogni valore va moltiplicato per \(10^6\), e come ordinata abbiamo il tempo in secondi di riordinamento dell'array.
+\noindent Tempo:
 
-\begin{center}
-    \includegraphics[width=0.9\textwidth]{images/grafico_counting_sort_m.png}
-\end{center}
+\begin{itemize}
+    \item Conteggio: \(O(n)\) per scorrere l'array \(A\) e contare le occorrenze di ciascun elemento.
+    \item Calcolo delle posizioni cumulative: \(O(k)\) per trasformare l'array \(C\) in un array cumulativo.
+    \item Costruzione dell'array ordinato: \(O(n)\) per scorrere l'array \(A\) e inserire gli elementi nell'array ordinato \(B\).
+    \item Totale: \(O(n + k)\).
+\end{itemize}
 
+\noindent Spazio:
 
+\begin{itemize}
+    \item Array ausiliario \(C\): richiede \(O(k)\) spazio.
+    \item Array ordinato \(B\): richiede \(O(n)\) spazio.
+    \item Totale: \(O(n + k)\).
+\end{itemize}
 
-\chapter*{Quick Sort}
-\addcontentsline{toc}{chapter}{Quick Sort}
+\noindent L'algoritmo è efficiente quando \(k = O(n)\), ovvero quando il range massimo dei valori interi è proporzionale alla dimensione dell'array.
+In scenari in cui \(k >> n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
+
+\section{Analisi sperimentale}
+
+Sono stati condotti due esperimenti distinti per analizzare le prestazioni empiriche del Counting Sort:
+
+\begin{itemize}
+    \item Nel primo esperimento, la dimensione dell'array \(n\) varia, mentre il valore massimo \(k\) è mantenuto fisso a 100000.
+    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(m\).
+\end{itemize}
+
+\noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
+Per ogni valore di \(n\) o \(m\) sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo \(\leq\) 0.001.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
+
+\noindent I risultati ottenuti sono in linea con le aspettative teoriche:
+Nel primo grafico (a \(k\) fisso), il tempo cresce linearmente con \(n\), coerentemente con la complessità \(O(n + m)\).
+Nel secondo grafico (a \(n\) fisso), il tempo cresce linearmente con \(m\), evidenziando l'impatto della fase di conteggio e dell'allocazione dell'array \(C\).
+I due grafici risultanti mostrano visivamente come il Counting Sort si comporti in relazione ai due parametri chiave \(n\) e \(m\).
+
+\section{Grafico dei tempi di esecuzione}
+
+In primo luogo, è stato analizzato l'andamento temporale al variare della dimensione dell'array \(n\), mantenendo costante l'intervallo dei valori a \(k = 100000\). 
+Il grafico seguente mostra in:
+\begin{itemize}
+    \item \textbf{Ascissa}: dimensione \(n\) dell'array (scala logaritmica, \(10^2 \leq n \leq 10^6\)).
+    \item \textbf{Ordinata}: tempo di esecuzione (secondi) per l'ordinamento.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_counting_sort_n.png}
+    \caption{Performance del Counting Sort al variare di \(n\).}
+    \label{fig:counting_sort_n}
+\end{figure}
+
+\noindent Successivamente, è stato analizzato l'andamento temporale al variare dell'intervallo di valori \(m\), mantenendo costante la dimensione dell'array a \(n = 10000\). 
+Il grafico seguente presenta:
+\begin{itemize}
+    \item \textbf{Ascissa}: intervallo \(m\) dei valori (scala logaritmica, \(10^1 \leq m \leq 10^6\))
+    \item \textbf{Ordinata}: tempo di esecuzione (secondi) per l'ordinamento
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_counting_sort_m.png}
+    \caption{Performance del Counting Sort al variare di \(m\).}
+    \label{fig:counting_sort_m}
+\end{figure}
+
+% chapter Counting Sort (end)
+
+\chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
 Quick Sort è un algoritmo di ordinamento basato sulla tecnica del "divide et impera". L'idea principale è quella di selezionare un elemento pivot e partizionare l'array in due sottosequenze: gli elementi minori del pivot e quelli maggiori. Passaggi principali che effettua l'algoritmo:
 
@@ -132,16 +184,18 @@ Abbiamo generato un grafico in cui varia la lunghezza dell'array \textbf{n} da o
 
 \noindent Qui si riscontra una problema nel grafico quando il numero di elementi possibile dell'array è molto basso, bisognerà indagare il motivo.
 
-\chapter*{Quick Sort 3 Way}
-\addcontentsline{toc}{chapter}{Quick Sort 3 Way}
+% chapter Quick Sort (end)
 
+\chapter{Quick Sort 3 Way}\label{chap:Quick Sort 3 Way} % (fold)
 
+...
 
-\chapter*{Radix Sort}
-\addcontentsline{toc}{chapter}{Radix Sort}
+\chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
 
-\chapter*{Conclusioni}
-\addcontentsline{toc}{chapter}{Colusioni}
+...
 
+\chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
+
+...
 
 \end{document}
