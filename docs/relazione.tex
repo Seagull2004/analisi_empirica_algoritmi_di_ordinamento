@@ -75,7 +75,7 @@ L'implementazione adottata si articola in tre fasi principali:
 
 Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto in \(A\). \\
 
-\noindent Tempo:
+\noindent \textbf{Tempo:}
 
 \begin{itemize}
     \item Conteggio: \(O(n)\) per scorrere l'array \(A\) e contare le occorrenze di ciascun elemento.
@@ -84,7 +84,7 @@ Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto i
     \item Totale: \(O(n + k)\).
 \end{itemize}
 
-\noindent Spazio:
+\noindent \textbf{Spazio:}
 
 \begin{itemize}
     \item Array ausiliario \(C\): richiede \(O(k)\) spazio.
@@ -132,8 +132,8 @@ Il grafico seguente mostra in:
 \noindent Successivamente, è stato analizzato l'andamento temporale al variare dell'intervallo di valori \(m\), mantenendo costante la dimensione dell'array a \(n = 10000\). 
 Il grafico seguente presenta:
 \begin{itemize}
-    \item \textbf{Ascissa}: intervallo \(m\) dei valori (scala logaritmica, \(10^1 \leq m \leq 10^6\))
-    \item \textbf{Ordinata}: tempo di esecuzione (secondi) per l'ordinamento
+    \item Ascissa: intervallo \(m\) dei valori (scala logaritmica, \(10^1 \leq m \leq 10^6\))
+    \item Ordinata: tempo di esecuzione (secondi) per l'ordinamento
 \end{itemize}
 
 \begin{figure}[H]
@@ -147,17 +147,19 @@ Il grafico seguente presenta:
 
 \chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
-Quick Sort è un algoritmo di ordinamento basato sulla tecnica del "divide et impera". L'idea principale è quella di selezionare un elemento pivot e partizionare l'array in due sottosequenze: gli elementi minori del pivot e quelli maggiori. Passaggi principali che effettua l'algoritmo:
+Quick Sort è un algoritmo di ordinamento basato sulla tecnica del "divide et impera".
+L'idea principale è quella di selezionare un elemento pivot e partizionare l'array in due sottosequenze: gli elementi minori del pivot e quelli maggiori.
+Passaggi principali che effettua l'algoritmo:
 
 \begin{enumerate}
-	\item Si sceglie un elemento \textbf{pivot} dall'array.
-	\item Si riordinano gli elementi in modo tale che tutti quelli minori del \textbf{pivot} lo precedano e quelli maggiori lo seguano.
-	\item Si applica \textbf{ricorsivamente} Quick Sort alle due sottosequenze.
+	\item Si sceglie un elemento pivot dall'array;
+	\item Si riordinano gli elementi in modo tale che tutti quelli minori del pivot lo precedano e quelli maggiori lo seguano;
+	\item Si applica ricorsivamente Quick Sort alle due sottosequenze.
 \end{enumerate}
 
 \noindent Quick Sort è molto efficiente nella pratica, anche se nel caso peggiore ha una complessità quadratica.
 
-\subsection*{Analisi della complessità}
+\section{Analisi della complessità}
 
 La complessità temporale di Quick Sort è:
 \begin{itemize}
@@ -168,15 +170,15 @@ La complessità temporale di Quick Sort è:
 
 \noindent Nella pratica, il caso peggiore si verifica raramente se si utilizza un buon criterio di scelta del pivot (es. pivot casuale o mediana di tre).
 
-\subsection*{Grafico dei tempi di esecuzione}
+\section{Grafico dei tempi di esecuzione}
 
-Abbiamo generato un grafico in cui varia la lunghezza dell'array \textbf{n} da ordinare, mentre il paramentro \textbf{m} resta fisso. L'ordinamento viene eseguito con Quick Sort su array contenenti numeri casuali. Come ascissa abbiamo \textbf{n} da 100 a 1000000, e come ordinata il tempo di esecuzione in secondi.
+Abbiamo generato un grafico in cui varia la lunghezza dell'array n da ordinare, mentre il paramentro m resta fisso. L'ordinamento viene eseguito con Quick Sort su array contenenti numeri casuali. Come ascissa abbiamo n da 100 a 1000000, e come ordinata il tempo di esecuzione in secondi.
 
 \begin{center}
 	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_n.png}
 \end{center}
 
-\noindent Successivamente, abbiamo realizzato un grafico in cui varia l'intervallo dei valori possibili presenti nell'array, (\textbf{m}), mantenendo costante la sua lunghezza a 10000 (\(n=10000\)). Nel grafico riportato qui sotto, sull'asse delle ascisse è rappresentata la variazione di \textbf{m} da 10 a 1000000 in scala scientifica (ogni valore va moltiplicato per \(10^6\)), mentre sull'asse delle ordinate è riportato il tempo di ordinamento dell'array in secondi.
+\noindent Successivamente, abbiamo realizzato un grafico in cui varia l'intervallo dei valori possibili presenti nell'array, (m), mantenendo costante la sua lunghezza a 10000 (\(n=10000\)). Nel grafico riportato qui sotto, sull'asse delle ascisse è rappresentata la variazione di m da 10 a 1000000 in scala scientifica (ogni valore va moltiplicato per \(10^6\)), mentre sull'asse delle ordinate è riportato il tempo di ordinamento dell'array in secondi.
  
 \begin{center}
 	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_m.png}
@@ -188,14 +190,20 @@ Abbiamo generato un grafico in cui varia la lunghezza dell'array \textbf{n} da o
 
 \chapter{Quick Sort 3 Way}\label{chap:Quick Sort 3 Way} % (fold)
 
-...
+TODO
+
+% chapter Quick Sort 3 Way (end)
 
 \chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
 
-...
+TODO
+
+% chapter Radix Sort (end)
 
 \chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
-...
+TODO
+
+% chapter Conclusioni (end)
 
 \end{document}
