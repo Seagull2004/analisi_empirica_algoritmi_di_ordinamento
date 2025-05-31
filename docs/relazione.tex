@@ -106,9 +106,9 @@ Sono stati condotti due esperimenti distinti per analizzare le prestazioni empir
 
 \noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
 Per ogni valore di \(n\) o \(m\) sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo \(\leq\) 0.001.
-Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python).
 
-\noindent I risultati ottenuti sono in linea con le aspettative teoriche:
+I risultati ottenuti sono in linea con le aspettative teoriche:
 Nel primo grafico (a \(k\) fisso), il tempo cresce linearmente con \(n\), coerentemente con la complessità \(O(n + m)\).
 Nel secondo grafico (a \(n\) fisso), il tempo cresce linearmente con \(m\), evidenziando l'impatto della fase di conteggio e dell'allocazione dell'array \(C\).
 I due grafici risultanti mostrano visivamente come il Counting Sort si comporti in relazione ai due parametri chiave \(n\) e \(m\).
@@ -147,44 +147,69 @@ Il grafico seguente presenta:
 
 \chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
-Quick Sort è un algoritmo di ordinamento basato sulla tecnica del "divide et impera".
-L'idea principale è quella di selezionare un elemento pivot e partizionare l'array in due sottosequenze: gli elementi minori del pivot e quelli maggiori.
-Passaggi principali che effettua l'algoritmo:
+Il Quick Sort è un algoritmo di ordinamento basato sulla strategia del divide et impera (ovvero: dividere il problema in sottoproblemi più piccoli, risolverli ricorsivamente e combinare i risultati).
+A partire da un array \(A\), si seleziona un pivot, in questo caso l'elemento finale del sottoarray \(A[p...q]\), e si procede alla partizione: tutti gli elementi minori o uguali al pivot vengono spostati a sinistra, quelli maggiori a destra. L'indice finale del pivot è restituito dalla funzione partition, e l'algoritmo viene poi richiamato ricorsivamente sulle due sottosequenze risultanti.
 
-\begin{enumerate}
-	\item Si sceglie un elemento pivot dall'array;
-	\item Si riordinano gli elementi in modo tale che tutti quelli minori del pivot lo precedano e quelli maggiori lo seguano;
-	\item Si applica ricorsivamente Quick Sort alle due sottosequenze.
-\end{enumerate}
+L'implementazione utilizzata è in-place (cioè non richiede spazio aggiuntivo proporzionale all'input), ma non stabile (l'ordine relativo tra elementi uguali può cambiare).
 
-\noindent Quick Sort è molto efficiente nella pratica, anche se nel caso peggiore ha una complessità quadratica.
+La funzione \texttt{uniformedQuickSort} è una versione ausiliaria pensata per rendere uniforme l'interfaccia tra gli algoritmi testati: riceve come parametro anche \(k\) (massimo valore degli elementi), che tuttavia non viene utilizzato in questo caso, in quanto Quick Sort non dipende dal dominio dei valori.
 
 \section{Analisi della complessità}
 
-La complessità temporale di Quick Sort è:
+Sia \(n\) la dimensione dell'array da ordinare:
+
 \begin{itemize}
-	\item Caso medio: \(O(n \log n)\) 
-	\item Caso peggiore: \(O(n^2)\)
-	\item Caso migliore: \(O(n \log n)\)
+    \item Caso medio: \(O(n \cdot log(n))\), si verifica quando il pivot divide l'array in modo bilanciato.
+    \item Caso migliore: \(O(n \cdot log(n))\), con partizioni esattamente simmetriche.
+    \item Caso peggiore: \(O(n^2)\), quando il pivot è sempre il minimo o il massimo elemento (partizione altamente sbilanciata).
+    \item Spazio ausiliario: \(O(log(n))\) nel caso medio per la profondità dello stack ricorsivo; \(O(n)\) nel caso peggiore.
 \end{itemize}
 
-\noindent Nella pratica, il caso peggiore si verifica raramente se si utilizza un buon criterio di scelta del pivot (es. pivot casuale o mediana di tre).
+\noindent A differenza di altri algoritmi come Counting Sort o Radix Sort, Quick Sort non richiede conoscenza del range dei valori interi e lavora unicamente tramite confronti tra elementi.
+
+\section{Analisi sperimentale}
+
+Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti due esperimenti distinti:
+
+\begin{itemize}
+    \item Esperimento 1: variazione della dimensione dell'array \(n\), mantenendo fisso \(m = 100000\).
+    \item Esperimento 2: \(n = 10000\) costante, con variazione di \(m\).
+\end{itemize}
+
+\noindent In entrambi i casi, i parametri sono distribuiti secondo una progressione geometrica.
+Per ogni coppia \((n, m)\) sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte per stimare in modo accurato il tempo medio di esecuzione, con un errore relativo massimo \(\leq 0.001\).
+Le misurazioni sono state effettuate mediante un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python).
+
+Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m non influisce direttamente sulla complessità. Tuttavia, può avere effetti indiretti sulla distribuzione dei dati (ad esempio, la presenza di molti duplicati o valori ripetuti), il che può influenzare l'efficienza della partizione. \\
+
+\noindent I risultati ottenuti mostrano che:
+
+\begin{itemize}
+    \item Nel primo grafico, i tempi di esecuzione crescono come \(O(n log n)\), in linea con il comportamento teorico nel caso medio.
+    \item Nel secondo grafico, la variazione di \(m\) non produce cambiamenti significativi nei tempi di esecuzione, a conferma del fatto che l'algoritmo non dipende dal dominio numerico.
+\end{itemize}
 
 \section{Grafico dei tempi di esecuzione}
 
-Abbiamo generato un grafico in cui varia la lunghezza dell'array n da ordinare, mentre il paramentro m resta fisso. L'ordinamento viene eseguito con Quick Sort su array contenenti numeri casuali. Come ascissa abbiamo n da 100 a 1000000, e come ordinata il tempo di esecuzione in secondi.
+È stato generato un grafico in cui varia la lunghezza dell'array da ordinare, indicata con \(n\), mentre il parametro \(m\) (range dei valori) è mantenuto costante. L'ordinamento è stato eseguito utilizzando l'algoritmo Quick Sort su array contenenti numeri casuali. Sull'asse delle ascisse è riportato il valore di \(n\), da 100 a 1.000.000, mentre sull'asse delle ordinate è rappresentato il tempo medio di esecuzione, espresso in secondi.
 
-\begin{center}
-	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_n.png}
-\end{center}
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_quick_sort_n.png}
+    \caption{Performance del Quick Sort al variare di \(n\).}
+    \label{fig:quick_sort_n}
+\end{figure}
 
-\noindent Successivamente, abbiamo realizzato un grafico in cui varia l'intervallo dei valori possibili presenti nell'array, (m), mantenendo costante la sua lunghezza a 10000 (\(n=10000\)). Nel grafico riportato qui sotto, sull'asse delle ascisse è rappresentata la variazione di m da 10 a 1000000 in scala scientifica (ogni valore va moltiplicato per \(10^6\)), mentre sull'asse delle ordinate è riportato il tempo di ordinamento dell'array in secondi.
- 
-\begin{center}
-	\includegraphics[width=0.9\textwidth]{images/grafico_quick_sort_m.png}
-\end{center}
+\noindent Successivamente, è stato realizzato un grafico in cui varia il range dei valori interi presenti nell'array, indicato con \(m\), mantenendo costante la dimensione dell'array a \(n=10000\). Nel grafico riportato di seguito, sull'asse delle ascisse è rappresentata la variazione di \(m\), da 10 a 1.000.000, in scala scientifica. Sull'asse delle ordinate è riportato il tempo medio di esecuzione dell'ordinamento, espresso in secondi.
 
-\noindent Qui si riscontra una problema nel grafico quando il numero di elementi possibile dell'array è molto basso, bisognerà indagare il motivo.
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_quick_sort_m.png}
+    \caption{Performance del Quick Sort al variare di \(m\).}
+    \label{fig:quick_sort_m}
+\end{figure}
+
+\noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nell'array (\(m\)) è molto basso. Sarà opportuno approfondire l'origine di questo comportamento, che potrebbe essere legato alla scarsa diversità dei dati e al conseguente degrado delle prestazioni dell'algoritmo.
 
 % chapter Quick Sort (end)
 
