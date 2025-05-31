@@ -43,7 +43,7 @@ Oltre alla corretta implementazione viene richiesto di effettuare un analisi emp
 Per stimare i tempi di esecuzione di questi algoritmi garanantendo un errore relativo massimo pari a 0.001 adotteremo le seguenti metodologie:
 \begin{itemize}
     \item Utilizzeremo un clock di sistema monotono per garantire precisione nelle misurazioni (ad esempio, \texttt{perf\_counter()} del modulo \(time\) in Python);
-    \item Andremo a generare almeno 100 campioni per ciascun grafico, con i valori dei parametri (dimensione dell’array \(n\) e intervallo dei valori \(m\)) distribuiti secondo una progressione geometrica;
+    \item Andremo a generare almeno 100 campioni per ciascun grafico, con i valori dei parametri (dimensione dell'array \(n\) e intervallo dei valori \(m\)) distribuiti secondo una progressione geometrica;
     \item Effettueremo più esecuzioni per ogni campione, per stimare in modo affidabile il tempo medio di esecuzione e, eventualmente, il relativo errore.
 \end{itemize}
 Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà interessante confrontare i grafici ottenuti per analizzare il comportamento degli algoritmi in diverse situazioni, come il caso peggiore, quello migliore o in quello medio.
@@ -95,7 +95,7 @@ Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto i
 \noindent L'algoritmo è efficiente quando \(k = O(n)\), ovvero quando il range massimo dei valori interi è proporzionale alla dimensione dell'array.
 In scenari in cui \(k >> n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
 
-\section{Analisi sperimentale}
+\section{Analisi empirica}
 
 Sono stati condotti due esperimenti distinti per analizzare le prestazioni empiriche del Counting Sort:
 
@@ -167,7 +167,7 @@ Sia \(n\) la dimensione dell'array da ordinare:
 
 \noindent A differenza di altri algoritmi come Counting Sort o Radix Sort, Quick Sort non richiede conoscenza del range dei valori interi e lavora unicamente tramite confronti tra elementi.
 
-\section{Analisi sperimentale}
+\section{Analisi empirica}
 
 Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti due esperimenti distinti:
 
@@ -215,19 +215,93 @@ Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m n
 
 \chapter{Quick Sort 3 Way}\label{chap:Quick Sort 3 Way} % (fold)
 
-TODO
+Il Quick Sort 3-Way è una variante del Quick Sort classico, progettata per migliorare l'efficienza in presenza di molti elementi duplicati. Come il Quick Sort tradizionale, segue la strategia del divide et impera (cioè suddividere l'array in parti più semplici da ordinare ricorsivamente).
+A differenza della versione classica, che suddivide in due partizioni (elementi minori o maggiori del pivot), il Quick Sort 3-Way suddivide l'array in tre sezioni distinte:
+
+\begin{itemize}
+    \item Elementi minori del pivot;
+    \item Elementi uguali al pivot;
+    \item Elementi maggiori del pivot.
+\end{itemize}
+
+\noindent Questa suddivisione viene effettuata durante la fase di partizionamento, evitando confronti e ricorsioni inutili sugli elementi uguali al pivot, che sono già in posizione corretta. La ricorsione viene infatti applicata solo alle sottosequenze strettamente minori o maggiori del pivot.
+L'algoritmo è in-place (non richiede spazio addizionale significativo) ma non stabile (gli elementi uguali possono cambiare ordine relativo).
+
+\section{Analisi della complessità}
+
+Sia \(n\) la dimensione dell'array:
+
+\begin{itemize}
+    \item Caso migliore: \(O(n)\), quando tutti gli elementi sono uguali, e la partizione centrale include l'intero array.
+    \item Caso medio: \(O(n \cdot log(n))\), come il Quick Sort classico, ma con una costante migliore grazie alla gestione efficiente dei duplicati.
+    \item Caso peggiore: \(O(n^2)\), in caso di pivot molto sbilanciati e assenza di duplicati.
+    \item Spazio ausiliario: \(O(log(n))\) per la profondità della ricorsione.
+\end{itemize}
+
+\noindent Nel complesso, Quick Sort 3-Way si comporta meglio del Quick Sort classico in presenza di dati con molti valori ripetuti, mantenendo lo stesso ordine di complessità.
+
+\section{Analisi empirica}
+
+Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti due esperimenti separati:
+
+\begin{itemize}
+    \item Esperimento 1: \(m = 100000\) fisso, e variazione della dimensione dell'array \(n\).
+    \item Esperimento 2: \(n = 10000\) fisso, e variazione dell'intervallo dei valori \(m\).
+\end{itemize}
+
+I valori di \(n\) e \(m\) sono distribuiti secondo una progressione geometrica. Per ogni coppia di parametri sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte. I tempi medi di esecuzione sono stati stimati con un clock monotono ad alta precisione (\texttt{time.perf\_counter()}), garantendo un errore relativo massimo \(\leq 0.001\). \\
+
+\noindent I risultati ottenuti sono coerenti con le aspettative teoriche:
+
+\begin{itemize}
+    \item Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(O(n \cdot log(n))\), come previsto.
+    \item Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati nei dati, e l'algoritmo ne beneficia: i tempi di esecuzione diminuiscono sensibilmente grazie al partizionamento ottimizzato del Quick Sort 3-Way.
+\end{itemize}
+
+\noindent Nel grafico allegato si evidenziano chiaramente i vantaggi di questa variante rispetto alla versione classica, soprattutto in presenza di dati ridondanti.
 
 % chapter Quick Sort 3 Way (end)
 
 \chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
 
-TODO
+Il Radix Sort è un algoritmo di ordinamento non comparativo che sfrutta le rappresentazioni numeriche degli elementi. Ordina i numeri interi cifra per cifra, a partire dalla cifra meno significativa (LSD - Least Significant Digit) fino a quella più significativa. L'ordinamento delle singole cifre è effettuato tramite un algoritmo stabile, come il Counting Sort, applicato in sequenza per ogni posizione.
+Radix Sort lavora bene quando si conosce il numero massimo di cifre degli elementi (ovvero \(log_{10}(k)\) se \(k\) è il valore massimo presente).
+Questo algoritmo è in-place (usa spazio aggiuntivo proporzionale a \(n + b\), con \(b\) la base usata, tipicamente \(10\)), ma non stabile per natura a meno che il sorting delle cifre lo sia (in questo caso è garantita la stabilità tramite Counting Sort).
+
+\section{Analisi della complessità}
+Sia \(n\) la lunghezza dell'array e \(d\) il numero massimo di cifre (ossia \( d = \lceil \log_{10}(k + 1) \rceil \)): \\
+
+\begin{itemize}
+    \item Tempo: \(O(d \cdot (n + b))\), che nel caso più comune (\(b = 10\)) diventa \(O(n \cdot log_{10}(k))\). Quando \(k = O(n^c)\) per una costante \(c\), si ha complessivamente tempo quasi-lineare \(O(n)\).
+    \item Spazio: \(O(n + b)\) per ogni cifra, dove \(b\) è la base (es. 10 cifre decimali).
+    \item Stabile: sì, se il counting sort interno è stabile.
+    \item In-place: no, nel senso stretto (usa memoria ausiliaria \(O(n)\)).
+\end{itemize}
+
+\section{Analisi empirica}
+L'algoritmo è stato testato su array di interi generati casualmente, secondo due configurazioni sperimentali:
+
+\begin{itemize}
+    \item Esperimento 1: \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) dell'array.
+    \item Esperimento 2: \(n = 10000\) fisso, variando \(m\), cioè il massimo valore presente negli elementi.
+\end{itemize}
+
+\noindent In entrambi i casi, i parametri sono scelti su una scala geometrica. Ogni configurazione \((n, m)\) è stata eseguita su almeno 100 campioni, ciascuno ripetuto più volte. I tempi di esecuzione sono stati misurati tramite un clock monotono con errore relativo massimo \(\leq 0.001\). \\
+
+\noindent I risultati ottenuti confermano l'efficienza teorica:
+
+\begin{itemize}
+    \item In Esperimento 1, il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(O(n \cdot log_{10}(k))\), dato \(k\) fisso.
+    \item In Esperimento 2, aumentando \(k\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di counting sort, coerente con la complessità \(O(d \cdot n)\).
+\end{itemize}
+
+\noindent Radix Sort si dimostra particolarmente adatto per dataset numerici con intervallo limitato, risultando spesso più veloce di algoritmi comparativi come Quick Sort nei casi in cui \(k = O(n)\) o \(k << n^2\).
 
 % chapter Radix Sort (end)
 
 \chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
-TODO
+TODO (?)
 
 % chapter Conclusioni (end)
 
