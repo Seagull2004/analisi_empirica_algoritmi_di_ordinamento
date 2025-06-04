@@ -37,23 +37,28 @@
 
 \chapter{Introduzione}\label{chap:Introduzione} % (fold)
 
-Il progetto richiede l'implementazione di quattro algoritmi di ordinamento per array interi di dimensioni variabili.
+Il progetto richiede l'implementazione di quattro algoritmi di ordinamento per array di interi di dimensione variabile.
 Gli algoritmi che andremo ad analizzare sono il Counting Sort, il Quick Sort, il Quick Sort 3 way e il Radix Sort (algoritmo a scelta).
-Oltre alla corretta implementazione viene richiesto di effettuare un analisi empirica dei tempi medi di esecuzione degli algorimti al variare della dimensione dell'array e del range dei valori interi.
-Per stimare i tempi di esecuzione di questi algoritmi garanantendo un errore relativo massimo pari a 0.001 adotteremo le seguenti metodologie:
+Oltre alla corretta implementazione viene richiesto di effettuare un'analisi empirica dei tempi di esecuzione degli algorimti al variare della dimensione dell'array e del range dei valori interi. Per stimare i tempi di esecuzione di questi algoritmi garanantendo un errore relativo massimo pari a 0.001 adotteremo le seguenti metodologie:
+
 \begin{itemize}
     \item Utilizzeremo un clock di sistema monotono per garantire precisione nelle misurazioni (ad esempio, \texttt{perf\_counter()} del modulo \(time\) in Python);
-    \item Andremo a generare almeno 100 campioni per ciascun grafico, con i valori dei parametri (dimensione dell'array \(n\) e intervallo dei valori \(m\)) distribuiti secondo una progressione geometrica;
-    \item Effettueremo più esecuzioni per ogni campione, per stimare in modo affidabile il tempo medio di esecuzione e, eventualmente, il relativo errore.
+    \item Andremo a generare 100 campioni per ciascun grafico, con i valori dei parametri (dimensione dell'array \(n\) e intervallo dei valori \(m\)) distribuiti secondo una progressione geometrica;
+    \item Effettueremo più esecuzioni per ogni campione, per stimare in modo affidabile il tempo medio di esecuzione.
 \end{itemize}
-Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà interessante confrontare i grafici ottenuti per analizzare il comportamento degli algoritmi in diverse situazioni, come il caso peggiore, quello migliore o in quello medio.
 
-Da tutto questo potremmo ottenere una verifica empirica dell'andamento asintotico dei tempi di esecuzione di ogni algoritmo.
+\noindent Dopo aver stimato i tempi di esecuzione per ciascun algoritmo, risulterà interessante confrontare i grafici ottenuti per analizzarne il comportamento. 
 
 % chapter Introduzione (end)
 
+
+ 
 \chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
 
+
+
+% questa parte serve?
+% da qui
 Il Counting Sort è un algoritmo di ordinamento non comparativo: anziché effettuare confronti tra gli elementi, si basa sul conteggio delle occorrenze di ciascun elemento presente nell'array da ordinare.
 È particolarmente efficiente quando gli elementi da ordinare sono numeri interi compresi in un intervallo limitato (intervallo \([0, k]\)).
 L'implementazione adottata si articola in tre fasi principali:
@@ -63,16 +68,19 @@ L'implementazione adottata si articola in tre fasi principali:
     \item Calcolo delle posizioni cumulative; per ottenere la posizione finale di ciascun elemento nell'array ordinato, si trasforma \(C\) in un array cumulativo. In questa versione, \(C[0]\) viene inizialmente decrementando di uno, così che \(c[i]\) rapprsenti l'indice massimo in cui si può inserire l'elemento \(i\) nell'array ordinato.
     \item Costruzione dell'array ordinato; si scorre l'array originale da destra a sinistra, e si inserisce ciascun elemento \(x\) nella posizione \(C[x]\) dell'array ordinato, decrementando \(C[x]\) di 1 dopo ogni inserimento. Questo garantisce la stabilità dell'ordinamento, poiché gli elementi con lo stesso valore vengono inseriti nell'ordine in cui appaiono nell'array originale.
 \end{itemize}
+% a qui
 
 \noindent Le due funzioni fornite nel codice sono:
 
 \begin{itemize}
-    \item \texttt{countingSort(A, B, k)}: scrive l'output ordinato in B;
+    \item \texttt{countingSort(A, B, k)}: modifica il vettore B scrivendoci all'interno l'ordinamento crescente di A;
     \item \texttt{uniformedCountingSort(A, k)}: funzione wrapper che restituisce direttamente una copia ordinata di A.
 \end{itemize}
 
 \section{Analisi della complessità}
 
+% serve davvero
+% da qui
 Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto in \(A\). \\
 
 \noindent \textbf{Tempo:}
@@ -93,7 +101,9 @@ Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto i
 \end{itemize}
 
 \noindent L'algoritmo è efficiente quando \(k = O(n)\), ovvero quando il range massimo dei valori interi è proporzionale alla dimensione dell'array.
-In scenari in cui \(k >> n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
+In scenari in cui \(k \gg n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
+% a qui
+
 
 \section{Analisi empirica}
 
@@ -101,25 +111,21 @@ Sono stati condotti due esperimenti distinti per analizzare le prestazioni empir
 
 \begin{itemize}
     \item Nel primo esperimento, la dimensione dell'array \(n\) varia, mentre il valore massimo \(k\) è mantenuto fisso a 100000.
-    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(m\).
+    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(k\).
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
-Per ogni valore di \(n\) o \(m\) sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo \(\leq\) 0.001.
-Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python).
+Per ogni valore di \(n\) o \(m\) sono stati generati 100 campioni casuali, ciascuno eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo \(\leq\) 0.001.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
 
-I risultati ottenuti sono in linea con le aspettative teoriche:
-Nel primo grafico (a \(k\) fisso), il tempo cresce linearmente con \(n\), coerentemente con la complessità \(O(n + m)\).
-Nel secondo grafico (a \(n\) fisso), il tempo cresce linearmente con \(m\), evidenziando l'impatto della fase di conteggio e dell'allocazione dell'array \(C\).
-I due grafici risultanti mostrano visivamente come il Counting Sort si comporti in relazione ai due parametri chiave \(n\) e \(m\).
+\subsection{Primo esperimento ($n$ varia)}
 
-\section{Grafico dei tempi di esecuzione}
-
+\noindent
 In primo luogo, è stato analizzato l'andamento temporale al variare della dimensione dell'array \(n\), mantenendo costante l'intervallo dei valori a \(k = 100000\). 
 Il grafico seguente mostra in:
 \begin{itemize}
-    \item \textbf{Ascissa}: dimensione \(n\) dell'array (scala logaritmica, \(10^2 \leq n \leq 10^6\)).
-    \item \textbf{Ordinata}: tempo di esecuzione (secondi) per l'ordinamento.
+    \item \textbf{Ascissa}: dimensione \(n\) dell'array;
+    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
 \end{itemize}
 
 \begin{figure}[H]
@@ -129,11 +135,13 @@ Il grafico seguente mostra in:
     \label{fig:counting_sort_n}
 \end{figure}
 
+\subsection{Secondo esperimento ($m$ varia)}
+
 \noindent Successivamente, è stato analizzato l'andamento temporale al variare dell'intervallo di valori \(m\), mantenendo costante la dimensione dell'array a \(n = 10000\). 
 Il grafico seguente presenta:
 \begin{itemize}
-    \item Ascissa: intervallo \(m\) dei valori (scala logaritmica, \(10^1 \leq m \leq 10^6\))
-    \item Ordinata: tempo di esecuzione (secondi) per l'ordinamento
+    \item \textbf{Ascissa}: intervallo \(m\) dei valori;
+    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
 \end{itemize}
 
 \begin{figure}[H]
@@ -147,12 +155,22 @@ Il grafico seguente presenta:
 
 \chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
+% serve davvero?
+% da qui
 Il Quick Sort è un algoritmo di ordinamento basato sulla strategia del divide et impera (ovvero: dividere il problema in sottoproblemi più piccoli, risolverli ricorsivamente e combinare i risultati).
 A partire da un array \(A\), si seleziona un pivot, in questo caso l'elemento finale del sottoarray \(A[p...q]\), e si procede alla partizione: tutti gli elementi minori o uguali al pivot vengono spostati a sinistra, quelli maggiori a destra. L'indice finale del pivot è restituito dalla funzione partition, e l'algoritmo viene poi richiamato ricorsivamente sulle due sottosequenze risultanti.
+% a qui?
 
-L'implementazione utilizzata è in-place (cioè non richiede spazio aggiuntivo proporzionale all'input), ma non stabile (l'ordine relativo tra elementi uguali può cambiare).
 
-La funzione \texttt{uniformedQuickSort} è una versione ausiliaria pensata per rendere uniforme l'interfaccia tra gli algoritmi testati: riceve come parametro anche \(k\) (massimo valore degli elementi), che tuttavia non viene utilizzato in questo caso, in quanto Quick Sort non dipende dal dominio dei valori.
+\noindent Le due funzioni fornite nel codice sono:
+
+\begin{itemize}
+    \item \texttt{quicksort(A, p, q)}: aggiorna il contenuto del vettore A ordinandolo dal range da $p$ a $q$;
+    \item \texttt{uniformedQuickSort(A, k)}: funzione wrapper per rendere uniforme l'interfaccia tra gli algoritmi testati che esegue l'algoritmo Quick Sort sull'intero vettore A.
+\end{itemize}
+
+\noindent
+L'implementazione del Quick Sort analizzata non è in place a causa della coda delle ricorsioni, e non soddisfa la condizione di stabilità.
 
 \section{Analisi della complessità}
 
@@ -172,26 +190,20 @@ Sia \(n\) la dimensione dell'array da ordinare:
 Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti due esperimenti distinti:
 
 \begin{itemize}
-    \item Esperimento 1: variazione della dimensione dell'array \(n\), mantenendo fisso \(m = 100000\).
-    \item Esperimento 2: \(n = 10000\) costante, con variazione di \(m\).
+    \item Nel primo esperimento la dimensione dell'array \(n\) viene fatta variare, mantenendo fisso \(m = 100000\).
+    \item Nel secondo esperimento abbiamo \(n = 10000\) costante, con variazione di \(m\).
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono distribuiti secondo una progressione geometrica.
-Per ogni coppia \((n, m)\) sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte per stimare in modo accurato il tempo medio di esecuzione, con un errore relativo massimo \(\leq 0.001\).
-Le misurazioni sono state effettuate mediante un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python).
+Per ogni coppia \((n, m)\) sono stati generati 100 campioni casuali, ciascuno eseguito più volte per stimare in modo accurato il tempo medio di esecuzione, con un errore relativo massimo \(\leq 0.001\).
+Le misurazioni sono state effettuate mediante un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
 
+\noindent
 Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m non influisce direttamente sulla complessità. Tuttavia, può avere effetti indiretti sulla distribuzione dei dati (ad esempio, la presenza di molti duplicati o valori ripetuti), il che può influenzare l'efficienza della partizione. \\
 
-\noindent I risultati ottenuti mostrano che:
+\subsection{Primo esperimento ($n$ varia)}
 
-\begin{itemize}
-    \item Nel primo grafico, i tempi di esecuzione crescono come \(O(n log n)\), in linea con il comportamento teorico nel caso medio.
-    \item Nel secondo grafico, la variazione di \(m\) non produce cambiamenti significativi nei tempi di esecuzione, a conferma del fatto che l'algoritmo non dipende dal dominio numerico.
-\end{itemize}
-
-\section{Grafico dei tempi di esecuzione}
-
-È stato generato un grafico in cui varia la lunghezza dell'array da ordinare, indicata con \(n\), mentre il parametro \(m\) (range dei valori) è mantenuto costante. L'ordinamento è stato eseguito utilizzando l'algoritmo Quick Sort su array contenenti numeri casuali. Sull'asse delle ascisse è riportato il valore di \(n\), da 100 a 1.000.000, mentre sull'asse delle ordinate è rappresentato il tempo medio di esecuzione, espresso in secondi.
+A partire dai dati misurati è stato generato un grafico nel quale la lunghezza dell'array indicata con \(n\) varia da 100 a 1000000, mentre il parametro \(m\) (range dei valori) è mantenuto costante. L'ordinamento è stato eseguito utilizzando l'algoritmo Quick Sort su array contenenti numeri casuali.
 
 \begin{figure}[H]
     \centering
@@ -199,6 +211,8 @@ Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m n
     \caption{Performance del Quick Sort al variare di \(n\).}
     \label{fig:quick_sort_n}
 \end{figure}
+
+\subsection{Secondo esperimento ($m$ varia)}
 
 \noindent Successivamente, è stato realizzato un grafico in cui varia il range dei valori interi presenti nell'array, indicato con \(m\), mantenendo costante la dimensione dell'array a \(n=10000\). Nel grafico riportato di seguito, sull'asse delle ascisse è rappresentata la variazione di \(m\), da 10 a 1.000.000, in scala scientifica. Sull'asse delle ordinate è riportato il tempo medio di esecuzione dell'ordinamento, espresso in secondi.
 
@@ -209,7 +223,7 @@ Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m n
     \label{fig:quick_sort_m}
 \end{figure}
 
-\noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nell'array (\(m\)) è molto basso. Sarà opportuno approfondire l'origine di questo comportamento, che potrebbe essere legato alla scarsa diversità dei dati e al conseguente degrado delle prestazioni dell'algoritmo.
+\noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nell'array (\(m\)) è molto basso. La motivazione è presto detta: Quick Sort rischia di diventare $O(n^2)$ se ci sono tante ripetizioni dello stesso elemento, cosa che, per il principio della piccionaia avviene per valori di $m$ piuttosto bassi (e.g. un'array da 10000 elementi che contiene elementi che possono assumere solamente 10 valori diversi risulta avere molte ripetizioni).
 
 % chapter Quick Sort (end)
 
@@ -245,8 +259,8 @@ Sia \(n\) la dimensione dell'array:
 Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti due esperimenti separati:
 
 \begin{itemize}
-    \item Esperimento 1: \(m = 100000\) fisso, e variazione della dimensione dell'array \(n\).
-    \item Esperimento 2: \(n = 10000\) fisso, e variazione dell'intervallo dei valori \(m\).
+    \item Nel primo esperimento abbiamo \(m = 100000\) fisso, mentre la dimensione dell'array che varia da \(100\) a $100000$
+    \item Nel secondo esperimento la dimensione dell'array è \(n = 10000\) mentre viene fatto variare il range dei valori \(m\) da $10$ a $1000000$.
 \end{itemize}
 
 I valori di \(n\) e \(m\) sono distribuiti secondo una progressione geometrica. Per ogni coppia di parametri sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte. I tempi medi di esecuzione sono stati stimati con un clock monotono ad alta precisione (\texttt{time.perf\_counter()}), garantendo un errore relativo massimo \(\leq 0.001\). \\

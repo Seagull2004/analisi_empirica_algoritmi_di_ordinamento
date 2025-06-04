@@ -146,13 +146,13 @@ def stampaGraficiVersus(x_label: str, log_scale: bool = False) -> None:
             plt.show()
 
 def ottieniLineaTeorica(x, y):
-        # plot del grafico teorico
-        log_x = np.log10(x)
-        log_y = np.log10(y)
-        coeff = np.polyfit(log_x, log_y, 3)  # Fitting polinomiale di grado 3
-        fitted_curve = np.poly1d(coeff)
-        fitted_y = 10**fitted_curve(log_x) # Generazione dei valori della curva di adattamento
-        return fitted_y
+    # plot del grafico teorico
+    log_x = np.log10(x)
+    log_y = np.log10(y)
+    coeff = np.polyfit(log_x, log_y, 3)  # Fitting polinomiale di grado 3
+    fitted_curve = np.poly1d(coeff)
+    fitted_y = 10 ** fitted_curve(log_x) # Generazione dei valori della curva di adattamento
+    return fitted_y
 
 def stampaGraficoUnicoDeiValoriMisurati(x_label: str, log_scale: bool = False) -> None:
     """
