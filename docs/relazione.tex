@@ -111,7 +111,8 @@ Sono stati condotti due esperimenti distinti per analizzare le prestazioni empir
 
 \begin{itemize}
     \item Nel primo esperimento, la dimensione dell'array \(n\) varia, mentre il valore massimo \(k\) è mantenuto fisso a 100000.
-    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(k\).
+    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(k\);
+    \item Nel terzo esperimento: studio del caso peggiore 
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
@@ -150,6 +151,9 @@ Il grafico seguente presenta:
     \caption{Performance del Counting Sort al variare di \(m\).}
     \label{fig:counting_sort_m}
 \end{figure}
+
+\subsection{Terzo esperimento (studio del caso peggiore)}
+#todo
 
 % chapter Counting Sort (end)
 
@@ -192,6 +196,7 @@ Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti
 \begin{itemize}
     \item Nel primo esperimento la dimensione dell'array \(n\) viene fatta variare, mantenendo fisso \(m = 100000\).
     \item Nel secondo esperimento abbiamo \(n = 10000\) costante, con variazione di \(m\).
+    \item Studio del caso peggiore: array ordinato
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono distribuiti secondo una progressione geometrica.
@@ -225,11 +230,14 @@ A partire dai dati misurati è stato generato un grafico nel quale la lunghezza 
 
 \noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nell'array (\(m\)) è molto basso. La motivazione è presto detta: Quick Sort rischia di diventare $O(n^2)$ se ci sono tante ripetizioni dello stesso elemento, cosa che, per il principio della piccionaia avviene per valori di $m$ piuttosto bassi (e.g. un'array da 10000 elementi che contiene elementi che possono assumere solamente 10 valori diversi risulta avere molte ripetizioni).
 
+\subsection{Terzo esperimento (studio del caso peggiore)}
+#todo 
+
 % chapter Quick Sort (end)
 
 \chapter{Quick Sort 3 Way}\label{chap:Quick Sort 3 Way} % (fold)
 
-Il Quick Sort 3-Way è una variante del Quick Sort classico, progettata per migliorare l'efficienza in presenza di molti elementi duplicati. Come il Quick Sort tradizionale, segue la strategia del divide et impera (cioè suddividere l'array in parti più semplici da ordinare ricorsivamente).
+Il Quick Sort 3-Way è una variante del Quick Sort classico, progettata per migliorare l'efficienza in presenza di molti elementi duplicati. Come il Quick Sort tradizionale, segue la strategia del \textit{divide et impera} (cioè suddividere l'array in parti più semplici da ordinare ricorsivamente).
 A differenza della versione classica, che suddivide in due partizioni (elementi minori o maggiori del pivot), il Quick Sort 3-Way suddivide l'array in tre sezioni distinte:
 
 \begin{itemize}
@@ -239,7 +247,7 @@ A differenza della versione classica, che suddivide in due partizioni (elementi 
 \end{itemize}
 
 \noindent Questa suddivisione viene effettuata durante la fase di partizionamento, evitando confronti e ricorsioni inutili sugli elementi uguali al pivot, che sono già in posizione corretta. La ricorsione viene infatti applicata solo alle sottosequenze strettamente minori o maggiori del pivot.
-L'algoritmo è in-place (non richiede spazio addizionale significativo) ma non stabile (gli elementi uguali possono cambiare ordine relativo).
+L'algoritmo non è in-place per via della coda delle chiamate ricorsive e non è neanche stabile, infatti gli elementi uguali possono cambiare ordine relativo.
 
 \section{Analisi della complessità}
 
@@ -263,16 +271,38 @@ Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti du
     \item Nel secondo esperimento la dimensione dell'array è \(n = 10000\) mentre viene fatto variare il range dei valori \(m\) da $10$ a $1000000$.
 \end{itemize}
 
-I valori di \(n\) e \(m\) sono distribuiti secondo una progressione geometrica. Per ogni coppia di parametri sono stati generati almeno 100 campioni casuali, ciascuno eseguito più volte. I tempi medi di esecuzione sono stati stimati con un clock monotono ad alta precisione (\texttt{time.perf\_counter()}), garantendo un errore relativo massimo \(\leq 0.001\). \\
+\noindent
+I valori di \(n\) e \(m\) sono distribuiti secondo una progressione geometrica. Per ogni coppia di parametri sono stati generati 100 campioni casuali, ciascuno eseguito più volte. I tempi medi di esecuzione sono stati stimati con un clock monotono ad alta precisione (\texttt{time.perf\_counter()}), garantendo un errore relativo massimo \(\leq 0.001\). \\
 
-\noindent I risultati ottenuti sono coerenti con le aspettative teoriche:
 
-\begin{itemize}
-    \item Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(O(n \cdot log(n))\), come previsto.
-    \item Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati nei dati, e l'algoritmo ne beneficia: i tempi di esecuzione diminuiscono sensibilmente grazie al partizionamento ottimizzato del Quick Sort 3-Way.
-\end{itemize}
+\noindent
+Nel grafico allegato si evidenziano chiaramente i vantaggi di questa variante rispetto alla versione classica, soprattutto in presenza di dati ridondanti.
 
-\noindent Nel grafico allegato si evidenziano chiaramente i vantaggi di questa variante rispetto alla versione classica, soprattutto in presenza di dati ridondanti.
+\subsection{Primo esperimento ($n$ varia)}
+
+Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(O(n \cdot log(n))\), come previsto.
+
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_quick_sort_3_way_n.png}
+    \caption{Performance del Quick Sort 3 Way al variare di \(n\).}
+    \label{fig:quick_sort_3_way_n}
+\end{figure}
+
+
+
+\subsection{Secondo esperimento ($m$ varia)}
+
+Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati nei dati, e l'algoritmo ne beneficia: i tempi di esecuzione diminuiscono sensibilmente grazie al partizionamento ottimizzato del Quick Sort 3-Way.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_quick_sort_3_way_m.png}
+    \caption{Performance del Quick Sort 3 Way al variare di \(m\).}
+    \label{fig:quick_sort_3_way_m}
+\end{figure}
+
 
 % chapter Quick Sort 3 Way (end)
 
@@ -293,29 +323,55 @@ Sia \(n\) la lunghezza dell'array e \(d\) il numero massimo di cifre (ossia \( d
 \end{itemize}
 
 \section{Analisi empirica}
+
 L'algoritmo è stato testato su array di interi generati casualmente, secondo due configurazioni sperimentali:
 
 \begin{itemize}
-    \item Esperimento 1: \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) dell'array.
-    \item Esperimento 2: \(n = 10000\) fisso, variando \(m\), cioè il massimo valore presente negli elementi.
+    \item Nel primo esperimento \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) dell'array da 100 a 100000;
+    \item Nel secondo esperimento \(n = 10000\) fisso, variando \(m\), cioè il massimo valore presente negli elementi da 10 a 1000000.
 \end{itemize}
 
-\noindent In entrambi i casi, i parametri sono scelti su una scala geometrica. Ogni configurazione \((n, m)\) è stata eseguita su almeno 100 campioni, ciascuno ripetuto più volte. I tempi di esecuzione sono stati misurati tramite un clock monotono con errore relativo massimo \(\leq 0.001\). \\
+\noindent In entrambi i casi, i parametri sono scelti su una scala geometrica. Ogni configurazione \((n, m)\) è stata eseguita su 100 campioni, ciascuno ripetuto più volte. I tempi di esecuzione sono stati misurati tramite un clock monotono con errore relativo massimo \(\leq 0.001\). \\
 
 \noindent I risultati ottenuti confermano l'efficienza teorica:
 
-\begin{itemize}
-    \item In Esperimento 1, il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(O(n \cdot log_{10}(k))\), dato \(k\) fisso.
-    \item In Esperimento 2, aumentando \(k\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di counting sort, coerente con la complessità \(O(d \cdot n)\).
-\end{itemize}
 
-\noindent Radix Sort si dimostra particolarmente adatto per dataset numerici con intervallo limitato, risultando spesso più veloce di algoritmi comparativi come Quick Sort nei casi in cui \(k = O(n)\) o \(k << n^2\).
+\subsection{Primo esempio ($n$ varia)}
+
+Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(O(n \cdot log(m))\), dato \(m\) fisso.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_radix_sort_n.png}
+    \caption{Performance del Radix Sort al variare di \(n\).}
+    \label{fig:radix_sort_way_n}
+\end{figure}
+
+\subsection{Secondo esempio ($m$ varia)}
+
+Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di Counting Sort, coerente con la complessità \(O(d \cdot n)\).
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/grafico_radix_sort_m.png}
+    \caption{Performance del Radix Sort variare di \(m\).}
+    \label{fig:radix_sort_3_way_m}
+\end{figure}
+
+\noindent Radix Sort si dimostra particolarmente adatto per dataset numerici con intervallo limitato, risultando spesso più veloce di algoritmi comparativi come Quick Sort nei casi in cui \(k = O(n)\) o \(k \gg n^2\).
 
 % chapter Radix Sort (end)
 
 \chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
-TODO (?)
+
+\begin{itemize}
+    \item mostriamo che asintoticamente con n fissato e un m che cresce sono meglio gli algoritmi basati su sbambi e confronti
+    \item mostriamo che asintoticamente con m fissato e un n che cresce sono meglio gli algoritmi lineari se le loro ipotesi sono soddisfatte
+    \item (opzionale) cosa succede se facciamo variare m e n conteporaneamente?
+\end{itemize}
+
+// grafico complessivo qui
 
 % chapter Conclusioni (end)
 
