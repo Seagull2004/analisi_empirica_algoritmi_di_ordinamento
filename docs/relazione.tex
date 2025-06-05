@@ -11,7 +11,7 @@
 \author[ ]{Petri Riccardo \thanks{Email: petri.riccardo@spes.uniud.it, Matricola: 167623}}
 \author[ ]{Ungaro Marco \thanks{Email: ungaro.marco@spes.uniud.it, Matricola: 168934}}
 
-\affil[ ]{Università degli Studi di Udine, Dipartimento di Matematica e Informatica}
+\affil[ ]{Università degli Studi di Udine, Dipartimento di Scienze matematiche, informatiche e fisiche}
 
 \date{A.A. 2024-2025}
 %\date{}
@@ -326,9 +326,9 @@ Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati 
 
 \subsection{Terzo esperimento (array ordinati)}
 
-Notiamo che anche in questo caso, come per il Quick Sort base, l'andamento risulta quadratico.
-Tuttavia la performance risulta migliore grazie alla divisione in 3 parti dell'array.
-In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il tempo di misurazione e il numero di ricorsioni arrivava ad essere troppo elevato). In ogni caso vediamo che per array di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con array di 10000 elementi! (sempre con array ordinati)
+Notiamo che anche in questo caso, come per il Quick Sort base, l'andamento peggiora, ma sembra resistere meglio.
+La performance risulta migliore grazie alla divisione in 3 parti dell'array, che probabilmente permette di evitare ricorsioni (anche se le ricorsioni evitate sono mediamente su un singolo elemento, il pivot).
+In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il tempo di misurazione e il numero di ricorsioni arrivava ad essere troppo elevato). In ogni caso vediamo che per array di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con array di appena 10000 elementi! (sempre con array ordinati)
 
 \begin{figure}[H]
     \centering

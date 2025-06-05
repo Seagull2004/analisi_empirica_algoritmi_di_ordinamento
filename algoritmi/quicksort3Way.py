@@ -31,19 +31,9 @@ def quickSort3WayRec(vec: list[int], p: int, q: int) -> None:
     """
     if q - p < 2:
         return
-
     k, l = partition3way(vec, p, q)
-
-    # Only recurse if subarray is non-empty
-    if p < k:
-        quickSort3WayRec(vec, p, k)
-    if l < q:
-        quickSort3WayRec(vec, l, q)
-#    if q - p < 2:
-#        return
-#    k, l = partition3way(vec, p, q)
-#    quickSort3WayRec(vec, p, k)
-#    quickSort3WayRec(vec, l, q)
+    quickSort3WayRec(vec, p, k)
+    quickSort3WayRec(vec, l, q)
 
 
 def partition3way(A: list[int], p: int, q: int) -> tuple[int, int]:
@@ -77,8 +67,8 @@ def partition3way(A: list[int], p: int, q: int) -> tuple[int, int]:
             i += 1
 
     return lt, gt  # Elements in A[lt..gt-1] == pivot
-    if q - p < 1:
-        return p, q
+#    if q - p < 1:
+#        return p, q
 #    pivot = A[q - 1]
 #    A[q-1], A[p] = A[p], A[q-1]
 #    k = p
