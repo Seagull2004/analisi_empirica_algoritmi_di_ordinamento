@@ -8,6 +8,7 @@ from algoritmi.quicksort3Way import uniformedQuickSort3Way as quickSort3Way
 from algoritmi.radixSort import uniformedRadixSort as radixSort
 import utils.measurement as measurement
 import utils.geometricRangeGenerator as generatorRange
+from utils.randomGenerator import Disposition as Disposition
 import os
 import csv
 
@@ -57,7 +58,7 @@ def misuraTempiSullaBaseDi(variabile: str, var_end: int, lock: int, var_start: i
         for i in generatorRange.generateGeometricRange(var_start, var_end, NUM_CAMPIONI):
             ascisse[measure_counter] = i
             if variabile == 'n':
-                ordinate[measure_counter] = measurement.measureMeanTimeAlgo(algo_config["algo"], n = i, m = lock) 
+                ordinate[measure_counter] = measurement.measureMeanTimeAlgo(algo_config["algo"], n = i, m = lock, disposition = Disposition.RANDOM) 
             else:
                 ordinate[measure_counter] = measurement.measureMeanTimeAlgo(algo_config["algo"], m = i, n = lock) 
             measure_counter += 1

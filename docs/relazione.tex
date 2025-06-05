@@ -60,11 +60,11 @@ Oltre alla corretta implementazione viene richiesto di effettuare un'analisi emp
 % questa parte serve?
 % da qui
 Il Counting Sort è un algoritmo di ordinamento non comparativo: anziché effettuare confronti tra gli elementi, si basa sul conteggio delle occorrenze di ciascun elemento presente nell'array da ordinare.
-È particolarmente efficiente quando gli elementi da ordinare sono numeri interi compresi in un intervallo limitato (intervallo \([0, k]\)).
+È particolarmente efficiente quando gli elementi da ordinare sono numeri interi compresi in un intervallo limitato (intervallo \([0, m]\)).
 L'implementazione adottata si articola in tre fasi principali:
 
 \begin{itemize}
-    \item Conteggio delle occorrenze di ciascun elemento; si costruisce un array ausiliario \(C\) di lunghezza \(k+1\), inizializzato a zero, in cui per ogni elemento \(x\) in \(A\), si incrementa \(C[x]\) di 1.
+    \item Conteggio delle occorrenze di ciascun elemento; si costruisce un array ausiliario \(C\) di lunghezza \(m+1\), inizializzato a zero, in cui per ogni elemento \(x\) in \(A\), si incrementa \(C[x]\) di 1.
     \item Calcolo delle posizioni cumulative; per ottenere la posizione finale di ciascun elemento nell'array ordinato, si trasforma \(C\) in un array cumulativo. In questa versione, \(C[0]\) viene inizialmente decrementando di uno, così che \(c[i]\) rapprsenti l'indice massimo in cui si può inserire l'elemento \(i\) nell'array ordinato.
     \item Costruzione dell'array ordinato; si scorre l'array originale da destra a sinistra, e si inserisce ciascun elemento \(x\) nella posizione \(C[x]\) dell'array ordinato, decrementando \(C[x]\) di 1 dopo ogni inserimento. Questo garantisce la stabilità dell'ordinamento, poiché gli elementi con lo stesso valore vengono inseriti nell'ordine in cui appaiono nell'array originale.
 \end{itemize}
@@ -73,35 +73,35 @@ L'implementazione adottata si articola in tre fasi principali:
 \noindent Le due funzioni fornite nel codice sono:
 
 \begin{itemize}
-    \item \texttt{countingSort(A, B, k)}: modifica il vettore B scrivendoci all'interno l'ordinamento crescente di A;
-    \item \texttt{uniformedCountingSort(A, k)}: funzione wrapper che restituisce direttamente una copia ordinata di A.
+    \item \texttt{countingSort(A, B, m)}: modifica il vettore B scrivendoci all'interno l'ordinamento crescente di A;
+    \item \texttt{uniformedCountingSort(A, m)}: funzione wrapper che restituisce direttamente una copia ordinata di A.
 \end{itemize}
 
 \section{Analisi della complessità}
 
 % serve davvero
 % da qui
-Siano \(n\) la dimensione dell'array \(A\) e \(k\) il valore massimo contenuto in \(A\). \\
+Siano \(n\) la dimensione dell'array \(A\) e \(m\) il valore massimo contenuto in \(A\). \\
 
 \noindent \textbf{Tempo:}
 
 \begin{itemize}
-    \item Conteggio: \(O(n)\) per scorrere l'array \(A\) e contare le occorrenze di ciascun elemento.
-    \item Calcolo delle posizioni cumulative: \(O(k)\) per trasformare l'array \(C\) in un array cumulativo.
-    \item Costruzione dell'array ordinato: \(O(n)\) per scorrere l'array \(A\) e inserire gli elementi nell'array ordinato \(B\).
-    \item Totale: \(O(n + k)\).
+    \item Conteggio: \(\Theta(n)\) per scorrere l'array \(A\) e contare le occorrenze di ciascun elemento.
+    \item Calcolo delle posizioni cumulative: \(\Theta(m)\) per trasformare l'array \(C\) in un array cumulativo.
+    \item Costruzione dell'array ordinato: \(\Theta(n)\) per scorrere l'array \(A\) e inserire gli elementi nell'array ordinato \(B\).
+    \item Totale: \(\Theta(n + m)\).
 \end{itemize}
 
 \noindent \textbf{Spazio:}
 
 \begin{itemize}
-    \item Array ausiliario \(C\): richiede \(O(k)\) spazio.
+    \item Array ausiliario \(C\): richiede \(O(m)\) spazio.
     \item Array ordinato \(B\): richiede \(O(n)\) spazio.
-    \item Totale: \(O(n + k)\).
+    \item Totale: \(O(n + m)\).
 \end{itemize}
 
-\noindent L'algoritmo è efficiente quando \(k = O(n)\), ovvero quando il range massimo dei valori interi è proporzionale alla dimensione dell'array.
-In scenari in cui \(k \gg n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
+\noindent L'algoritmo è efficiente quando \(m = O(n)\), ovvero quando la crescita dell'elemento massimo dell'array ha ordine inferiore o uguale alla crescita della lunghezza.
+In scenari in cui \(m \gg n\), il costo della fase di conteggio e l'allocazione dell'array ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
 % a qui
 
 
@@ -110,9 +110,9 @@ In scenari in cui \(k \gg n\), il costo della fase di conteggio e l'allocazione 
 Sono stati condotti due esperimenti distinti per analizzare le prestazioni empiriche del Counting Sort:
 
 \begin{itemize}
-    \item Nel primo esperimento, la dimensione dell'array \(n\) varia, mentre il valore massimo \(k\) è mantenuto fisso a 100000.
-    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(k\);
-    \item Nel terzo esperimento: studio del caso peggiore 
+    \item Nel primo esperimento, la dimensione dell'array \(n\) varia, mentre il valore massimo \(m\) è mantenuto fisso a 1000000.
+    \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(m\);
+    \item Nel terzo esperimento: \(n\) varia tra 0 e 10000 e \(m\) è posto come il quadrato di \(n\)
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
@@ -153,7 +153,19 @@ Il grafico seguente presenta:
 \end{figure}
 
 \subsection{Terzo esperimento (studio del caso peggiore)}
-#todo
+\noindent In terza battuta, al variare di \(n\) tra 100 e 10000 (per mantenere contenuto il tempo di esecuzione) è stato posto il massimo \(m\) come il quadrato della lunghezza dell'array. Con questa misurazione, mostriamo che se al crescere dell'input, l'elemento massimo cresce con un ordine superiore a quello della lunghezza, l'algoritmo diventa inefficiente rispetto ai tradizionali algoritmi basati su scambi e confronti, per i quali la crescita di \(m\) non comporta problemi. In questo caso l'andamento sembra essere proprio quadratico rispetto ad n (come ci aspettavamo) ma può arrivare ad essere anche peggio. In ogni caso i tempi anche solo per array di 10000 elementi risultano molto alti, superando gli 8 secondi, da qui vediamo anche le alte costanti moltiplicative nascoste dietro la notazione asintotica.
+Il grafico seguente presenta:
+\begin{itemize}
+    \item \textbf{Ascissa}: intervallo \(n\) dei valori;
+    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/countingSortQuadratico.png}
+    \caption{Performance del Counting Sort al variare di \(n\) e \(m\) = \(n\)^2.}
+    \label{fig:counting_sort_m}
+\end{figure}
 
 % chapter Counting Sort (end)
 
@@ -170,7 +182,7 @@ A partire da un array \(A\), si seleziona un pivot, in questo caso l'elemento fi
 
 \begin{itemize}
     \item \texttt{quicksort(A, p, q)}: aggiorna il contenuto del vettore A ordinandolo dal range da $p$ a $q$;
-    \item \texttt{uniformedQuickSort(A, k)}: funzione wrapper per rendere uniforme l'interfaccia tra gli algoritmi testati che esegue l'algoritmo Quick Sort sull'intero vettore A.
+    \item \texttt{uniformedQuickSort(A, m)}: funzione wrapper per rendere uniforme l'interfaccia tra gli algoritmi testati che esegue l'algoritmo Quick Sort sull'intero vettore A.
 \end{itemize}
 
 \noindent
@@ -196,7 +208,7 @@ Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti
 \begin{itemize}
     \item Nel primo esperimento la dimensione dell'array \(n\) viene fatta variare, mantenendo fisso \(m = 100000\).
     \item Nel secondo esperimento abbiamo \(n = 10000\) costante, con variazione di \(m\).
-    \item Studio del caso peggiore: array ordinato
+    \item Studio del caso peggiore: array ordinato, \(m = 100000\), \(n\) varia tra 100 e 10000
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono distribuiti secondo una progressione geometrica.
@@ -231,7 +243,15 @@ A partire dai dati misurati è stato generato un grafico nel quale la lunghezza 
 \noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nell'array (\(m\)) è molto basso. La motivazione è presto detta: Quick Sort rischia di diventare $O(n^2)$ se ci sono tante ripetizioni dello stesso elemento, cosa che, per il principio della piccionaia avviene per valori di $m$ piuttosto bassi (e.g. un'array da 10000 elementi che contiene elementi che possono assumere solamente 10 valori diversi risulta avere molte ripetizioni).
 
 \subsection{Terzo esperimento (studio del caso peggiore)}
-#todo 
+
+Per ottenere dei campioni su cui Quick Sort risulta pessimo, le misurazioni sono state effettuate generando array già ordinati, in modo da avere una cattiva scelta dell'elemento pivot. Similmente al grafico del terzo esperimento fatto su Counting Sort, vediamo che l'andamento sembra quadratico, proprio come ci aspettavamo. In ogni caso i tempi sono abbastanza contenuti rispetto al Counting Sort nel suo caso quadratico, dato che con array di 10000 elementi rimaniamo comunque sotto i 4 secondi. In questo caso n varia da 100 a 10000, anche con questa limitazione è stato necessario aumentare il limite di ricorsioni imposto di default da python.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/quickSortCasoPeggiore.png}
+    \caption{Performance del Quick Sort al variare di \(n\) su array ordinati.}
+    \label{fig:quick_sort_n}
+\end{figure}
 
 % chapter Quick Sort (end)
 
@@ -264,11 +284,12 @@ Sia \(n\) la dimensione dell'array:
 
 \section{Analisi empirica}
 
-Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti due esperimenti separati:
+Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti tre esperimenti separati:
 
 \begin{itemize}
-    \item Nel primo esperimento abbiamo \(m = 100000\) fisso, mentre la dimensione dell'array che varia da \(100\) a $100000$
+    \item Nel primo esperimento abbiamo \(m = 100000\) fisso, mentre la dimensione dell'array che varia da \(100\) a $1000000$
     \item Nel secondo esperimento la dimensione dell'array è \(n = 10000\) mentre viene fatto variare il range dei valori \(m\) da $10$ a $1000000$.
+    \item Nel terzo esperimento l'elemento massimo è \(n = 100000\) mentre viene fatto variare il range dei valori \(n\) da $100$ a $100000$ e gli array generati sono tutti generati già ordinati, come per il caso peggiore del Quick Sort di base.
 \end{itemize}
 
 \noindent
@@ -303,6 +324,19 @@ Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati 
     \label{fig:quick_sort_3_way_m}
 \end{figure}
 
+\subsection{Terzo esperimento (array ordinati)}
+
+Notiamo che anche in questo caso, come per il Quick Sort base, l'andamento risulta quadratico.
+Tuttavia la performance risulta migliore grazie alla divisione in 3 parti dell'array.
+In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il tempo di misurazione e il numero di ricorsioni arrivava ad essere troppo elevato). In ogni caso vediamo che per array di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con array di 10000 elementi! (sempre con array ordinati)
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/quicksort3wayCasoPeggiore.png}
+    \caption{Performance del Quick Sort 3 Way su array ordinati.}
+    \label{fig:quick_sort_3_way_m}
+\end{figure}
+
 
 % chapter Quick Sort 3 Way (end)
 
@@ -316,19 +350,20 @@ Questo algoritmo è in-place (usa spazio aggiuntivo proporzionale a \(n + b\), c
 Sia \(n\) la lunghezza dell'array e \(d\) il numero massimo di cifre (ossia \( d = \lceil \log_{10}(k + 1) \rceil \)): \\
 
 \begin{itemize}
-    \item Tempo: \(O(d \cdot (n + b))\), che nel caso più comune (\(b = 10\)) diventa \(O(n \cdot log_{10}(k))\). Quando \(k = O(n^c)\) per una costante \(c\), si ha complessivamente tempo quasi-lineare \(O(n)\).
-    \item Spazio: \(O(n + b)\) per ogni cifra, dove \(b\) è la base (es. 10 cifre decimali).
+    \item Tempo: \(\Theta(d \cdot (n + b))\), che nel caso più comune (\(b = 10\)) diventa \(\Theta(n \cdot log_{10}(k))\). Quando \(k = O(n^c)\) per una costante \(c\), si ha complessivamente tempo quasi-lineare \(\Theta(n)\).
+    \item Spazio: \(\Theta(n + b)\) per ogni cifra, dove \(b\) è la base (es. 10 cifre decimali).
     \item Stabile: sì, se il counting sort interno è stabile.
-    \item In-place: no, nel senso stretto (usa memoria ausiliaria \(O(n)\)).
+    \item In-place: no, nel senso stretto (usa memoria ausiliaria \(\Theta(n)\)).
 \end{itemize}
 
 \section{Analisi empirica}
 
-L'algoritmo è stato testato su array di interi generati casualmente, secondo due configurazioni sperimentali:
+L'algoritmo è stato testato su array di interi generati casualmente, secondo tre configurazioni sperimentali:
 
 \begin{itemize}
-    \item Nel primo esperimento \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) dell'array da 100 a 100000;
+    \item Nel primo esperimento \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) dell'array da 100 a 1000000;
     \item Nel secondo esperimento \(n = 10000\) fisso, variando \(m\), cioè il massimo valore presente negli elementi da 10 a 1000000.
+    \item Nel terzo esperimento è stato studiato lo stesso caso "pessimo" visto per il Counting Sort, ma dal momento che con \(m\) che cresce come il quadrato di \(n\) la complessità temporale di Radix Sort risulta \(\Theta(nlogn)\), abbiamo spinto \(n\) fino a 1000000, come negli gli altri casi.
 \end{itemize}
 
 \noindent In entrambi i casi, i parametri sono scelti su una scala geometrica. Ogni configurazione \((n, m)\) è stata eseguita su 100 campioni, ciascuno ripetuto più volte. I tempi di esecuzione sono stati misurati tramite un clock monotono con errore relativo massimo \(\leq 0.001\). \\
@@ -358,6 +393,18 @@ Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\
     \label{fig:radix_sort_3_way_m}
 \end{figure}
 
+\subsection{Terzo esempio ($m$ = $n^2$)}
+
+Nel terzo esperimento vediamo che, sebbene Radix Sort impieghi più tempo di Counting Sort quando \(m\) è costante, quando facciamo aumentare \(m\) come \(n^2\) le parti si invertono drasticamente, visto che abbiamo un \(\Theta(nlogn)\) contro un \(\Theta(n^2)\).
+Vediamo che anche con array di 1000000 elementi Radix Sort rimane sotto i 6 secondi, mentre appena con array di 10000 elementi counting Sort supera gli 8 secondi. Comunque quando \(m\) cresce in questo modo, rimangono migliori algoritmi \(O(nlogn)\) basati su scambi e confronti, come il Quick Sort.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{images/radixsort_nlogn.png}
+    \caption{Performance del Radix Sort con \(m = n^2\).}
+    \label{fig:radix_sort_3_way_m}
+\end{figure}
+
 \noindent Radix Sort si dimostra particolarmente adatto per dataset numerici con intervallo limitato, risultando spesso più veloce di algoritmi comparativi come Quick Sort nei casi in cui \(k = O(n)\) o \(k \gg n^2\).
 
 % chapter Radix Sort (end)
@@ -366,9 +413,10 @@ Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\
 
 
 \begin{itemize}
-    \item mostriamo che asintoticamente con n fissato e un m che cresce sono meglio gli algoritmi basati su sbambi e confronti
+    \item mostriamo che asintoticamente con n fissato e un m che cresce sono meglio gli algoritmi basati su sbambi e confronti (grafici con tutti gli algorimti)
     \item mostriamo che asintoticamente con m fissato e un n che cresce sono meglio gli algoritmi lineari se le loro ipotesi sono soddisfatte
     \item (opzionale) cosa succede se facciamo variare m e n conteporaneamente?
+    \item (opzionale) volendo potremmo aggiungere le immagini quicksort_vs_3way.png (che confronta quicksort e quicksort3way nel caso di array ordinati) e radixsort_vs_countingsort_crescita_m_quadratica.png
 \end{itemize}
 
 // grafico complessivo qui
