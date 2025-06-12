@@ -183,9 +183,9 @@ def main():
     stampaGraficiVersus('n')
     stampaGraficiSeparatiDeiValoriMisurati('n')
 
-    misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
-    stampaGraficoUnicoDeiValoriMisurati('m')
-    stampaGraficiVersus('m')
-    stampaGraficiSeparatiDeiValoriMisurati('m')
+    # misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
+    # stampaGraficoUnicoDeiValoriMisurati('m')
+    # stampaGraficiVersus('m')
+    # stampaGraficiSeparatiDeiValoriMisurati('m')
 
 main()

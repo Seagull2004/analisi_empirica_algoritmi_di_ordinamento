@@ -62,64 +62,35 @@ L'implementazione adottata si articola in tre fasi principali:
 \end{itemize}
 % a qui
 
-\noindent Le due funzioni fornite nel codice sono:
+\noindent Risulta interessante notare che il Counting Sort, a differenza degli altri algoritmi, non andrà a modficare direttamente il vettore fornito come parametro, bensì per motivi legati alla logica dell'algoritmo farà uso di un vettore ausiliario che rappresentare una copia ordinata del vettore di partenza.
 
-\begin{itemize}
-    \item \texttt{countingSort(A, B, m)}: modifica il vettore B scrivendoci all'interno l'ordinamento crescente di A;
-    \item \texttt{uniformedCountingSort(A, m)}: funzione wrapper che restituisce direttamente una copia ordinata di A.
-\end{itemize}
+\section{Complessità teorica}
 
-\section{Analisi della complessità}
+Per quanto riguarda l'algoritmo Couting Sort, ci aspettiamo una complessità lineare in tempo.
+Siano quindi \(n\) la dimensione del vettore \(A\) e \(m\) il valore massimo contenuto in \(A\), la complessità sarà:
 
-% questa parte serve?
-% da qui
-Siano \(n\) la dimensione del vettore \(A\) e \(m\) il valore massimo contenuto in \(A\). \\
-
-\noindent \textbf{Tempo:}
-
-\begin{itemize}
-    \item Conteggio: \(\Theta(n)\) per scorrere il vettore \(A\) e contare le occorrenze di ciascun elemento.
-    \item Calcolo delle posizioni cumulative: \(\Theta(m)\) per trasformare il vettore \(C\) in un vettore cumulativo.
-    \item Costruzione del vettore ordinato: \(\Theta(n)\) per scorrere il vettore \(A\) e inserire gli elementi nel vettore ordinato \(B\).
-    \item Totale: \(\Theta(n + m)\).
-\end{itemize}
-
-\noindent \textbf{Spazio:}
-
-\begin{itemize}
-    \item Array ausiliario \(C\): richiede \(O(m)\) spazio.
-    \item Array ordinato \(B\): richiede \(O(n)\) spazio.
-    \item Totale: \(O(n + m)\).
-\end{itemize}
-
-\noindent L'algoritmo è efficiente quando \(m = O(n)\), ovvero quando la crescita dell'elemento massimo del vettore ha ordine inferiore o uguale alla crescita della lunghezza.
-In scenari in cui \(m \gg n\), il costo della fase di conteggio e l'allocazione del vettore ausiliario \(C\) possono rendere l'algoritmo meno competitivo rispetto ad altri metodi di ordinamento.
-% a qui
-
+\begin{equation*}
+    \Theta(n+m) 
+\end{equation*}
 
 \section{Analisi empirica}
 
-Sono stati condotti due esperimenti distinti per analizzare le prestazioni empiriche del Counting Sort:
+Sono stati condotti tre esperimenti distinti per analizzare le prestazioni empiriche del Counting Sort:
 
 \begin{itemize}
-    \item Nel primo esperimento, la dimensione del vettore \(n\) varia, mentre il valore massimo \(m\) è mantenuto fisso a 1000000.
+    \item Nel primo esperimento, la dimensione del vettore \(n\) varia, mentre il valore massimo \(m\) è mantenuto fisso a 100000;
     \item Nel secondo esperimento, \(n\) è fissato a 10000, e viene fatto variare \(m\);
-    \item Nel terzo esperimento: \(n\) varia tra 0 e 10000 e \(m\) è posto come il quadrato di \(n\)
+    \item Nel terzo esperimento, \(n\) varia tra 0 e 10000 e \(m\) è posto come il quadrato di \(n\).
 \end{itemize}
 
-\noindent In entrambi i casi, i parametri sono stati scelti seguendo una progressione geometrica.
-Per ogni valore di \(n\) o \(m\) sono stati generati 100 campioni casuali, ciascuno eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo \(\leq\) 0.001.
-Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
+\noindent Ogni esperimento è stato analizzato empiricamente considerando 100 campionamenti distinti nei quali i valori $n$ o $m$ venivano fatti variare seguendo l'andamento di una progressione geometrica.
+Ogni campionamento inoltre è stato eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo minore di 0.001s.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{perf\_counter()} in Python). \\
 
 \subsection{Primo esperimento ($n$ varia)}
 
-\noindent
-In primo luogo, è stato analizzato l'andamento temporale al variare della dimensione del vettore \(n\), mantenendo costante l'intervallo dei valori a \(k = 100000\). 
-Il grafico seguente mostra in:
-\begin{itemize}
-    \item \textbf{Ascissa}: dimensione \(n\) del vettore;
-    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
-\end{itemize}
+\noindent In primo luogo, è stato analizzato l'andamento temporale del Couting Sort al variare della dimensione del vettore \(n\), mantenendo costante l'intervallo dei valori a \(m = 100000\). 
+Il grafico seguente mostra in ascissa la dimensione \(n\) del vettore e in ordinata il tempo di esecuzione per l'ordinamento espresso in secondi.
 
 \begin{figure}[H]
     \centering
@@ -128,14 +99,13 @@ Il grafico seguente mostra in:
     \label{fig:counting_sort_n}
 \end{figure}
 
+\noindent La crescita, come da aspettative, segue un andamento lineare. Il calcolo del rapporto tra $n$ e tempo infatti assume asintoticamente un valore costante.
+
+
 \subsection{Secondo esperimento ($m$ varia)}
 
-\noindent Successivamente, è stato analizzato l'andamento temporale al variare dell'intervallo di valori \(m\), mantenendo costante la dimensione del vettore a \(n = 10000\). 
-Il grafico seguente presenta:
-\begin{itemize}
-    \item \textbf{Ascissa}: intervallo \(m\) dei valori;
-    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
-\end{itemize}
+\noindent Successivamente, è stato analizzato l'andamento temporale al variare del parametro \(m\), mantenendo costante la dimensione del vettore a \(n = 10000\). 
+Il grafico seguente presenta il parametro \(m\) e in ordinata il tempo di esecuzione del Couting Sort espresso in secondi.
 
 \begin{figure}[H]
     \centering
@@ -144,13 +114,14 @@ Il grafico seguente presenta:
     \label{fig:counting_sort_m}
 \end{figure}
 
-\subsection{Terzo esperimento (studio del caso peggiore)}
-\noindent In terza battuta, al variare di \(n\) tra 100 e 10000 (per mantenere contenuto il tempo di esecuzione) è stato posto il massimo \(m\) come il quadrato della lunghezza del vettore. Con questa misurazione, mostriamo che se al crescere dell'input, l'elemento massimo cresce con un ordine superiore a quello della lunghezza, l'algoritmo diventa inefficiente rispetto ai tradizionali algoritmi basati su scambi e confronti, per i quali la crescita di \(m\) non comporta problemi. In questo caso l'andamento sembra essere proprio quadratico rispetto ad n (come ci aspettavamo) ma può arrivare ad essere anche peggio. In ogni caso i tempi anche solo per vettori da 10000 elementi risultano molto alti, superando gli 8 secondi, da qui vediamo anche le alte costanti moltiplicative nascoste dietro la notazione asintotica.
-Il grafico seguente presenta:
-\begin{itemize}
-    \item \textbf{Ascissa}: intervallo \(n\) dei valori;
-    \item \textbf{Ordinata}: tempo di esecuzione per l'ordinamento espresso in secondi.
-\end{itemize}
+\noindent La crescita, come da aspettative, segue un andamento lineare nonostate la lunghezza del vettore sia costante, questo porta conferma alla complessità teorica $\Theta(n+m)$.
+
+
+\subsection{Terzo esperimento (crescita quadratica)}
+
+
+\noindent In terza battuta, al variare di \(n\) tra 100 e 10000 (rispetto al range 100-1000000, per mantenere contenuto il tempo di esecuzione) è stato posto il massimo \(m\) come il quadrato della lunghezza del vettore. Con questa misurazione, mostriamo che se al crescere della dimensione del vettore, l'elemento massimo cresce con un ordine superiore, l'algoritmo diventa molto inefficiente rispetto ai tradizionali algoritmi basati su scambi e confronti, per i quali la crescita di \(m\) non comporta problemi. 
+Il grafico seguente presenta in ascissa la lunghezza \(n\) dei vettori, in ordinata il tempo di esecuzione del Counting Sort espresso in secondi.
 
 \begin{figure}[H]
     \centering
@@ -158,6 +129,8 @@ Il grafico seguente presenta:
     \caption{Performance del Counting Sort al variare di \(n\) e \(m\) = \(n\)^2.}
     \label{fig:counting_sort_m}
 \end{figure}
+
+\noindent In questo caso, come ci aspettavamo, l'andamento sembra essere proprio quadratico rispetto ad n ma può arrivare ad essere anche peggio nel caso in cui $m$ cresce ancora di più. In ogni caso i tempi anche solo per vettori da 10000 elementi risultano molto alti, superando gli 8 secondi, da qui vediamo anche le alte costanti moltiplicative nascoste dietro la notazione asintotica.
 
 % chapter Counting Sort (end)
 
@@ -171,49 +144,33 @@ Il Quick Sort è un algoritmo di ordinamento basato sulla strategia del divide e
 A partire da un vettore \(A\), si seleziona un pivot, in questo caso l'elemento finale del sottovettore \(A[p...q]\), e si procede alla partizione: tutti gli elementi minori o uguali al pivot vengono spostati a sinistra, quelli maggiori a destra. L'indice finale del pivot è restituito dalla funzione partition, e l'algoritmo viene poi richiamato ricorsivamente sulle due sottosequenze risultanti.
 % a qui?
 
-\noindent Le due funzioni fornite nel codice sono:
-
-\begin{itemize}
-    \item \texttt{quicksort(A, p, q)}: aggiorna il contenuto del vettore A ordinandolo dal range da $p$ a $q$;
-    \item \texttt{uniformedQuickSort(A, m)}: funzione wrapper per rendere uniforme l'interfaccia tra gli algoritmi testati che esegue l'algoritmo Quick Sort sull'intero vettore A.
-\end{itemize}
 
 \noindent
 L'implementazione del Quick Sort analizzata non è in place a causa della coda delle ricorsioni, e non soddisfa la condizione di stabilità.
 
-\section{Analisi della complessità}
+\section{Complessità teorica}
 
-Sia \(n\) la dimensione del vettore da ordinare:
+Per quanto riguarda l'algoritmo Quick Sort ci aspettiamo di misurare una crescita temporale pari a $O(n\cdot \log(n))$ nel caso medio, ossia quando il vettore da ordinare è generato casualmente e quindi la scelta del pivot partiziona in maniera equa il vettore. La complessità nel caso peggiore, che per il Quick Sort è rappresentato da il vettore ordinato, ci aspettiamo che sia $O(n^2)$.
 
-\begin{itemize}
-    \item Caso medio: \(O(n \cdot log(n))\), si verifica quando il pivot divide il vettore in modo bilanciato.
-    \item Caso migliore: \(O(n \cdot log(n))\), con partizioni esattamente simmetriche.
-    \item Caso peggiore: \(O(n^2)\), quando il pivot è sempre il minimo o il massimo elemento (partizione altamente sbilanciata).
-    \item Spazio ausiliario: \(O(log(n))\) nel caso medio per la profondità dello stack ricorsivo; \(O(n)\) nel caso peggiore.
-\end{itemize}
-
-\noindent A differenza di altri algoritmi come Counting Sort o Radix Sort, Quick Sort non richiede conoscenza del range dei valori interi e lavora unicamente tramite confronti tra elementi.
 
 \section{Analisi empirica}
 
-Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti due esperimenti distinti:
+Per analizzare empiricamente il comportamento del Quick Sort sono stati eseguiti i tre esperimenti seguenti:
 
 \begin{itemize}
-    \item Nel primo esperimento la dimensione del vettore \(n\) viene fatta variare, mantenendo fisso \(m = 100000\).
-    \item Nel secondo esperimento abbiamo \(n = 10000\) costante, con variazione di \(m\).
-    \item Studio del caso peggiore: vettore ordinato, \(m = 100000\), \(n\) varia tra 100 e 10000
+    \item Nel primo esperimento la dimensione del vettore \(n\) viene fatta variare, mantenendo fisso \(m = 100000\);
+    \item Nel secondo esperimento abbiamo \(n = 10000\) costante, con variazione di \(m\);
+    \item Nel terzo esperimento studio il caso peggiore quindi il vettore sarà ordinato, \(m = 100000\), \(n\) varia tra 100 e 10000.
 \end{itemize}
 
-\noindent In entrambi i casi, i parametri sono distribuiti secondo una progressione geometrica.
-Per ogni coppia \((n, m)\) sono stati generati 100 campioni casuali, ciascuno eseguito più volte per stimare in modo accurato il tempo medio di esecuzione, con un errore relativo massimo \(\leq 0.001\).
-Le misurazioni sono state effettuate mediante un clock monotono ad alta precisione (\texttt{time.perf\_counter()} in Python). \\
+\noindent Ogni esperimento è stato analizzato empiricamente considerando 100 campionamenti distinti nei quali i valori $n$ o $m$ venivano fatti variare seguendo l'andamento di una progressione geometrica.
+Ogni campionamento inoltre è stato eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo minore di 0.001s.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{perf\_counter()} in Python). \\
 
-\noindent
-Poiché Quick Sort opera esclusivamente tramite confronti, il valore massimo m non influisce direttamente sulla complessità. Tuttavia, può avere effetti indiretti sulla distribuzione dei dati (ad esempio, la presenza di molti duplicati o valori ripetuti), il che può influenzare l'efficienza della partizione. \\
 
 \subsection{Primo esperimento ($n$ varia)}
 
-A partire dai dati misurati è stato generato un grafico nel quale la lunghezza del vettore indicata con \(n\) varia da 100 a 1000000, mentre il parametro \(m\) (range dei valori) è mantenuto costante. L'ordinamento è stato eseguito utilizzando l'algoritmo Quick Sort su vettori contenenti numeri casuali.
+A partire dai dati misurati è stato generato un grafico nel quale la lunghezza del vettore indicata con \(n\) varia da 100 a 1000000, mentre il parametro \(m\) è mantenuto costante. L'ordinamento è stato eseguito utilizzando l'algoritmo Quick Sort su vettori contenenti numeri casuali.
 
 \begin{figure}[H]
     \centering
@@ -222,9 +179,12 @@ A partire dai dati misurati è stato generato un grafico nel quale la lunghezza 
     \label{fig:quick_sort_n}
 \end{figure}
 
+\noindent In questo caso, come ci aspettavamo, l'andamento è $n \log(n)$, quindi poco più che lineare come da aspettative.
+
+
 \subsection{Secondo esperimento ($m$ varia)}
 
-\noindent Successivamente, è stato realizzato un grafico in cui varia il range dei valori interi presenti nel vettore, indicato con \(m\), mantenendo costante la dimensione del vettore a \(n=10000\). Nel grafico riportato di seguito, sull'asse delle ascisse è rappresentata la variazione di \(m\), da 10 a 1.000.000, in scala scientifica. Sull'asse delle ordinate è riportato il tempo medio di esecuzione dell'ordinamento, espresso in secondi.
+\noindent Successivamente, è stato realizzato un grafico in cui viene fatto variare il parametro $m$, mantenendo costante la dimensione del vettore a \(n=10000\). I risultati ottenuti sono stati riportati graficamente nel seguente grafico:
 
 \begin{figure}[H]
     \centering
@@ -233,11 +193,11 @@ A partire dai dati misurati è stato generato un grafico nel quale la lunghezza 
     \label{fig:quick_sort_m}
 \end{figure}
 
-\noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nel vettore (\(m\)) è molto basso. La motivazione è presto detta: Quick Sort rischia di diventare $O(n^2)$ se ci sono tante ripetizioni dello stesso elemento, cosa che, per il principio della piccionaia avviene per valori di $m$ piuttosto bassi (e.g. un vettore da 10000 elementi che contiene elementi che possono assumere solamente 10 valori diversi risulta avere molte ripetizioni).
+\noindent Si osserva un'anomalia nel grafico quando il numero di valori distinti presenti nel vettore (\(m\)) è molto basso. La motivazione è presto detta: Quick Sort rischia di diventare $O(n^2)$ se ci sono tante ripetizioni dello stesso elemento, cosa che, per il principio della piccionaia avviene per valori di $m$ piuttosto bassi (e.g. un vettore da 10000 elementi che possono assumere solamente 10 valori diversi risulta avere molte ripetizioni). Per il resto l'andamento è costante, infatti la complessità del Quick Sort ricordiamo essere $O(n \log n)$, $n$ è costante e quinidi l'algoritmo richiede tempo costante.
 
 \subsection{Terzo esperimento (studio del caso peggiore)}
 
-Per ottenere dei campioni su cui Quick Sort risulta pessimo, le misurazioni sono state effettuate generando vettori già ordinati, in modo da avere una cattiva scelta dell'elemento pivot. Similmente al grafico del terzo esperimento fatto su Counting Sort, vediamo che l'andamento sembra quadratico, proprio come ci aspettavamo. In ogni caso i tempi sono abbastanza contenuti rispetto al Counting Sort nel suo caso quadratico, dato che con vettori da 10000 elementi rimaniamo comunque sotto i 4 secondi. In questo caso n varia da 100 a 10000, anche con questa limitazione è stato necessario aumentare il limite di ricorsioni imposto di default da python.
+Per ottenere dei campioni su cui Quick Sort risulta pessimo, le misurazioni sono state effettuate generando vettori già ordinati, in modo da avere una cattiva scelta dell'elemento pivot. I risultati ottenuti empiricamente sono stati rappresentati da un grafico: 
 
 \begin{figure}[H]
     \centering
@@ -245,6 +205,9 @@ Per ottenere dei campioni su cui Quick Sort risulta pessimo, le misurazioni sono
     \caption{Performance del Quick Sort al variare di \(n\) su vettori ordinati.}
     \label{fig:quick_sort_n}
 \end{figure}
+
+\noindent Similmente al grafico del terzo esperimento fatto su Counting Sort, vediamo che l'andamento sembra quadratico, proprio come ci aspettavamo. 
+ In ogni caso i tempi sono abbastanza contenuti rispetto al Counting Sort nel suo caso quadratico, dato che con vettori da 10000 elementi rimaniamo comunque sotto i 4 secondi. In questo caso n varia da 100 a 10000, anche con questa limitazione è stato necessario aumentare il limite di ricorsioni imposto di default da python.
 
 % chapter Quick Sort (end)
 
@@ -264,39 +227,30 @@ A differenza della versione classica, che suddivide in due partizioni (elementi 
 \noindent Questa suddivisione viene effettuata durante la fase di partizionamento, evitando confronti e ricorsioni inutili sugli elementi uguali al pivot, che sono già in posizione corretta. La ricorsione viene infatti applicata solo alle sottosequenze strettamente minori o maggiori del pivot.
 L'algoritmo non è in-place per via della coda delle chiamate ricorsive e non è neanche stabile, infatti gli elementi uguali possono cambiare ordine relativo.
 
-\section{Analisi della complessità}
+\section{Complessità teorica}
 
-Sia \(n\) la dimensione del vettore:
+Dall'analisi empirica dell'algoritmo Quick Sort 3-Way ci aspettiamo ci osservare un andamento $O(n\cdot \log(n))$ nel caso medio, come il Quick Sort classico, ma con una costante moltiplicativa migliore grazie alla gestione efficiente dei valori duplicati. Nel caso peggiore, ossia nei casi in cui i pivot sono molto sbilanciati e con una quantità ridotta di valori duplicati, ci aspettiamo di osservare da questo algoritmo un costo $O(n^2)$. Il Quick Sort 3-Way nel caso migliore, ossia quando tutti gli elementi sono uguali è lineare rispetto a $n$.
 
-\begin{itemize}
-    \item Caso migliore: \(O(n)\), quando tutti gli elementi sono uguali, e la partizione centrale include l'intero vettore.
-    \item Caso medio: \(O(n \cdot log(n))\), come il Quick Sort classico, ma con una costante migliore grazie alla gestione efficiente dei duplicati.
-    \item Caso peggiore: \(O(n^2)\), in caso di pivot molto sbilanciati e assenza di duplicati.
-    \item Spazio ausiliario: \(O(log(n))\) per la profondità della ricorsione.
-\end{itemize}
 
-\noindent Nel complesso, Quick Sort 3-Way si comporta meglio del Quick Sort classico in presenza di dati con molti valori ripetuti, mantenendo lo stesso ordine di complessità.
 
 \section{Analisi empirica}
 
 Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti tre esperimenti separati:
 
 \begin{itemize}
-    \item Nel primo esperimento abbiamo \(m = 100000\) fisso, mentre la dimensione del vettore che varia da \(100\) a $1000000$
-    \item Nel secondo esperimento la dimensione del vettore è \(n = 10000\) mentre viene fatto variare il range dei valori \(m\) da $10$ a $1000000$.
-    \item Nel terzo esperimento l'elemento massimo è \(n = 100000\) mentre viene fatto variare il range dei valori \(n\) da $100$ a $100000$ e i vettori generati sono tutti generati già ordinati, come per il caso peggiore del Quick Sort di base.
+    \item Nel primo esperimento abbiamo \(m = 100000\) fisso, mentre la dimensione del vettore che varia da \(100\) a $1000000$;
+    \item Nel secondo esperimento la dimensione del vettore è \(n = 10000\) mentre viene fatto variare il range dei valori \(m\) da $10$ a $1000000$;
+    \item Nel terzo esperimento $m$ viene fissato a $100000$ la lunghezza del vettore viene fatta variare da $100$ a $100000$ e i vettori generati sono tutti generati già ordinati, come per il caso peggiore del Quick Sort.
 \end{itemize}
 
-\noindent
-I valori di \(n\) e \(m\) sono distribuiti secondo una progressione geometrica. Per ogni coppia di parametri sono stati generati 100 campioni casuali, ciascuno eseguito più volte. I tempi medi di esecuzione sono stati stimati con un clock monotono ad alta precisione (\texttt{time.perf\_counter()}), garantendo un errore relativo massimo \(\leq 0.001\). \\
+\noindent Ogni esperimento è stato analizzato empiricamente considerando 100 campionamenti distinti nei quali i valori $n$ o $m$ venivano fatti variare seguendo l'andamento di una progressione geometrica.
+Ogni campionamento inoltre è stato eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo minore di 0.001s.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{perf\_counter()} in Python). \\
 
-
-\noindent
-Nel grafico allegato si evidenziano chiaramente i vantaggi di questa variante rispetto alla versione classica, soprattutto in presenza di dati ridondanti.
 
 \subsection{Primo esperimento ($n$ varia)}
 
-Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(O(n \cdot log(n))\), come previsto.
+Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(O(n \cdot log(n))\), come previsto. Di seguito viene riportato il grafico delle misurazioni che sono state effettuate:
 
 
 \begin{figure}[H]
@@ -306,11 +260,12 @@ Nel primo esperimento, i tempi crescono approssimativamente secondo una curva \(
     \label{fig:quick_sort_3_way_n}
 \end{figure}
 
+\noindent Nel complesso, in presenza di dati con molti valori ripetuti il Quick Sort 3-Way si comporta meglio del Quick Sort classico pur mantenendo lo stesso ordine di complessità.
 
 
 \subsection{Secondo esperimento ($m$ varia)}
 
-Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati nei dati, e l'algoritmo ne beneficia: i tempi di esecuzione diminuiscono sensibilmente grazie al partizionamento ottimizzato del Quick Sort 3-Way.
+Nel secondo esperimento, si osserva che per valori \(m\) molto bassi aumentano inevitabilmente i duplicati nei dati, e l'algoritmo ne beneficia: i tempi di esecuzione diminuiscono sensibilmente grazie al partizionamento ottimizzato del Quick Sort 3-Way.
 
 \begin{figure}[H]
     \centering
@@ -319,11 +274,11 @@ Nel secondo esperimento, si osserva che, riducendo \(m\), aumentano i duplicati 
     \label{fig:quick_sort_3_way_m}
 \end{figure}
 
-\subsection{Terzo esperimento (vettori ordinati)}
+\subsection{Terzo esperimento (caso peggiore)}
 
 Notiamo che anche in questo caso, come per il Quick Sort base, l'andamento peggiora, ma sembra resistere meglio.
-La performance risulta migliore grazie alla divisione in 3 parti del vettore, che probabilmente permette di evitare ricorsioni (anche se le ricorsioni evitate sono mediamente su un singolo elemento, il pivot).
-In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il tempo di misurazione e il numero di ricorsioni arrivava ad essere troppo elevato). In ogni caso vediamo che per vettori di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con vettori di appena 10000 elementi! (sempre con vettori ordinati)
+La performance risulta migliore grazie alla divisione in 3 parti del vettore, che probabilmente permette di evitare ricorsioni nel caso in cui ci siano elementi duplicati.
+In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il tempo di misurazione e il numero di ricorsioni arrivava ad essere troppo elevato). Le misurazioni effettuate sono state riportate nel seguente grafico:
 
 \begin{figure}[H]
     \centering
@@ -332,8 +287,10 @@ In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il
     \label{fig:quick_sort_3_way_m}
 \end{figure}
 
-% chapter Quick Sort 3 Way (end)
+\noindent
+Osserviamo che per vettori di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con vettori di appena 10000 elementi. Analizzando il rapporto tra tempo e $n \cdot \log (n)$ 
 
+% chapter Quick Sort 3 Way (end)
 
 
 \chapter{Radix Sort}\label{chap:Radix Sort} % (fold)

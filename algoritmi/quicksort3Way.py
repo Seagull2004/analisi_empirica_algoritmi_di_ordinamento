@@ -41,70 +41,32 @@ def partition3way(A: list[int], p: int, q: int) -> tuple[int, int]:
     Partiziona l'array A[p...q - 1] in tre parti: minori, uguali e maggiori del pivot.
     #      p     k     l     q 
     # ... |<|<|<|=|=|=|>|>|>| ...
-    
+
     Args: 
         0 <= p < q <= len(A)
     Post: 
-        - A[p...q - 1] viene diviso in tre sezioni ordinate correttamente.
-        - vengono restituiti:
-          - indice di inizio partizione con elementi che hanno valore pari al pivot
-          - indice di inizio partizione con elementi che hanno valore maggiore al pivot
+        A[p...q - 1] viene diviso in tre sezioni ordinate correttamente.
+        Vengono restituiti:
+        - indice k: inizio partizione con elementi uguali al pivot
+        - indice l: inizio partizione con elementi maggiori del pivot
     """
     pivot = A[p]
-    lt = p        # A[p..lt-1] < pivot
-    gt = q        # A[gt..q-1] > pivot
-    i = p + 1     # A[lt..i-1] == pivot
+    k = p        # A[p..k-1] < pivot
+    l = q        # A[l..q-1] > pivot
+    j = p + 1    # A[k..j-1] == pivot
 
-    while i < gt:
-        if A[i] < pivot:
-            A[lt], A[i] = A[i], A[lt]
-            lt += 1
-            i += 1
-        elif A[i] > pivot:
-            gt -= 1
-            A[i], A[gt] = A[gt], A[i]
+    while j < l:
+        if A[j] < pivot:
+            A[k], A[j] = A[j], A[k]
+            k += 1
+            j += 1
+        elif A[j] > pivot:
+            l -= 1
+            A[j], A[l] = A[l], A[j]
         else:
-            i += 1
+            j += 1
 
-    return lt, gt  # Elements in A[lt..gt-1] == pivot
-#    if q - p < 1:
-#        return p, q
-#    pivot = A[q - 1]
-#    A[q-1], A[p] = A[p], A[q-1]
-#    k = p
-#    l = p
-#    for j in range(p + 1, q):
-#        # TOGLIERE I COMMENTI SOLO PER FARE DEBUG
-#        # print(" ",end="")
-#        # for x in range(i):
-#        #     print("   ", end="")
-#        # print("i")
-#        # print(" ",end="")
-#        # for x in range(j):
-#        #     print("   ", end="")
-#        # print("j")
-#        # print(" ",end="")
-#        # for x in range(k):
-#        #     print("   ", end="")
-#        # print("k")
-#        # print(" ",end="")
-#        # for x in range(l):
-#        #     print("   ", end="")
-#        # print("l")
-#        # print(A)
-#        if A[j] < pivot:
-#            A[k], A[l] = A[l], A[k]
-#            A[j], A[k] = A[k], A[j]
-#            k += 1
-#            l += 1
-#        elif A[j] > pivot:
-#            pass
-#        else:
-#            assert(A[j] == pivot)
-#            A[l], A[j] = A[j], A[l]
-#            l += 1
-#    return k, l
-#
+    return k, l  # Elementi in A[k..l-1] == pivot
 
 def uniformedQuickSort3Way(A: list[int], k: int) -> None:
     """
