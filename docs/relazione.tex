@@ -288,44 +288,46 @@ In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il
 \end{figure}
 
 \noindent
-Osserviamo che per vettori di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con vettori di appena 10000 elementi. Analizzando il rapporto tra tempo e $n \cdot \log (n)$ 
+Osserviamo che per vettori di 100000 elementi il tempo resta tra i 3 e 4 secondi, mentre questo avveniva con Quick Sort di base con vettori, ordinati, di appena 10000 elementi. Analizzando il rapporto tra tempo e $n \cdot \log (n)$.
 
 % chapter Quick Sort 3 Way (end)
 
 
+
 \chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
 
+% questa parte serve davvero?
+% da qui
 Il Radix Sort è un algoritmo di ordinamento non comparativo che sfrutta le rappresentazioni numeriche degli elementi. Ordina i numeri interi cifra per cifra, a partire dalla cifra meno significativa (LSD - Least Significant Digit) fino a quella più significativa. L'ordinamento delle singole cifre è effettuato tramite un algoritmo stabile, come il Counting Sort, applicato in sequenza per ogni posizione.
 Radix Sort lavora bene quando si conosce il numero massimo di cifre degli elementi (ovvero \(log_{10}(k)\) se \(k\) è il valore massimo presente).
 Questo algoritmo è in-place (usa spazio aggiuntivo proporzionale a \(n + b\), con \(b\) la base usata, tipicamente \(10\)), ma non stabile per natura a meno che il sorting delle cifre lo sia (in questo caso è garantita la stabilità tramite Counting Sort).
+% a qui
 
-\section{Analisi della complessità}
-Sia \(n\) la lunghezza del vettore e \(d\) il numero massimo di cifre (ossia \( d = \lceil \log_{10}(k + 1) \rceil \)): \\
 
-\begin{itemize}
-    \item Tempo: \(\Theta(d \cdot (n + b))\), che nel caso più comune (\(b = 10\)) diventa \(\Theta(n \cdot log_{10}(k))\). Quando \(k = O(n^c)\) per una costante \(c\), si ha complessivamente tempo quasi-lineare \(\Theta(n)\).
-    \item Spazio: \(\Theta(n + b)\) per ogni cifra, dove \(b\) è la base (es. 10 cifre decimali).
-    \item Stabile: sì, se il counting sort interno è stabile.
-    \item In-place: no, nel senso stretto (usa memoria ausiliaria \(\Theta(n)\)).
-\end{itemize}
+\section{Complessità teorica}
+
+Dal momento che il Radix Sort lavora sul numero cifre dei numeri che compongono il vettore, è importante considerare la base che viene usata per la rappresentazione.
+La complessità di Radix Sort è $\Theta(n)\cdot d$ dove $d$ è il numero di cifre dei numeri all'interno del vettore, ci aspettiamo che l'algoritmo risulti lineare quando sappiamo che nei nostri vettori i numeri avranno al massimo un certo numero di cifre.
+
 
 \section{Analisi empirica}
 
-L'algoritmo è stato testato su vettori di interi generati casualmente, secondo tre configurazioni sperimentali:
+Per verificare empiricamente l'efficienza dell'algoritmo, sono stati condotti tre esperimenti separati:
 
 \begin{itemize}
-    \item Nel primo esperimento \(m = 100000\) (valore massimo) fisso, variando la dimensione \(n\) del vettore da 100 a 1000000;
-    \item Nel secondo esperimento \(n = 10000\) fisso, variando \(m\), cioè il massimo valore presente negli elementi da 10 a 1000000.
-    \item Nel terzo esperimento è stato studiato lo stesso caso "pessimo" visto per il Counting Sort, ma dal momento che con \(m\) che cresce come il quadrato di \(n\) la complessità temporale di Radix Sort risulta \(\Theta(nlogn)\), abbiamo spinto \(n\) fino a 1000000, come negli gli altri casi.
+    \item Nel primo esperimento \(m = 100000\) rimane costante per tutte le misurazioni, la dimensione \(n\) del vettore da viene fatta variare da 100 a 1000000;
+    \item Nel secondo esperimento \(n = 10000\) rimane costante per tutte le misurazioni, mentre \(m\) cioè il massimo valore presente negli elementi da varia da 10 a 1000000;
+    \item Nel terzo esperimento è stato studiato lo stesso caso quadratico visto per il Counting Sort, ma dal momento che con \(m\) che cresce come il quadrato di \(n\) la complessità temporale di Radix Sort risulta \(\Theta(n \cdto \log n)\), abbiamo spinto \(n\) fino a 1000000, come negli altri casi.
 \end{itemize}
 
-\noindent In entrambi i casi, i parametri sono scelti su una scala geometrica. Ogni configurazione \((n, m)\) è stata eseguita su 100 campioni, ciascuno ripetuto più volte. I tempi di esecuzione sono stati misurati tramite un clock monotono con errore relativo massimo \(\leq 0.001\). \\
+\noindent Ogni esperimento è stato analizzato empiricamente considerando 100 campionamenti distinti nei quali i valori $n$ o $m$ venivano fatti variare seguendo l'andamento di una progressione geometrica.
+Ogni campionamento inoltre è stato eseguito più volte per stimare in modo affidabile il tempo medio di esecuzione, mantenendo un errore relativo massimo minore di 0.001s.
+Le misurazioni sono state effettuate utilizzando un clock monotono ad alta precisione (\texttt{perf\_counter()} in Python). \\
 
-\noindent I risultati ottenuti confermano l'efficienza teorica:
 
 \subsection{Primo esperimento ($n$ varia)}
 
-Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(O(n \cdot log(m))\), dato \(m\) fisso.
+Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(\Theta (n )\cdot d\), dove $d$ è asintoticamente equivalente a $\log m$, dove $m$ è il massimo numero che compare nei vettori da ordinare.
 
 \begin{figure}[H]
     \centering
@@ -336,7 +338,8 @@ Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente 
 
 \subsection{Secondo esperimento ($m$ varia)}
 
-Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di Counting Sort, coerente con la complessità \(O(d \cdot n)\).
+Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di Counting Sort, coerente con la complessità \(\Theta(n) \cdot d \).
+I risultati ottenuti dalle misurazioni sono stati riportati nel seguente grafico:
 
 \begin{figure}[H]
     \centering
@@ -345,10 +348,13 @@ Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\
     \label{fig:radix_sort_3_way_m}
 \end{figure}
 
-\subsection{Terzo esperimento ($m$ = $n^2$)}
+\noindent Dal momento che $n$ è costante e $m$ aumenta osserviamo che la complessità dovrebbe essere $\Theta(\log m)$, infatti osserviamo un andamento logaritmico.
 
-Nel terzo esperimento vediamo che, sebbene Radix Sort impieghi più tempo di Counting Sort quando \(m\) è costante, quando facciamo aumentare \(m\) come \(n^2\) le parti si invertono drasticamente, visto che abbiamo un \(\Theta(nlogn)\) contro un \(\Theta(n^2)\).
-Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 secondi, mentre appena con vettori da 10000 elementi counting Sort supera gli 8 secondi. Comunque quando \(m\) cresce in questo modo, rimangono migliori algoritmi \(O(nlogn)\) basati su scambi e confronti, come il Quick Sort.
+
+\subsection{Terzo esperimento (crescita quadratica)}
+
+Nel terzo esperimento vediamo che, sebbene Radix Sort impieghi più tempo di Counting Sort quando \(m\) è costante, quando facciamo aumentare \(m\) come \(n^2\) le parti si invertono drasticamente, visto che abbiamo un \(\Theta(n \log n)\) contro un \(\Theta(n^2)\).
+Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 secondi, mentre appena con vettori da 10000 elementi counting Sort supera gli 8 secondi. Comunque quando \(m\) cresce in questo modo, rimangono migliori algoritmi \(O(n \log n)\) basati su scambi e confronti, come il Quick Sort.
 
 \begin{figure}[H]
     \centering
@@ -365,14 +371,15 @@ Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 se
 
 \chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
-\begin{itemize}
-    \item mostriamo che asintoticamente con n fissato e un m che cresce sono meglio gli algoritmi basati su sbambi e confronti (grafici con tutti gli algorimti)
-    \item mostriamo che asintoticamente con m fissato e un n che cresce sono meglio gli algoritmi lineari se le loro ipotesi sono soddisfatte
-    \item (opzionale) cosa succede se facciamo variare m e n conteporaneamente?
-    \item (opzionale) volendo potremmo aggiungere le immagini quicksort_vs_3way.png (che confronta quicksort e quicksort3way nel caso di vettori ordinati) e radixsort_vs_countingsort_crescita_m_quadratica.png
-\end{itemize}
 
-// grafico complessivo qui
+\noindent
+Dallo studio empirico effettuato su questi algoritmi di ordinamento è emerso che nel caso in cui la lunghezza dei vettori viene fissata mentre $m$ cresce gli algoritmi basati su scambi e confronti risultano più convenienti, viceversa nel momento in cui è la lunghezza del vettore a cambiare e $m$ viene fissato sono gli algoritmi lineari ad essere più convenienti.
+\\
+
+
+\noindent
+Per quanto riguarda i casi peggiori analizzati abbiamo osservato che il Quick Sort 3-Way risulta più performante rispetto al Quick Sort.
+Per quanto riguarda la classe di input per cui l'elemento massimo aumenta come il quadrato della lunghezza il Radix Sort risulta essere decisamente migliore rispetto al Couging Sort.
 
 % chapter Conclusioni (end)
 
