@@ -12,6 +12,7 @@ from utils.randomGenerator import Disposition as Disposition
 import os
 import csv
 
+
 # Alcuni parametri di configurazione
 configuration = json5.load(open("./config.json"))
 NUM_CAMPIONI = configuration["NUM_CAMPIONI"]
@@ -183,9 +184,10 @@ def main():
     stampaGraficiVersus('n')
     stampaGraficiSeparatiDeiValoriMisurati('n')
 
-    # misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
-    # stampaGraficoUnicoDeiValoriMisurati('m')
-    # stampaGraficiVersus('m')
-    # stampaGraficiSeparatiDeiValoriMisurati('m')
+    misuraTempiSullaBaseDi('m', var_start=M_MIN, var_end=M_MAX, lock=N_LOCK)
+    stampaGraficoUnicoDeiValoriMisurati('m')
+    stampaGraficiVersus('m')
+    stampaGraficiSeparatiDeiValoriMisurati('m')
 
-main()
+print("prima di eseguire il main assicurati di aver scaricato i file di utilità -> https://github.com/Seagull2004/analisi_empirica_algoritmi_di_ordinamento")
+#main()
