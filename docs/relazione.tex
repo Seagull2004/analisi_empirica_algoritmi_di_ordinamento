@@ -1,21 +1,6 @@
 \documentclass[a4paper, 12pt, oneside]{book}
 \usepackage[italian]{babel} % Lingua italiana
 \usepackage{authblk} % Per gli autori
-
-\renewcommand\Authands{ e }
-
-\title{Analisi empirica degli algoritmi di ordinamento}
-
-\author[ ]{Graziano Francesco \thanks{Email: graziano.francesco@spes.uniud.it, Matricola: 166680}}
-\author[ ]{Ongaro Michele \thanks{Email: ongaro.michele@spes.uniud.it, Matricola: 168049}}
-\author[ ]{Petri Riccardo \thanks{Email: petri.riccardo@spes.uniud.it, Matricola: 167623}}
-\author[ ]{Ungaro Marco \thanks{Email: ungaro.marco@spes.uniud.it, Matricola: 168934}}
-
-\affil[ ]{Università degli Studi di Udine, Dipartimento di Scienze matematiche, informatiche e fisiche}
-
-\date{A.A. 2024-2025}
-%\date{}
-
 \usepackage{amsmath} % Per equazioni avanzate
 \usepackage{amssymb} % Simboli matematici
 \usepackage{graphicx} % Per immagini
@@ -23,19 +8,28 @@
 \usepackage{geometry} % Per margini personalizzati
 \usepackage{listings} % scrivere codice
 \usepackage{float} % Per il posizionamento delle immagini
-
 \geometry{a4paper, margin=2.5cm}
 \cleardoublepage
-
-\begin{document}
-
+\renewcommand\Authands{ e }
 \renewcommand{\contentsname}{Contenuti}
 \renewcommand{\chaptername}{Capitolo}
+
+\title{Analisi empirica degli algoritmi di ordinamento}
+\author[ ]{Graziano Francesco \thanks{Email: graziano.francesco@spes.uniud.it, Matricola: 166680}}
+\author[ ]{Ongaro Michele \thanks{Email: ongaro.michele@spes.uniud.it, Matricola: 168049}}
+\author[ ]{Petri Riccardo \thanks{Email: petri.riccardo@spes.uniud.it, Matricola: 167623}}
+\author[ ]{Ungaro Marco \thanks{Email: ungaro.marco@spes.uniud.it, Matricola: 168934}}
+\affil[ ]{Università degli Studi di Udine, Dipartimento di Scienze matematiche, informatiche e fisiche}
+\date{A.A. 2024-2025}
+
+
+\begin{document}
 
 \maketitle % copertina del documento
 \tableofcontents % sommario di tutti i titoli
 
-\chapter{Introduzione}\label{chap:Introduzione} % (fold)
+
+\chapter{Introduzione}\label{chap:Introduzione}
 
 Con la seguente relazione si vuole documentare i risultati empirici ottenuti dalla realizzazione e implementazione di quattro algoritmi di ordinamento per vettori di interi di dimensione variabile.
 Gli algoritmi che andremo ad analizzare sono il Counting Sort, il Quick Sort, il Quick Sort 3 way e il Radix Sort.
@@ -54,8 +48,6 @@ Oltre alla corretta implementazione viene richiesto di effettuare un'analisi emp
 
  
 \chapter{Counting Sort}\label{chap:Counting Sort} % (fold)
-
-
 
 % questa parte serve?
 % da qui
@@ -79,7 +71,7 @@ L'implementazione adottata si articola in tre fasi principali:
 
 \section{Analisi della complessità}
 
-% serve davvero
+% questa parte serve?
 % da qui
 Siano \(n\) la dimensione del vettore \(A\) e \(m\) il valore massimo contenuto in \(A\). \\
 
@@ -169,6 +161,8 @@ Il grafico seguente presenta:
 
 % chapter Counting Sort (end)
 
+
+
 \chapter{Quick Sort}\label{chap:Quick Sort} % (fold)
 
 % serve davvero?
@@ -176,7 +170,6 @@ Il grafico seguente presenta:
 Il Quick Sort è un algoritmo di ordinamento basato sulla strategia del divide et impera (ovvero: dividere il problema in sottoproblemi più piccoli, risolverli ricorsivamente e combinare i risultati).
 A partire da un vettore \(A\), si seleziona un pivot, in questo caso l'elemento finale del sottovettore \(A[p...q]\), e si procede alla partizione: tutti gli elementi minori o uguali al pivot vengono spostati a sinistra, quelli maggiori a destra. L'indice finale del pivot è restituito dalla funzione partition, e l'algoritmo viene poi richiamato ricorsivamente sulle due sottosequenze risultanti.
 % a qui?
-
 
 \noindent Le due funzioni fornite nel codice sono:
 
@@ -254,6 +247,8 @@ Per ottenere dei campioni su cui Quick Sort risulta pessimo, le misurazioni sono
 \end{figure}
 
 % chapter Quick Sort (end)
+
+
 
 \chapter{Quick Sort 3 Way}\label{chap:Quick Sort 3 Way} % (fold)
 
@@ -337,8 +332,9 @@ In questo caso il range di \(n\) varia tra 100 e 100000 (fermandoci a 1000000 il
     \label{fig:quick_sort_3_way_m}
 \end{figure}
 
-
 % chapter Quick Sort 3 Way (end)
+
+
 
 \chapter{Radix Sort}\label{chap:Radix Sort} % (fold)
 
@@ -370,8 +366,7 @@ L'algoritmo è stato testato su vettori di interi generati casualmente, secondo 
 
 \noindent I risultati ottenuti confermano l'efficienza teorica:
 
-
-\subsection{Primo esempio ($n$ varia)}
+\subsection{Primo esperimento ($n$ varia)}
 
 Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente con \(n\), confermando il comportamento \(O(n \cdot log(m))\), dato \(m\) fisso.
 
@@ -382,7 +377,7 @@ Nel primo eseperimento osserviamo che il tempo di esecuzione cresce linearmente 
     \label{fig:radix_sort_way_n}
 \end{figure}
 
-\subsection{Secondo esempio ($m$ varia)}
+\subsection{Secondo esperimento ($m$ varia)}
 
 Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\)), si osserva un aumento graduale dei tempi dovuto alla crescita del numero di passaggi di Counting Sort, coerente con la complessità \(O(d \cdot n)\).
 
@@ -393,7 +388,7 @@ Nel secondo esperimento, aumentando \(m\) (cioè il numero massimo di cifre \(d\
     \label{fig:radix_sort_3_way_m}
 \end{figure}
 
-\subsection{Terzo esempio ($m$ = $n^2$)}
+\subsection{Terzo esperimento ($m$ = $n^2$)}
 
 Nel terzo esperimento vediamo che, sebbene Radix Sort impieghi più tempo di Counting Sort quando \(m\) è costante, quando facciamo aumentare \(m\) come \(n^2\) le parti si invertono drasticamente, visto che abbiamo un \(\Theta(nlogn)\) contro un \(\Theta(n^2)\).
 Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 secondi, mentre appena con vettori da 10000 elementi counting Sort supera gli 8 secondi. Comunque quando \(m\) cresce in questo modo, rimangono migliori algoritmi \(O(nlogn)\) basati su scambi e confronti, come il Quick Sort.
@@ -409,8 +404,9 @@ Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 se
 
 % chapter Radix Sort (end)
 
-\chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
+
+\chapter{Conclusioni}\label{chap:Conclusioni} % (fold)
 
 \begin{itemize}
     \item mostriamo che asintoticamente con n fissato e un m che cresce sono meglio gli algoritmi basati su sbambi e confronti (grafici con tutti gli algorimti)
@@ -422,5 +418,7 @@ Vediamo che anche con vettori da 1000000 elementi Radix Sort rimane sotto i 6 se
 // grafico complessivo qui
 
 % chapter Conclusioni (end)
+
+
 
 \end{document}
